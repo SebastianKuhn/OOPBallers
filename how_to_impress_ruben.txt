@@ -1,0 +1,5 @@
+#use 
+
+try:
+
+#it will try to make a request in the database and if it does not work it will stop.
