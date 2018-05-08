@@ -19,7 +19,7 @@ def appendNewIngredient(image_to_append):
     base_url = "https://vision.googleapis.com/v1/images:annotate?key="
     api_key = "AIzaSyDfKIKpRF7OBu5Q3Q6Zh1zxFOsulyTZ2IE"
     url = base_url + api_key
-    image_base64 = encode_image_as_base64(image_to_append)
+    image_base64 = encodeImageAsBase64(image_to_append)
 
     json_request = {
                       "requests":[
@@ -43,22 +43,29 @@ def appendNewIngredient(image_to_append):
     list_of_possible_ingredients = loaded_json["responses"][0]["labelAnnotations"]
 
     #appends the first possible ingredient's name that is not in the list of common terms
-    recognized_ingredients.append(chooseCorrectIngredient(list_of_possible_ingredients).getDescription())
+    recognized_ingredients.append(chooseCorrectIngredient(list_of_possible_ingredients))
+    print("")
+    print("Your ingredients so far are:")
+    print(recognized_ingredients)
 
 
 def chooseCorrectIngredient(list_of_ingredients):
     """loops every possible description and returns the first that is not in the list of common terms"""
 
     for element in list_of_ingredients:
-        for term in common_terms:
-            if element.get("description") != term:
-                description = element.get("description")
-                score = element.get("score")
-                ingredient = GoogleVisionObject(description, score)
-                return ingredient
+        if compareWithCommonTerms(element):
+            print("wrong description")
+        else:
+            return element.get("description")
 
 
-def encode_image_as_base64(image_path):
+def compareWithCommonTerms(ingredient):
+    for term in common_terms:
+        if ingredient.get("description") == term:
+            return True
+
+
+def encodeImageAsBase64(image_path):
     """ Loads an image from path and returns it as base64 encoded string """
 
     print("Encoding image: "+ image_path)
@@ -66,6 +73,31 @@ def encode_image_as_base64(image_path):
         encoded_string = base64.b64encode(image_file.read())
 
     return encoded_string
+
+
+def getRecipesByIngredient():
+
+    base_url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?ranking=" \
+               "1&number=5&ingredients="
+    ingredients_no_spaces = []
+
+    #delete all spaces for the url
+    for ingredient in recognized_ingredients:
+        ingredient = ''.join(str(ingredient).split())
+        ingredients_no_spaces.append(ingredient)
+
+    ingredients = '%2C'.join(ingredients_no_spaces)
+    url = base_url + ingredients
+
+    response = requests.get(
+        url,
+        headers={
+            "X-Mashape-Key": "PO4pY9yb8wmshcGIX33au66a9Jvdp1FpU0zjsnwB2BMrEKZ902",
+            "X-Mashape-Host": "spoonacular-recipe-food-nutrition-v1.p.mashape.com"
+        }
+    )
+
+    print(response.json)
 
 
 if __name__ == "__main__":
@@ -78,7 +110,7 @@ if __name__ == "__main__":
         appendNewIngredient(image_path)
         answer = str(input("Do you want to add another ingredient? (y/n)"))
         if answer == "n":
-            print(recognized_ingredients)
+            getRecipesByIngredient()
             isFinished = True
 
 
