@@ -1,19 +1,30 @@
 #import classes
-import base64
-import json
-import requests
-from googlevisionobject import GoogleVisionObject
+import base64, json, requests, glob
 
 #list of commonly used terms which are too general
 common_terms = ["animal source foods", "animal fat", "vegetable", "natural foods", "local foods", "produce", "food",
                 "product", "product design", "ingredient", "drink", "dairy product", "yellow", "red", "blue",
                 "al dente", "italian food"]
 
-#list of recognized ingredients
-recognized_ingredients = []
+def scanFolderforPictures(folder_path):
+    """ takes a folder directory as the input and adds all pictures in an array, which will be returned """
+
+    jpg = folder_path + "/*.jpg"
+    jpeg = folder_path + "/*.jpeg"
+    png = folder_path + "/*.png"
+    gif = folder_path + "/*.gif"
+
+    list_of_formats = [jpg, jpeg, png, gif]
+
+    list_of_image_paths = []
+
+    for format in list_of_formats:
+        list_of_image_paths.extend(glob.glob(format))
+
+    return list_of_image_paths
 
 
-def appendNewIngredient(image_to_append):
+def identifyNewIngredient(image_to_append):
     """ sends a request to the Google Vision API and chooses the correct term """
 
     base_url = "https://vision.googleapis.com/v1/images:annotate?key="
@@ -42,11 +53,7 @@ def appendNewIngredient(image_to_append):
     loaded_json = response.json()
     list_of_possible_ingredients = loaded_json["responses"][0]["labelAnnotations"]
 
-    #appends the first possible ingredient's name that is not in the list of common terms
-    recognized_ingredients.append(chooseCorrectIngredient(list_of_possible_ingredients))
-    print("")
-    print("Your ingredients so far are:")
-    print(recognized_ingredients)
+    return chooseCorrectIngredient(list_of_possible_ingredients)
 
 
 def chooseCorrectIngredient(list_of_ingredients):
@@ -54,7 +61,7 @@ def chooseCorrectIngredient(list_of_ingredients):
 
     for element in list_of_ingredients:
         if compareWithCommonTerms(element):
-            print("wrong description")
+            """no clue why that does not work otherwise"""
         else:
             return element.get("description")
 
@@ -97,7 +104,14 @@ def getRecipesByIngredient():
         }
     )
 
-    print(response.json)
+    print(response.text)
+
+    print("")
+    print("You can choose between the following recipes:")
+    print("")
+
+    for recipe in response.json():
+        print(recipe.get("title"))
 
 
 if __name__ == "__main__":
@@ -106,11 +120,23 @@ if __name__ == "__main__":
     isFinished = False
 
     while isFinished != True:
-        image_path = str(input("Please insert the file path of the ingredient you want to analyze"))
-        appendNewIngredient(image_path)
-        answer = str(input("Do you want to add another ingredient? (y/n)"))
-        if answer == "n":
-            getRecipesByIngredient()
-            isFinished = True
+        folder_path = str(input("Please insert the file path of your folder containing all the pictures"))
+        list_of_image_paths = scanFolderforPictures(folder_path)
+
+        # list of recognized ingredients
+        recognized_ingredients = []
+
+        for image_path in list_of_image_paths:
+            recognized_ingredients.append(identifyNewIngredient(image_path))
+
+        print("")
+        print("Your ingredients so far are:")
+        print(recognized_ingredients)
+        print("")
+
+        getRecipesByIngredient()
+        isFinished = True
+
+
 
 
