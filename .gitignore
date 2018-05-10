@@ -98,7 +98,6 @@ ENV/
 /site
 
 # mypy
-<<<<<<< HEAD
 .mypy_cache/
 
 ### JetBrains ###
@@ -133,6 +132,3 @@ ENV/
 # modules.xml
 # .idea/misc.xml
 # *.ipr
-=======
-.mypy_cache/
->>>>>>> 7e70b48d88bfebc8b8f0ee8f08c23232e9e78c53
