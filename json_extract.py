@@ -1,6 +1,15 @@
 """
 extract important vales from responses
 """
+
+search_recipe = {
+
+}
+
+
+
+
+
 recipe_information = {
     "vegatarian" : response["body"]["vegetarian"],
     "aggregateLikes" : response["body"]["aggretageLikes"],
