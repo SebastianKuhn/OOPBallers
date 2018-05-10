@@ -22,11 +22,11 @@ def getRecipesByIngredient(ingredients):
         }
     )
 
-    print(response.text)
-
     print("")
     print("You can choose between the following recipes:")
     print("")
 
     for recipe in response.json():
         print(recipe.get("title"))
+
+    print("")

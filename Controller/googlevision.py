@@ -18,8 +18,8 @@ def scanFolderforPictures(folder_path):
 
     list_of_image_paths = []
 
-    for format in list_of_formats:
-        list_of_image_paths.extend(glob.glob(format))
+    for image_format in list_of_formats:
+        list_of_image_paths.extend(glob.glob(image_format))
 
     return list_of_image_paths
 
@@ -36,7 +36,7 @@ def identifyNewIngredient(image_to_append):
                       "requests":[
                         {
                           "image":{
-                            "content": image_base64.decode("utf-8")
+                            "content": image_base64.decode("utf-8") #decoding from bytes into a string
                           },
                           "features": [
                             {
@@ -56,6 +56,16 @@ def identifyNewIngredient(image_to_append):
     return chooseCorrectIngredient(list_of_possible_ingredients)
 
 
+def encodeImageAsBase64(image_path):
+    """ Loads an image from path and returns it as base64 encoded string """
+
+    print("Encoding image: "+ image_path)
+    with open(image_path, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read())
+
+    return encoded_string
+
+
 def chooseCorrectIngredient(list_of_ingredients):
     """loops every possible description and returns the first that is not in the list of common terms"""
 
@@ -65,16 +75,8 @@ def chooseCorrectIngredient(list_of_ingredients):
 
 
 def compareWithCommonTerms(ingredient):
+    """loops the input ingredient's description through all common terms and returns true if one of the is equal"""
+
     for term in common_terms:
         if ingredient.get("description") == term:
             return True
-
-
-def encodeImageAsBase64(image_path):
-    """ Loads an image from path and returns it as base64 encoded string """
-
-    print("Encoding image: "+ image_path)
-    with open(image_path, "rb") as image_file:
-        encoded_string = base64.b64encode(image_file.read())
-
-    return encoded_string
