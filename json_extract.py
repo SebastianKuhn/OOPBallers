@@ -13,8 +13,8 @@ search_recipe = [
                     for j in i["imageUrls"]:
                         {
                         "imageUrl" : j
-                        }
-        ]
+                        }]
+}]
 
 
 
