@@ -1,6 +1,9 @@
 from Controller import googlevision, spoonacular
+import hashlib, uuid
+from Models.user import User
 
-def startProgram():
+
+def welcome():
     """starts the program and welcomes the user"""
 
     print("""
@@ -23,47 +26,74 @@ def startProgram():
 
 def login():
     """prompts the user to login and checks the credentials in the database"""
-
     print("")
 
-    username = input("username: ")
-    password = input("password: ")
+    correct_login = False
 
-    # check username and password in the database
+    while correct_login != True:
+        username = input("username: ")
+        password = input("password: ")
+
+        # check username and password in the database using the database controller -> if clause following
+        # check password => hash function in the database controller
+
+        correct_login = True
+
 
     print("")
     print("You successfully logged in")
     print("")
 
+    #return user
+
 
 def signUp():
     """prompts the user to define a username and a password. The username will be checked in the
     database whether it is still available"""
-
     print("")
-    username = input("Please enter a username: ")
 
-    #check username against database
+    username_available = False
+
+    while username_available != True:
+        username = input("Please enter a username: ")
+
+        # check username against database using the database controller
+
+
 
     password = input("Please enter a passwort: ")
 
-    #save passwort and username
+    #hash password
+    hashed_password = hash_password(password)
+
+    #create User
+    user = User(username, hashed_password)
+
 
     print("")
     print("You successfully created an account!")
     print("")
+
+    return user
+
+
+def hash_password(password):
+    # uuid is used to generate a random number
+    salt = uuid.uuid4().hex
+    return hashlib.sha256(salt.encode() + password.encode()).hexdigest() + ':' + salt
 
 
 def presentOptions():
     """presents all the available options"""
 
     print("Please enter the number of one of the following options:")
-    print("1. Search a new recipes with pictures")
+    print("1. Search a new recipe using pictures")
     print("2. Search recipes by name")
     print("3. Get all your recipes")
-    print("'info' to get information")
+    print("'info' to get information on all options")
     print("'end' to end the program")
     print("")
+
 
 def checkUserInput():
     """checks the user input and matches it with the available options"""
@@ -119,17 +149,20 @@ def searchNewRecipes():
 if __name__ == "__main__":
     """starts the program"""
 
-    startProgram()
+    current_user = None
+
+    welcome()
 
     login_or_signup = str(input("Login/Sign up (1/2): "))
     login_status = False
 
     while login_status is False:
         if login_or_signup == "1":
+            #current_user =
             login()
             login_status = True
         elif login_or_signup == "2":
-            signUp()
+            current_user = signUp()
             login_status = True
         else:
             print("")
@@ -140,5 +173,5 @@ if __name__ == "__main__":
 
     is_finished = False
 
-    while not is_finished:
+    while is_finished != True:
         is_finished = checkUserInput()

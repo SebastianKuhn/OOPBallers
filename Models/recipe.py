@@ -1,12 +1,11 @@
 class Recipe(object):
 
-    def __init__(self, recipe_id, title, ready_in_minutes, image_url, servings, vegetarian=None, source_url=None,
+    def __init__(self, recipe_id, title, ready_in_minutes, servings, vegetarian=None, source_url=None,
                  aggregate_likes=None, health_score=None, ingredients=[], instructions=[]):
 
         self.recipe_id = recipe_id
         self.title = title
         self.ready_in_minutes = ready_in_minutes
-        self.image_url = image_url
         self.servings = servings
         self.vegetarian = vegetarian
         self.source_url = source_url
@@ -25,9 +24,6 @@ class Recipe(object):
 
     def getReadyInMinutes(self):
         return self.ready_in_minutes
-
-    def getImageUrl(self):
-        return self.image_url
 
     def getServings(self):
         return self.servings
