@@ -9,11 +9,9 @@ recipe_information = {
         for ingredient in response["body"]["extendedIngredients"]:
             {
                 "iid" : response["body"]["extendedIngredients"]["id"],
-                "name" : response["body"]["extendedIngredients"]["id"]
-                "meta"
+                "name" : response["body"]["extendedIngredients"]["name"],
+                "meta" : response["body"]["extendedIngredients"]["metaInformation"],
                 "amount" : response["body"]["extendedIngredients"]["measures"]["metric"]["amount"],
                 "unit" : response["body"]["extendedIngredients"]["measures"]["metric"]["unitShort"]
-            }
-
-
-]
+            }]
+}
