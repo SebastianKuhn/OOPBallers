@@ -1,142 +1,144 @@
-#import classes
-import base64, json, requests, glob
+from Controller import googlevision, spoonacular
 
-#list of commonly used terms which are too general
-common_terms = ["animal source foods", "animal fat", "vegetable", "natural foods", "local foods", "produce", "food",
-                "product", "product design", "ingredient", "drink", "dairy product", "yellow", "red", "blue",
-                "al dente", "italian food"]
+def startProgram():
+    """starts the program and welcomes the user"""
 
-def scanFolderforPictures(folder_path):
-    """ takes a folder directory as the input and adds all pictures in an array, which will be returned """
+    print("""
 
-    jpg = folder_path + "/*.jpg"
-    jpeg = folder_path + "/*.jpeg"
-    png = folder_path + "/*.png"
-    gif = folder_path + "/*.gif"
-
-    list_of_formats = [jpg, jpeg, png, gif]
-
-    list_of_image_paths = []
-
-    for format in list_of_formats:
-        list_of_image_paths.extend(glob.glob(format))
-
-    return list_of_image_paths
-
-
-def identifyNewIngredient(image_to_append):
-    """ sends a request to the Google Vision API and chooses the correct term """
-
-    base_url = "https://vision.googleapis.com/v1/images:annotate?key="
-    api_key = "AIzaSyDfKIKpRF7OBu5Q3Q6Zh1zxFOsulyTZ2IE"
-    url = base_url + api_key
-    image_base64 = encodeImageAsBase64(image_to_append)
-
-    json_request = {
-                      "requests":[
-                        {
-                          "image":{
-                            "content": image_base64.decode("utf-8")
-                          },
-                          "features": [
-                            {
-                              "type":"LABEL_DETECTION",
-                              "maxResults": 5
-                            }
-                          ]
-                        }
-                      ]
-                    }
-
-    #performs request and saves response, decodes it and chooses the list in list_of_possible_ingredients
-    response = requests.post(url, data=json.dumps(json_request))
-    loaded_json = response.json()
-    list_of_possible_ingredients = loaded_json["responses"][0]["labelAnnotations"]
-
-    return chooseCorrectIngredient(list_of_possible_ingredients)
-
-
-def chooseCorrectIngredient(list_of_ingredients):
-    """loops every possible description and returns the first that is not in the list of common terms"""
-
-    for element in list_of_ingredients:
-        if compareWithCommonTerms(element):
-            """no clue why that does not work otherwise"""
-        else:
-            return element.get("description")
-
-
-def compareWithCommonTerms(ingredient):
-    for term in common_terms:
-        if ingredient.get("description") == term:
-            return True
-
-
-def encodeImageAsBase64(image_path):
-    """ Loads an image from path and returns it as base64 encoded string """
-
-    print("Encoding image: "+ image_path)
-    with open(image_path, "rb") as image_file:
-        encoded_string = base64.b64encode(image_file.read())
-
-    return encoded_string
-
-
-def getRecipesByIngredient():
-
-    base_url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?ranking=" \
-               "1&number=5&ingredients="
-    ingredients_no_spaces = []
-
-    #delete all spaces for the url
-    for ingredient in recognized_ingredients:
-        ingredient = ''.join(str(ingredient).split())
-        ingredients_no_spaces.append(ingredient)
-
-    ingredients = '%2C'.join(ingredients_no_spaces)
-    url = base_url + ingredients
-
-    response = requests.get(
-        url,
-        headers={
-            "X-Mashape-Key": "PO4pY9yb8wmshcGIX33au66a9Jvdp1FpU0zjsnwB2BMrEKZ902",
-            "X-Mashape-Host": "spoonacular-recipe-food-nutrition-v1.p.mashape.com"
-        }
-    )
-
-    print(response.text)
-
+                 \ \  / /                                                  ___         ___
+                  \ \/ /           _   __      _   __     //             //   ) )    //   ) )
+                   \/ / //   / / // ) )  ) ) // ) )  ) ) // //   / /      __ / /    //   / /
+                   / / //   / / // / /  / / // / /  / / // ((___/ /          ) )   //   / /
+                  / / ((___( ( // / /  / / // / /  / / //      / /     ((___/ / . ((___/ /
+                                                              / /
+                                                             / /
+            
+            """)
+    print("Welcome to Yummly, you're tool to search recipes by snapping pictures of the ingredients the fridge!")
     print("")
-    print("You can choose between the following recipes:")
+    print("")
+    print("Please choose to either log in if you already have an account or sign up if you do not.")
     print("")
 
-    for recipe in response.json():
-        print(recipe.get("title"))
+
+def login():
+    """prompts the user to login and checks the credentials in the database"""
+
+    print("")
+
+    username = input("username: ")
+    password = input("password: ")
+
+    # check username and password in the database
+
+    print("")
+    print("You successfully logged in")
+    print("")
+
+
+def signUp():
+    """prompts the user to define a username and a password. The username will be checked in the
+    database whether it is still available"""
+
+    print("")
+    username = input("Please enter a username: ")
+
+    #check username against database
+
+    password = input("Please enter a passwort: ")
+
+    #save passwort and username
+
+    print("")
+    print("You successfully created an account!")
+    print("")
+
+
+def presentOptions():
+    """presents all the available options"""
+
+    print("Please enter the number of one of the following options:")
+    print("1. Search a new recipes with pictures")
+    print("2. Search recipes by name")
+    print("3. Get all your recipes")
+    print("'info' to get information")
+    print("'end' to end the program")
+    print("")
+
+def checkUserInput():
+    """checks the user input and matches it with the available options"""
+
+    user_input = str(input("What would you like to do? "))
+
+    if user_input == "1":
+        searchNewRecipes()
+
+    elif user_input == "2":
+        print("")
+        print("search Recipe by name")
+        print("")
+
+    elif user_input == "3":
+        print("")
+        print("get your recipes")
+        print("")
+
+    elif user_input == "info":
+        presentOptions()
+
+    elif user_input == "end":
+        return True
+
+    else:
+        print("")
+        print("Please enter a valid number. If you need further information type: info")
+        print("")
+
+def searchNewRecipes():
+    """asks the user for a folder file path, analyzes the pictures and prints the ingredients as well as possible
+    recipes"""
+
+    print("")
+    folder_path = str(input("Please insert the file path of your folder containing all the pictures:  "))
+    list_of_image_paths = googlevision.scanFolderforPictures(folder_path)
+
+    # list of recognized ingredients
+    recognized_ingredients = []
+
+    for image_path in list_of_image_paths:
+        recognized_ingredients.append(googlevision.identifyNewIngredient(image_path))
+
+    print("")
+    print("Your ingredients so far are:")
+    print(recognized_ingredients)
+    print("")
+
+    spoonacular.getRecipesByIngredient(recognized_ingredients)
 
 
 if __name__ == "__main__":
     """starts the program"""
 
-    isFinished = False
+    startProgram()
 
-    while isFinished != True:
-        folder_path = str(input("Please insert the file path of your folder containing all the pictures"))
-        list_of_image_paths = scanFolderforPictures(folder_path)
+    login_or_signup = str(input("Login/Sign up (1/2): "))
+    login_status = False
 
-        # list of recognized ingredients
-        recognized_ingredients = []
+    while login_status is False:
+        if login_or_signup == "1":
+            login()
+            login_status = True
+        elif login_or_signup == "2":
+            signUp()
+            login_status = True
+        else:
+            print("")
+            print("Please enter either 1 or 2")
+            login_or_signup = str(input("Login/Sign up (1/2): "))
 
-        for image_path in list_of_image_paths:
-            recognized_ingredients.append(identifyNewIngredient(image_path))
+    presentOptions()
 
-        print("")
-        print("Your ingredients so far are:")
-        print(recognized_ingredients)
-        print("")
+    is_finished = False
 
-        getRecipesByIngredient()
-        isFinished = True
-
-
-
-
+    while not is_finished:
+        is_finished = checkUserInput()
