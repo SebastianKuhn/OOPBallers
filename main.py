@@ -17,7 +17,7 @@ def welcome():
                                                              / /
             
             """)
-    print("Welcome to Yummly, you're tool to search recipes by snapping pictures of the ingredients the fridge!")
+    print("Welcome to Yummly, you're tool to search recipes by snapping pictures of the ingredients in the fridge!")
     print("")
     print("")
     print("Please choose to either log in if you already have an account or sign up if you do not.")
