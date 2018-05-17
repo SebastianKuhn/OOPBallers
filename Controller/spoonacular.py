@@ -22,11 +22,14 @@ def getRecipesByIngredient(ingredients):
         }
     )
 
-    print("")
-    print("You can choose between the following recipes:")
-    print("")
+    return response.json()
 
-    for recipe in response.json():
-        print(recipe.get("title"))
+def getRecipeInformation(recipe_id):
 
-    print("")
+    base_url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/{" + str(recipe_id) + "}/information"
+
+    response = requests.get(base_url)
+
+    return response.json()
+
+

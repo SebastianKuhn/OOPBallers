@@ -1,6 +1,6 @@
 class Ingredient(object):
 
-    def __init__(self, name, ingredient_id=None, amount=None, unit=None):
+    def __init__(self, name, ingredient_id, amount, unit):
         self.name = name
         self.ingredient_id = ingredient_id
         self.amount = amount
@@ -19,14 +19,3 @@ class Ingredient(object):
 
     def getUnit(self):
         return self.unit
-
-    #setter methods
-
-    def setId(self, ingredient_id):
-        self.ingredient_id = ingredient_id
-
-    def setAmount(self, amount):
-        self.amount = amount
-
-    def setUnit(self, unit):
-        self.unit = unit

@@ -1,4 +1,4 @@
-from Controller import googlevision, spoonacular
+from Controller import googlevision, spoonacular, json_parser
 import hashlib, uuid
 from Models.user import User
 
@@ -101,7 +101,8 @@ def checkUserInput():
     user_input = str(input("What would you like to do? "))
 
     if user_input == "1":
-        searchNewRecipes()
+        recipe = searchNewRecipes()
+        recipe.printRecipeInformations()
 
     elif user_input == "2":
         print("")
@@ -128,13 +129,23 @@ def searchNewRecipes():
     """asks the user for a folder file path, analyzes the pictures and prints the ingredients as well as possible
     recipes"""
 
-    print("")
-    folder_path = str(input("Please insert the file path of your folder containing all the pictures:  "))
-    list_of_image_paths = googlevision.scanFolderforPictures(folder_path)
+    list_of_image_paths = []
+
+    #checks if there are any results
+    while len(list_of_image_paths) == 0:
+        print("")
+        folder_path = str(input("Please insert the file path of your folder containing all the pictures:  "))
+        list_of_image_paths = googlevision.scanFolderforPictures(folder_path)
+
+        if len(list_of_image_paths) == 0:
+            print("")
+            print("Please enter a valid folder file path which includes pictures!")
+            print("")
 
     # list of recognized ingredients
     recognized_ingredients = []
 
+    #starts the googlevision api call for every picture and appends the recognized ingredient to the list
     for image_path in list_of_image_paths:
         recognized_ingredients.append(googlevision.identifyNewIngredient(image_path))
 
@@ -143,8 +154,45 @@ def searchNewRecipes():
     print(recognized_ingredients)
     print("")
 
-    spoonacular.getRecipesByIngredient(recognized_ingredients)
+    #starts the spoonacular get request and saves the response in recipes
+    recipes = spoonacular.getRecipesByIngredient(recognized_ingredients)
 
+    print("")
+    print("You can choose between the following recipes:")
+    print("")
+
+    number = 1
+
+    #prints the fetched recipe names
+    for recipe in recipes:
+        print(str(number) + ". " + recipe.get("title"))
+        number += 1
+
+    #checks whether the user input is an int and if it is not out of bounds
+    while True:
+        try:
+            print("")
+            chosen_recipe_nr = input("About which one would you like to know more? Just type in the number: ")
+            print("")
+
+            value = int(chosen_recipe_nr)
+
+            if value <= 0 or value > number-1: #subtracted 1 because the for-loop increases the number 1 too much
+                print("Oops, your number is not even listed!")
+            else:
+                break
+
+        except ValueError:
+            print("Please enter a valid number!")
+            print("")
+
+    chosen_recipe = json_parser.parseIdAndTitle(recipes, value)
+
+    recipe_information = spoonacular.getRecipeInformation(chosen_recipe.getId())
+
+    complete_recipe = json_parser.parseRemainingVariables(recipe_information, chosen_recipe)
+
+    return complete_recipe
 
 if __name__ == "__main__":
     """starts the program"""

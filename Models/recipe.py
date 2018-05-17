@@ -1,6 +1,8 @@
+from Models.ingredient import Ingredient
+
 class Recipe(object):
 
-    def __init__(self, recipe_id, title, ready_in_minutes, servings, vegetarian=None, source_url=None,
+    def __init__(self, recipe_id, title, ready_in_minutes=None, servings=None, vegetarian=None, source_url=None,
                  aggregate_likes=None, health_score=None, ingredients=[], instructions=[]):
 
         self.recipe_id = recipe_id
@@ -13,6 +15,21 @@ class Recipe(object):
         self.health_score = health_score
         self.ingredients = ingredients
         self.instructions = instructions
+
+    def printRecipeInformations(self):
+        print("Title: " + str(self.getTitle))
+        print("Ready in Minutes: " + str(self.getReadyInMinutes()))
+        print("Servings: " + str(self.getServings()))
+        print("Vegetarian: " + str(self.getVegetarian()))
+        print("Likes: " + str(self.getAggregateLikes()))
+        print("Health Score: " + str(self.getHealthScore()))
+        print("Ingredients: ")
+        for ingr in self.getIngredients():
+            print("- " + str(ingr.getName()))
+
+        print("Instructions: ")
+        for instr in self.getInstructions():
+            print(str(instr.getNumber()) + ": " + str(instr.getStep()))
 
     #getter methods
 
@@ -37,7 +54,7 @@ class Recipe(object):
     def getAggregateLikes(self):
         return self.aggregate_likes
 
-    def gethealthScore(self):
+    def getHealthScore(self):
         return self.health_score
 
     def getIngredients(self):
@@ -47,6 +64,11 @@ class Recipe(object):
         return self.instructions
 
     #setter methods
+    def setReadyInMinutes(self, ready_in_minutes):
+        self.ready_in_minutes = ready_in_minutes
+
+    def setServings(self, servings):
+        self.servings = servings
 
     def setVegetarian(self, vegetarian):
         self.vegetarian = vegetarian
@@ -57,7 +79,7 @@ class Recipe(object):
     def setAggregateLikes(self, aggregate_likes):
         self.aggregate_likes = aggregate_likes
 
-    def sethealthScore(self, health_score):
+    def setHealthScore(self, health_score):
         self.health_score = health_score
 
     def setIngredients(self, ingredients):
