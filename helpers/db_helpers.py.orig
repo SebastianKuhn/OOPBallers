@@ -4,13 +4,21 @@ from configparser import ConfigParser
 def getDbCon():
     # Configure settings
     parser = ConfigParser()
+<<<<<<< HEAD
     parser.read('config/config.ini')
-
+=======
+    parser.read("config/config.ini")
+>>>>>>> 2e583ea3337d8f6916dd696a623e413603fe3f16
 
     db_host = parser.get('db','host')
     db_user = parser.get('db','user')
     db_password = parser.get('db','password')
     db_name = parser.get('db','db')
     print(db_name)
-
+<<<<<<< HEAD
     return (MySQLdb.connect(db_host, db_user, db_password, db_name))
+=======
+    return (MySQLdb.connect(db_host, db_user, db_password, db_name))
+
+
+>>>>>>> 2e583ea3337d8f6916dd696a623e413603fe3f16
