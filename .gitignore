@@ -133,3 +133,5 @@ modules.xml
 *.idea
 .idea/misc.xml
 *.ipr
+
+**/.idea/
