@@ -82,7 +82,7 @@ def signUp():
 
     #determine whether the new user is vegetarian
     while True:
-        vegetarian_input = str(input("Are you a vegetarian? (Y/N)"))
+        vegetarian_input = str(input("Are you a vegetarian? (Y/N) "))
 
         if vegetarian_input.lower() == "y":
             vegetarian = True
@@ -126,7 +126,7 @@ def presentOptions():
     print("")
 
 
-def checkUserInput(current_user):
+def checkUserInput(cur_user):
     """checks the user input and matches it with the available options"""
 
     user_input = str(input("What would you like to do? "))
@@ -136,14 +136,14 @@ def checkUserInput(current_user):
         recipes = spoonacular.getRecipesByIngredient(recognized_ingredients)
         chosen_recipe = chooseRecipe(recipes)
         chosen_recipe.printRecipeInformations()
-
         print("")
+
         while True:
             save_recipe_input = str(input("Would you like to save the recipe? Y/N "))
 
             if save_recipe_input.lower() == "y":
                 recipe_helpers.newRecipe(chosen_recipe)
-                user_id = user_helpers.getCurrentUserId(current_user.username)
+                user_id = user_helpers.getCurrentUserId(cur_user.username)
                 recipe_helpers.addRecipetoUser(user_id, chosen_recipe.recipe_id)
                 break
             elif save_recipe_input.lower() == "n":
