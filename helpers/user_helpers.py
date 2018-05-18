@@ -17,8 +17,7 @@ def newUser(name, hashed_password, vegetarian):
 
 def getAllUsers():
     """
-    return all usernames from database
-    :return:
+    :return: all usernames that are currently in the database
     """
     db = helpers.getDbCon()
     cursor = db.cursor()
@@ -26,46 +25,98 @@ def getAllUsers():
     try:
         cursor.execute(getUsersQuery)
         info = cursor.fetchall() # print results
+        return info
     except Exception:
-        info = "Error: OOPs something went wrong!"
-    return info
+        return "Error: OOPs something went wrong!"
+    finally:
+        cursor.close()
+        db.close()
 
 
 def getAllUsernames():
     db = helpers.getDbCon()
     cursor = db.cursor()
     getAllUsernames = "SELECT username FROM users"
-    cursor.execute(getAllUsernames)
-    info = cursor.fetchall()
-    resp = []
-    for i in info:
-        resp.append(i[0])
-    return resp
+    try:
+        cursor.execute(getAllUsernames)
+        info = cursor.fetchall()
+        resp = []
+        for i in info:
+            resp.append(i[0])
+        return resp
+    except Exception:
+        return "Oh Snap, this didn't work!"
+    finally:
+        cursor.close()
+        db.close()
 
+def getUser(name):
+    db = helpers.getDbCon()
+    cursor = db.cursor()
+    getuser = "SELECT username FROM users WHERE username=%s"
+    try:
+        cursor.execute(getuser, (name,))
+        info = cursor.fetchone()
+        return info[0]
+    except Exception:
+        return None
+    finally:
+        cursor.close()
+        db.close()
 
 def getPassword(name):
     db = helpers.getDbCon()
     cursor = db.cursor()
     getpassword = "SELECT password FROM users WHERE username=%s"
-    # try:
-    cursor.execute(getpassword, (name,))
-    info = cursor.fetchone()
-    return info[0]
+    try:
+        cursor.execute(getpassword, (name,))
+        info = cursor.fetchone()
+        return info[0]
+    except Exception:
+        return "Oh Snap, this didn't work!"
+    finally:
+        cursor.close()
+        db.close()
 
 
 def deleteUser(name):
+    """
+    this function will delete a user from the database and say if the user has not been found in the database.
+    :param name:
+    :return:
+    """
     db = helpers.getDbCon()
     cursor = db.cursor()
     deleteUser = "DELETE FROM users WHERE username=%s"
-    #try
-    cursor.execute(deleteUser, (name,))
-    print("You deleted the user: " + name)
-    db.commit()
+    try:
+        info = cursor.execute(deleteUser, (name,))
+        db.commit()
+        if info == 0:
+            print("No such user found")
+        else:
+            print("You deleted the user: " + name)
+        return info
+    except Exception:
+        return "Oh Snap, this didn't work!"
+    finally:
+        cursor.close()
+        db.close()
 
 def getCurrentUserId(name):
+    """
+    This function is used to put the user with the corresponding recipes in table matching the latter two.
+    :param name:
+    :return:
+    """
     db = helpers.getDbCon()
     cursor = db.cursor()
     userIdQuery = "SELECT user_id FROM users WHERE username = %s"
-    cursor.execute(userIdQuery, (name,))
-    user_id = cursor.fetchone()
-    return user_id
+    try:
+        cursor.execute(userIdQuery, (name,))
+        user_id = cursor.fetchone()
+        return user_id
+    except Exception:
+        return "Oh Snap, this didn't work!"
+    finally:
+        cursor.close()
+        db.close()

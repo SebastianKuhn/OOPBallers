@@ -14,7 +14,7 @@ def newRecipe(recipe):
         db.commit()
 
     except Exception:
-        return "OOPs"
+        return "OOPs something went wrong"
     finally:
         cursor.close()
         db.close()

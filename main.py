@@ -118,9 +118,8 @@ def hash_password(password):
     input: password as a string
     :return hashed password
     """
-    #uuid is used to generate a random number
-    salt = uuid.uuid4().hex
-    return hashlib.sha256(salt.encode() + password.encode()).hexdigest() + ':' + salt
+
+    return hashlib.sha256(password.encode()).hexdigest()
 
 
 def presentOptions():
