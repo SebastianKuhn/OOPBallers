@@ -1,9 +1,13 @@
+<<<<<<< HEAD
 import hashlib
 import MySQLdb # pip install mysql-client or something else
 # Add new song into songs table
 # used by chart crawlers
 from configparser import ConfigParser
 import helpers.db_helpers as helpers
+=======
+db_helpers as helpers
+>>>>>>> 1c4f225d910d5e281fa4199dbe1bc73ef665510d
 from contextlib import closing
 
 def newUser(name, pw, vegetarian):
