@@ -4,9 +4,10 @@ from configparser import ConfigParser
 def getDbCon():
     # Configure settings
     parser = ConfigParser()
-    parser.read('../config/config.ini')
-
-
+    try:
+        parser.read('config/config.ini')
+    except Exception:
+        parser.read('../config/config.ini')
     db_host = parser.get('db','host')
     db_user = parser.get('db','user')
     db_password = parser.get('db','password')

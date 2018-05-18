@@ -1,52 +1,8 @@
 import helpers.db_helpers as helpers
 
-def newUser(name, hashedpw, vegetarian):
-    db = helpers.getDbCon()
-<<<<<<< HEAD
-    with closing(db.cursor()) as cursor:
-        userInsertQuery = "INSERT into users (username, password, vegetarian) VALUES (%s, %s, %s)"
-        # try:
-        cursor.execute(userInsertQuery, (name, hashedpw, vegetarian)) # to replace s% put in quotation markes
-    db.commit()
-
-||||||| merged common ancestors
-    with closing(db.cursor()) as cursor:
-        userInsertQuery = "INSERT into users (username, password, vegetarian) VALUES (%s, %s, %s)"
-        # try:
-        cursor.execute(userInsertQuery, (name, hashedpw, vegetarian)) # to replace s% put in quotation markes
-    db.commit()
-
-
-<<<<<<< HEAD
 def newUser(name, hashed_password, vegetarian):
     db = helpers.getDbCon()
     cursor = db.cursor()
-    userInsertQuery = "INSERT into users (username, password, vegetarian) VALUES (%s, %s, %s)"
-    # try:
-    cursor.execute(userInsertQuery, (name, hashed_password, vegetarian)) # to replace s% put in quotation markes
-    db.commit()
-    print("Successfully added " + name)
-
-
-||||||| merged common ancestors
-def newUser(name, hashed_password, vegetarian):
-    db = helpers.getDbCon()
-    cursor = db.cursor()
-    userInsertQuery = "INSERT into users (username, password, vegetarian) VALUES (%s, %s, %s)"
-    # try:
-    cursor.execute(userInsertQuery, (name, hashed_password, vegetarian)) # to replace s% put in quotation markes
-
-        cursor.execute(userInsertQuery, (name, pw, vegetarian)) # to replace s% put in quotation markes
-
-    db.commit()
-    print("Successfully added " + name)
-
-
-=======
->>>>>>> 1575d92be1abad2ca2e206819484ab4cb7881f5c
-=======
-    cursor = db.cursor()
-
     userInsertQuery = "INSERT into users (username, password, vegetarian) VALUES (%s, %s, %s)"
     try:
         cursor.execute(userInsertQuery, (name, hashedpw, vegetarian)) # to replace s% put in quotation markes
@@ -58,7 +14,6 @@ def newUser(name, hashed_password, vegetarian):
         cursor.close()
         db.close()
 
->>>>>>> a9a4cff5cb15ff4b1bb0a69e21ca791e7f2db79d
 def getAllUsers():
     db = helpers.getDbCon()
     cursor = db.cursor()
@@ -98,17 +53,6 @@ def deleteUser(name):
     #try
     cursor.execute(deleteuser, (name,))
     print("You deleted the user: " + name)
-<<<<<<< HEAD
-    db.commit()
-
-newUser("JL", "JL", True)
-||||||| merged common ancestors
     db.commit()
 
 
-
-
-# ------------ working functions --------------------------------------------
-=======
-    db.commit()
->>>>>>> a9a4cff5cb15ff4b1bb0a69e21ca791e7f2db79d
