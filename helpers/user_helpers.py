@@ -3,7 +3,8 @@ import MySQLdb # pip install mysql-client or something else
 # Add new song into songs table
 # used by chart crawlers
 from configparser import ConfigParser
-import db_helpers as helpers
+import helpers.db_helpers as helpers
+
 
 def newuser(userid, name, password, vegetarian):
     db = helpers.getDbCon()
@@ -33,7 +34,9 @@ def getPassword(user_name):
     return cursor.fetchone()
 
 
-
+def check_password(hashed_password, user_password):
+    password, salt = hashed_password.split(':')
+    return password == hashlib.sha256(salt.encode() + user_password.encode()).hexdigest()
 
 # ------------ working functions --------------------------------------------
 
