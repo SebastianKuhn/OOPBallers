@@ -4,14 +4,15 @@ import MySQLdb # pip install mysql-client or something else
 # used by chart crawlers
 from configparser import ConfigParser
 import db_helpers as helpers
+from contextlib import closing
 
-def newUser(userid, name, password, vegetarian):
+def newUser(name, password, vegetarian):
     db = helpers.getDbCon()
-    cursor = db.cursor()
-    hashedpw = password #not being hashed yet
-    userInsertQuery = "INSERT into users (user_id, username, password, vegetarian) VALUES (%s, %s, %s, %s)"
-    # try:
-    cursor.execute(userInsertQuery, (userid, name, hashedpw, vegetarian)) # to replace s% put in quotation markes
+    with closing(db.cursor()) as cursor:
+        hashedpw = password #not being hashed yet
+        userInsertQuery = "INSERT into users (username, password, vegetarian) VALUES (%s, %s, %s)"
+        # try:
+        cursor.execute(userInsertQuery, (name, hashedpw, vegetarian)) # to replace s% put in quotation markes
     db.commit()
     print("Successfully added " + name)
 
@@ -63,7 +64,7 @@ def deleteUser(name):
 
 # ------------ working functions --------------------------------------------
 
-#newUser(6, "Taylor", "123", 0)
+newUser("Max", "124", 0)
 #newuser(3, "Sebastian", "supersecurepassword", 1)
 #getAllUsers()
 #deleteUser("Sinan")
