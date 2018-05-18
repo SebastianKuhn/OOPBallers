@@ -6,13 +6,12 @@ from configparser import ConfigParser
 import helpers.db_helpers as helpers
 
 
-def newUser(userid, name, password, vegetarian):
+def newUser(name, hashed_password, vegetarian):
     db = helpers.getDbCon()
     cursor = db.cursor()
-    hashedpw = password #not being hashed yet
-    userInsertQuery = "INSERT into users (user_id, username, password, vegetarian) VALUES (%s, %s, %s, %s)"
+    userInsertQuery = "INSERT into users (username, password, vegetarian) VALUES (%s, %s, %s)"
     # try:
-    cursor.execute(userInsertQuery, (userid, name, hashedpw, vegetarian)) # to replace s% put in quotation markes
+    cursor.execute(userInsertQuery, (name, hashed_password, vegetarian)) # to replace s% put in quotation markes
     db.commit()
     print("Successfully added " + name)
 
@@ -26,7 +25,7 @@ def getAllUsers():
     print(info)
     return info
 
-def getAllUsersnames():
+def getAllUsernames():
     db = helpers.getDbCon()
     cursor = db.cursor()
     getAllUsernames = "SELECT username FROM users"
