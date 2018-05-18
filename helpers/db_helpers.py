@@ -4,7 +4,7 @@ from configparser import ConfigParser
 def getDbCon():
     # Configure settings
     parser = ConfigParser()
-    parser.read('config/config.ini')
+    parser.read('../config/config.ini')
 
 
     db_host = parser.get('db','host')
