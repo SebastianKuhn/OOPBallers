@@ -62,5 +62,5 @@ def addIngredienttoUser(user_id, ingredient_id):
     else:
         pass
 
-
+#create a class to test the functions
 coffee = Ingredient("coffee", 2, 4.5, "cups")
