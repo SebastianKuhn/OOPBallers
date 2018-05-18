@@ -121,7 +121,7 @@ def presentOptions():
     print("2. Search recipes by name")
     print("3. Get all your recipes")
     print("'info' to get information on all options")
-    print("'end' to end the program")
+    print("'exit' to end the program")
     print("")
 
 
@@ -131,15 +131,20 @@ def checkUserInput():
     user_input = str(input("What would you like to do? "))
 
     if user_input == "1":
-        recipe = searchNewRecipes()
-        recipe.printRecipeInformations()
+        recognized_ingredients = identifyIngredients()
+        recipes = spoonacular.getRecipesByIngredient(recognized_ingredients)
+        chosen_recipe = chooseRecipe(recipes)
+        chosen_recipe.printRecipeInformations()
         #saveRecipeInDatabase?
         print("")
-        presentOptions()
 
     elif user_input == "2":
         print("")
-        print("search Recipe by name")
+        search_query = str(input("What recipe would you like to search for? "))
+        recipes = spoonacular.getRecipeByName(search_query)
+        chosen_recipe = chooseRecipe(recipes)
+        chosen_recipe.printRecipeInformations()
+        # saveRecipeInDatabase?
         print("")
 
     elif user_input == "3":
@@ -150,7 +155,7 @@ def checkUserInput():
     elif user_input.lower() == "info":
         presentOptions()
 
-    elif user_input.lower() == "end":
+    elif user_input.lower() == "exit":
         return True
 
     else:
@@ -158,7 +163,10 @@ def checkUserInput():
         print("Please enter a valid number. If you need further information type: info")
         print("")
 
-def searchNewRecipes():
+    presentOptions()
+
+
+def identifyIngredients():
     """asks the user for a folder file path, analyzes the pictures and prints the ingredients as well as possible
     recipes"""
 
@@ -187,8 +195,19 @@ def searchNewRecipes():
     print(recognized_ingredients)
     print("")
 
-    #starts the spoonacular get request and saves the response in recipes
-    recipes = spoonacular.getRecipesByIngredient(recognized_ingredients)
+    return recognized_ingredients
+
+
+def chooseRecipe(response):
+
+    recipes = None
+
+    try:
+        if response.get("results") is not None:
+            recipes = response.get("results")
+
+    except:
+        recipes = response
 
     print("")
     print("You can choose between the following recipes:")
@@ -242,8 +261,7 @@ if __name__ == "__main__":
 
     while login_status is False:
         if login_or_signup == "1":
-            #current_user =
-            login()
+            current_user = login()
             login_status = True
         elif login_or_signup == "2":
             current_user = signUp()

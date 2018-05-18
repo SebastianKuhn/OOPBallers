@@ -1,5 +1,6 @@
 import helpers.db_helpers as helpers
 
+
 def newUser(name, hashed_password, vegetarian):
     db = helpers.getDbCon()
     cursor = db.cursor()
@@ -28,6 +29,7 @@ def getAllUsers():
     except Exception:
         info = "Error: OOPs something went wrong!"
     return info
+
 
 def getAllUsernames():
     db = helpers.getDbCon()

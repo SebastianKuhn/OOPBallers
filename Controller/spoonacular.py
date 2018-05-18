@@ -39,3 +39,19 @@ def getRecipeInformation(recipe_id):
     return response.json()
 
 
+def getRecipeByName(name):
+
+    base_url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?query=" + name
+
+    response = requests.get(
+        base_url,
+        headers={
+            "X-Mashape-Key": "PO4pY9yb8wmshcGIX33au66a9Jvdp1FpU0zjsnwB2BMrEKZ902",
+            "X-Mashape-Host": "spoonacular-recipe-food-nutrition-v1.p.mashape.com"
+        }
+    )
+
+    print(response.json())
+
+    return response.json()
+

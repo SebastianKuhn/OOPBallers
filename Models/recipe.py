@@ -25,12 +25,19 @@ class Recipe(object):
         print("Likes: " + str(self.aggregate_likes))
         print("Health Score: " + str(self.health_score))
         print("")
-        print("Ingredients: ")
-        for ingr in self.ingredients:
-            ingr.printInformation()
+
+        if len(self.ingredients) != 0:
+            print("Ingredients: ")
+            for ingr in self.ingredients:
+                ingr.printInformation()
+        else:
+            print("Unfortunately, there are no Ingredients for this recipe.")
 
         print("")
-        print("Instructions: ")
-        for instr in self.instructions:
-            instr.printInformation()
+        if len(self.instructions) != 0:
+            print("Instructions: ")
+            for instr in self.instructions:
+                instr.printInformation()
+        else:
+            print("Unfortunately, there are no Instructions for this recipe.")
 
