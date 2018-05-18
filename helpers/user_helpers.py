@@ -22,8 +22,20 @@ def getAllUsers():
     cursor = db.cursor()
     getUsersQuery = "SELECT * FROM users"
     cursor.execute(getUsersQuery)
-    print(cursor.fetchall()) # print results
-    return cursor.fetchall()
+    info = cursor.fetchall() # print results
+    print(info)
+    return info
+
+def getAllUsersnames():
+    db = helpers.getDbCon()
+    cursor = db.cursor()
+    getAllUsernames = "SELECT username FROM users"
+    cursor.execute(getAllUsernames)
+    info = cursor.fetchall()
+    resp = []
+    for i in info:
+        resp.append(i[0])
+    return resp
 
 
 def getPassword(name):
@@ -42,7 +54,7 @@ def deleteUser(name):
     cursor = db.cursor()
     deleteuser = "DELETE FROM users WHERE username=%s"
     #try
-    cursor.execute(deleteuser, (name))
+    cursor.execute(deleteuser, (name,))
     print("You deleted the user: " + name)
     db.commit()
 
@@ -53,12 +65,7 @@ def check_password(hashed_password, user_password):
 
 # ------------ working functions --------------------------------------------
 
-
 #newUser(6, "Taylor", "123", 0)
 #newuser(3, "Sebastian", "supersecurepassword", 1)
 #getAllUsers()
 #deleteUser("Sinan")
-
-
-#------------------ does not work idk why ----------------------------------
-#getPassword("Taylor")
