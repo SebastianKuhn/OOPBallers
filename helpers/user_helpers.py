@@ -15,17 +15,6 @@ def newUser(name, hashedpw, vegetarian):
     db.commit()
 
 
-def newUser(name, hashed_password, vegetarian):
-    db = helpers.getDbCon()
-    cursor = db.cursor()
-    userInsertQuery = "INSERT into users (username, password, vegetarian) VALUES (%s, %s, %s)"
-    # try:
-    cursor.execute(userInsertQuery, (name, hashed_password, vegetarian)) # to replace s% put in quotation markes
-
-    db.commit()
-    print("Successfully added " + name)
-
-
 def getAllUsers():
     db = helpers.getDbCon()
     cursor = db.cursor()

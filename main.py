@@ -61,13 +61,18 @@ def signUp():
         # check username against database using the database controller
         usernames = user_helpers.getAllUsernames()
 
+        username_exists = False
+
         for name in usernames:
+
             if username.lower() == name.lower():
                 print("")
-                raise ValueError("This username already exist, please login or choose another username.")
+                print("This username already exist, please login or choose another username.")
                 print("")
+                username_exists = True
 
-        break
+        if username_exists is False:
+            break
 
     print("")
     password = str(input("Please enter a password: "))
@@ -222,6 +227,7 @@ def searchNewRecipes():
     complete_recipe = json_parser.parseRemainingVariables(recipe_information, chosen_recipe)
 
     return complete_recipe
+
 
 if __name__ == "__main__":
     """starts the program"""
