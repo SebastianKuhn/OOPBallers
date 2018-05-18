@@ -1,7 +1,4 @@
-import hashlib
-import MySQLdb # pip install mysql-client or something else
-# Add new song into songs table
-# used by chart crawlers
+import MySQLdb
 from configparser import ConfigParser
 import helpers.db_helpers as helpers
 
@@ -56,15 +53,3 @@ def deleteUser(name):
     cursor.execute(deleteuser, (name,))
     print("You deleted the user: " + name)
     db.commit()
-
-
-def check_password(hashed_password, user_password):
-    password, salt = hashed_password.split(':')
-    return password == hashlib.sha256(salt.encode() + user_password.encode()).hexdigest()
-
-# ------------ working functions --------------------------------------------
-
-#newUser(6, "Taylor", "123", 0)
-#newuser(3, "Sebastian", "supersecurepassword", 1)
-#getAllUsers()
-#deleteUser("Sinan")

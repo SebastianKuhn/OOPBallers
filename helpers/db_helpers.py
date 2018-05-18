@@ -1,6 +1,4 @@
 import MySQLdb
-# Add new song into songs table
-# used by chart crawlers
 from configparser import ConfigParser
 
 def getDbCon():
@@ -14,5 +12,3 @@ def getDbCon():
     db_name = parser.get('db','db')
     print(db_name)
     return (MySQLdb.connect(db_host, db_user, db_password, db_name))
-
-getDbCon()
