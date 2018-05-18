@@ -17,74 +17,20 @@ class Recipe(object):
         self.instructions = instructions
 
     def printRecipeInformations(self):
-        print("Title: " + str(self.getTitle))
-        print("Ready in Minutes: " + str(self.getReadyInMinutes()))
-        print("Servings: " + str(self.getServings()))
-        print("Vegetarian: " + str(self.getVegetarian()))
-        print("Likes: " + str(self.getAggregateLikes()))
-        print("Health Score: " + str(self.getHealthScore()))
+        print("Title: " + str(self.title))
+        print("")
+        print("Ready in Minutes: " + str(self.ready_in_minutes))
+        print("Servings: " + str(self.servings))
+        print("Vegetarian: " + str(self.vegetarian))
+        print("Likes: " + str(self.aggregate_likes))
+        print("Health Score: " + str(self.health_score))
+        print("")
         print("Ingredients: ")
-        for ingr in self.getIngredients():
-            print("- " + str(ingr.getName()))
+        for ingr in self.ingredients:
+            ingr.printInformation()
 
+        print("")
         print("Instructions: ")
-        for instr in self.getInstructions():
-            print(str(instr.getNumber()) + ": " + str(instr.getStep()))
-
-    #getter methods
-
-    def getId(self):
-        return self.recipe_id
-
-    def getTitle(self):
-        return self.title
-
-    def getReadyInMinutes(self):
-        return self.ready_in_minutes
-
-    def getServings(self):
-        return self.servings
-
-    def getVegetarian(self):
-        return self.vegetarian
-
-    def getSourceUrl(self):
-        return self.source_url
-
-    def getAggregateLikes(self):
-        return self.aggregate_likes
-
-    def getHealthScore(self):
-        return self.health_score
-
-    def getIngredients(self):
-        return self.ingredients
-
-    def getInstructions(self):
-        return self.instructions
-
-    #setter methods
-    def setReadyInMinutes(self, ready_in_minutes):
-        self.ready_in_minutes = ready_in_minutes
-
-    def setServings(self, servings):
-        self.servings = servings
-
-    def setVegetarian(self, vegetarian):
-        self.vegetarian = vegetarian
-
-    def setSourceUrl(self, source_url):
-        self.source_url = source_url
-
-    def setAggregateLikes(self, aggregate_likes):
-        self.aggregate_likes = aggregate_likes
-
-    def setHealthScore(self, health_score):
-        self.health_score = health_score
-
-    def setIngredients(self, ingredients):
-        self.ingredients = ingredients
-
-    def setInstructions(self, instructions):
-        self.instructions = instructions
+        for instr in self.instructions:
+            instr.printInformation()
 

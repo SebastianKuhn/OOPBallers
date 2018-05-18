@@ -6,16 +6,5 @@ class Ingredient(object):
         self.amount = amount
         self.unit = unit
 
-    #getter methods
-
-    def getName(self):
-        return self.name
-
-    def getId(self):
-        return self.ingredient_id
-
-    def getAmount(self):
-        return self.amount
-
-    def getUnit(self):
-        return self.unit
+    def printInformation(self):
+        print(str(self.amount) + " " + str(self.unit) + " of " + str(self.name))
