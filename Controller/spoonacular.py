@@ -22,11 +22,20 @@ def getRecipesByIngredient(ingredients):
         }
     )
 
-    print("")
-    print("You can choose between the following recipes:")
-    print("")
+    return response.json()
 
-    for recipe in response.json():
-        print(recipe.get("title"))
+def getRecipeInformation(recipe_id):
 
-    print("")
+    base_url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/" + str(recipe_id) + "/information"
+
+    response = requests.get(
+        base_url,
+        headers={
+            "X-Mashape-Key": "PO4pY9yb8wmshcGIX33au66a9Jvdp1FpU0zjsnwB2BMrEKZ902",
+            "X-Mashape-Host": "spoonacular-recipe-food-nutrition-v1.p.mashape.com"
+        }
+    )
+
+    return response.json()
+
+

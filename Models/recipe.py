@@ -1,6 +1,8 @@
+from Models.ingredient import Ingredient
+
 class Recipe(object):
 
-    def __init__(self, recipe_id, title, ready_in_minutes, servings, vegetarian=None, source_url=None,
+    def __init__(self, recipe_id, title, ready_in_minutes=None, servings=None, vegetarian=None, source_url=None,
                  aggregate_likes=None, health_score=None, ingredients=[], instructions=[]):
 
         self.recipe_id = recipe_id
@@ -14,55 +16,21 @@ class Recipe(object):
         self.ingredients = ingredients
         self.instructions = instructions
 
-    #getter methods
+    def printRecipeInformations(self):
+        print("Title: " + str(self.title))
+        print("")
+        print("Ready in Minutes: " + str(self.ready_in_minutes))
+        print("Servings: " + str(self.servings))
+        print("Vegetarian: " + str(self.vegetarian))
+        print("Likes: " + str(self.aggregate_likes))
+        print("Health Score: " + str(self.health_score))
+        print("")
+        print("Ingredients: ")
+        for ingr in self.ingredients:
+            ingr.printInformation()
 
-    def getId(self):
-        return self.recipe_id
-
-    def getTitle(self):
-        return self.title
-
-    def getReadyInMinutes(self):
-        return self.ready_in_minutes
-
-    def getServings(self):
-        return self.servings
-
-    def getVegetarian(self):
-        return self.vegetarian
-
-    def getSourceUrl(self):
-        return self.source_url
-
-    def getAggregateLikes(self):
-        return self.aggregate_likes
-
-    def gethealthScore(self):
-        return self.health_score
-
-    def getIngredients(self):
-        return self.ingredients
-
-    def getInstructions(self):
-        return self.instructions
-
-    #setter methods
-
-    def setVegetarian(self, vegetarian):
-        self.vegetarian = vegetarian
-
-    def setSourceUrl(self, source_url):
-        self.source_url = source_url
-
-    def setAggregateLikes(self, aggregate_likes):
-        self.aggregate_likes = aggregate_likes
-
-    def sethealthScore(self, health_score):
-        self.health_score = health_score
-
-    def setIngredients(self, ingredients):
-        self.ingredients = ingredients
-
-    def setInstructions(self, instructions):
-        self.instructions = instructions
+        print("")
+        print("Instructions: ")
+        for instr in self.instructions:
+            instr.printInformation()
 
