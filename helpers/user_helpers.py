@@ -1,28 +1,33 @@
-import hashlib
-import MySQLdb # pip install mysql-client or something else
-# Add new song into songs table
-# used by chart crawlers
-from configparser import ConfigParser
 import helpers.db_helpers as helpers
-from contextlib import closing
 
 
-def newUser(name, hashedpw, vegetarian):
+def newUser(name, hashed_password, vegetarian):
     db = helpers.getDbCon()
-    with closing(db.cursor()) as cursor:
-        userInsertQuery = "INSERT into users (username, password, vegetarian) VALUES (%s, %s, %s)"
-        # try:
+    cursor = db.cursor()
+    userInsertQuery = "INSERT into users (username, password, vegetarian) VALUES (%s, %s, %s)"
+    try:
         cursor.execute(userInsertQuery, (name, hashedpw, vegetarian)) # to replace s% put in quotation markes
-    db.commit()
+        db.commit()
+    except Exception:
+        return 'Error: OOPs something went wrong!'
 
+    finally:
+        cursor.close()
+        db.close()
 
 def getAllUsers():
+    """
+    return all usernames from database
+    :return:
+    """
     db = helpers.getDbCon()
     cursor = db.cursor()
     getUsersQuery = "SELECT * FROM users"
-    cursor.execute(getUsersQuery)
-    info = cursor.fetchall() # print results
-    print(info)
+    try:
+        cursor.execute(getUsersQuery)
+        info = cursor.fetchall() # print results
+    except Exception:
+        info = "Error: OOPs something went wrong!"
     return info
 
 
@@ -57,8 +62,3 @@ def deleteUser(name):
     cursor.execute(deleteuser, (name,))
     print("You deleted the user: " + name)
     db.commit()
-
-
-
-
-# ------------ working functions --------------------------------------------

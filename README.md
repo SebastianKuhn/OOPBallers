@@ -7,6 +7,12 @@
 ### variable naming convention
 name = function variable
 username = database column name
+### getDbCon()
+For Julian the adress parser.read('../config/config.ini') works. 
+For Sebi and Thomas the adress parser.read('/config/config.ini') works.
+
+
+
 
 
 # Notes:
