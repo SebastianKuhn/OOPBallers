@@ -1,13 +1,15 @@
 <<<<<<< HEAD
+import db_helpers as helpers
+||||||| merged common ancestors
+db_helpers as helpers
+=======
 import hashlib
 import MySQLdb # pip install mysql-client or something else
 # Add new song into songs table
 # used by chart crawlers
 from configparser import ConfigParser
 import helpers.db_helpers as helpers
-=======
-db_helpers as helpers
->>>>>>> 1c4f225d910d5e281fa4199dbe1bc73ef665510d
+>>>>>>> 2e583ea3337d8f6916dd696a623e413603fe3f16
 from contextlib import closing
 
 def newUser(name, pw, vegetarian):
