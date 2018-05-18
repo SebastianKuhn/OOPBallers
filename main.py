@@ -115,6 +115,7 @@ def signUp():
 
 def hash_password(password):
     """
+    hash password using sha256
     input: password as a string
     :return hashed password
     """

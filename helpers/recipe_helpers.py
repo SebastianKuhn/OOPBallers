@@ -1,5 +1,3 @@
-import MySQLdb
-from configparser import ConfigParser
 from helpers import db_helpers
 
 def newRecipe(recipe):
