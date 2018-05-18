@@ -10,4 +10,3 @@ def newRecipe(re_id, re_title, re_readyinmin, re_servings, re_vegi, re_url, re_a
     cursor.execute(recipeInsertQuery, (re_id, re_title, re_readyinmin, re_servings, re_vegi, re_url, re_aggr, re_health_sc))
     db.commit()
     print("Successfully added the recipe " + re_title)
-
