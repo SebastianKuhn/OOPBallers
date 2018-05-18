@@ -6,7 +6,7 @@ def newUser(name, hashed_password, vegetarian):
     cursor = db.cursor()
     userInsertQuery = "INSERT into users (username, password, vegetarian) VALUES (%s, %s, %s)"
     try:
-        cursor.execute(userInsertQuery, (name, hashedpw, vegetarian)) # to replace s% put in quotation markes
+        cursor.execute(userInsertQuery, (name, hashed_password, vegetarian)) # to replace s% put in quotation markes
         db.commit()
     except Exception:
         return 'Error: OOPs something went wrong!'
