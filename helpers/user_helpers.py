@@ -1,4 +1,9 @@
-import db_helpers as helpers
+import hashlib
+import MySQLdb # pip install mysql-client or something else
+# Add new song into songs table
+# used by chart crawlers
+from configparser import ConfigParser
+import helpers.db_helpers as helpers
 from contextlib import closing
 
 def newUser(name, pw, vegetarian):
@@ -6,7 +11,20 @@ def newUser(name, pw, vegetarian):
     with closing(db.cursor()) as cursor:
         userInsertQuery = "INSERT into users (username, password, vegetarian) VALUES (%s, %s, %s)"
         # try:
+<<<<<<< HEAD
+        cursor.execute(userInsertQuery, (name, hashedpw, vegetarian)) # to replace s% put in quotation markes
+    db.commit()
+
+
+def newUser(name, hashed_password, vegetarian):
+    db = helpers.getDbCon()
+    cursor = db.cursor()
+    userInsertQuery = "INSERT into users (username, password, vegetarian) VALUES (%s, %s, %s)"
+    # try:
+    cursor.execute(userInsertQuery, (name, hashed_password, vegetarian)) # to replace s% put in quotation markes
+=======
         cursor.execute(userInsertQuery, (name, pw, vegetarian)) # to replace s% put in quotation markes
+>>>>>>> 1c4f225d910d5e281fa4199dbe1bc73ef665510d
     db.commit()
     print("Successfully added " + name)
 
@@ -51,3 +69,12 @@ def deleteUser(name):
     cursor.execute(deleteuser, (name,))
     print("You deleted the user: " + name)
     db.commit()
+<<<<<<< HEAD
+
+
+
+
+
+# ------------ working functions --------------------------------------------
+=======
+>>>>>>> 1c4f225d910d5e281fa4199dbe1bc73ef665510d
