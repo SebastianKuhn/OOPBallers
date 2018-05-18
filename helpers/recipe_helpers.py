@@ -19,16 +19,33 @@ def newRecipe(recipe):
         cursor.close()
         db.close()
 
+
+def checkifRecipeAlreadyExists(user_id, recipe_id):
+    db = db_helpers.getDbCon()
+    cursor = db.cursor()
+    userRecipeCheckQuery = "SELECT * FROM user_recipes WHERE user_id = %s and recipe_id = %s;"
+    try:
+        cursor.execute(userRecipeCheckQuery, (user_id, recipe_id))  # to replace s% put in quotation marks
+        result = cursor.fetchall()
+        return result
+    except Exception:
+        return "Error: OOPs something went wrong!"
+
 def addRecipetoUser(user_id, recipe_id):
     db = db_helpers.getDbCon()
     cursor = db.cursor()
-    userRecipeInsertQuery = """INSERT into user_recipes (user_id, recipe_id) VALUES (%s, %s) ON DUPLICATE KEY UPDATE 
-                                      user_id = user_id, recipe_id = recipe_id;"""
-    try:
-        cursor.execute(userRecipeInsertQuery, (user_id, recipe_id))  # to replace s% put in quotation markes
-        db.commit()
-    except Exception:
-        return 'Error: unable to execute!'
-    finally:
-        cursor.close()
-        db.close()
+    userRecipeInsertQuery = """INSERT into user_recipes (user_id, recipe_id) VALUES (%s, %s)"""
+    check = checkifRecipeAlreadyExists(user_id, recipe_id)
+    if check == ():
+        try:
+            cursor.execute(userRecipeInsertQuery, (user_id, recipe_id))  # to replace s% put in quotation markes
+            db.commit()
+        except Exception:
+            return 'Error: unable to execute!'
+        finally:
+            cursor.close()
+            db.close()
+    else:
+        pass
+
+addRecipetoUser(34, 25)
