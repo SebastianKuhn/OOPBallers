@@ -3,10 +3,13 @@ from helpers import user_helpers
 from helpers import recipe_helpers
 import hashlib, uuid
 from Models.user import User
+from Models.recipe import Recipe
 
 
 def welcome():
-    """starts the program and welcomes the user"""
+    """
+    starts the program and welcomes the user
+    """
 
     print("""
 
@@ -28,7 +31,9 @@ def welcome():
 
 
 def login():
-    """prompts the user to login and checks the credentials in the database"""
+    """
+    prompts the user to login and checks the credentials in the database
+    """
     print("")
 
     while True:
@@ -51,11 +56,11 @@ def login():
 
 
 def signUp():
-    """prompts the user to define a username and a password. The username will be checked in the
-    database whether it is still available"""
+    """
+    prompts the user to define a username and a password. The username will be checked in the
+    database whether it is still available
+    """
     print("")
-
-    username_available = False
 
     while True:
         username = str(input("Please enter a username: "))
@@ -100,22 +105,28 @@ def signUp():
     user_helpers.newUser(username, hashed_password,vegetarian)
     user = User(username, hashed_password, vegetarian)
 
-
     print("")
     print("You successfully created an account!")
     print("")
 
+    #return user to use within the running program
     return user
 
 
 def hash_password(password):
-    # uuid is used to generate a random number
+    """
+    input: password as a string
+    :return hashed password
+    """
+    #uuid is used to generate a random number
     salt = uuid.uuid4().hex
     return hashlib.sha256(salt.encode() + password.encode()).hexdigest() + ':' + salt
 
 
 def presentOptions():
-    """presents all the available options"""
+    """
+    presents all the available options
+    """
 
     print("Please enter the number of one of the following options:")
     print("1. Search a new recipe using pictures")
@@ -127,11 +138,16 @@ def presentOptions():
 
 
 def checkUserInput(cur_user):
-    """checks the user input and matches it with the available options"""
+    """
+    checks the user input and matches it with the available options
+    input: current user as User-object
+    """
 
     user_input = str(input("What would you like to do? "))
 
+    #search new recipe by ingredients.
     if user_input == "1":
+        #saves all recognized ingredients, which are used to search for a recipe in the spoonacular controller
         recognized_ingredients = identifyIngredients()
         recipes = spoonacular.getRecipesByIngredient(recognized_ingredients)
         chosen_recipe = chooseRecipe(recipes)
@@ -182,8 +198,10 @@ def checkUserInput(cur_user):
 
 
 def identifyIngredients():
-    """asks the user for a folder file path, analyzes the pictures and prints the ingredients as well as possible
-    recipes"""
+    """
+    asks the user for a folder file path, analyzes the pictures and returns the ingredients
+    :return recognized ingredients as Ingredient-objects in a list
+    """
 
     list_of_image_paths = []
 
@@ -214,6 +232,12 @@ def identifyIngredients():
 
 
 def chooseRecipe(response):
+    """
+    takes the spoonacular response as input and asks the user which recipe he wants to choose.
+    input: spoonacular json-response
+    :return complete_recipe as Recipe object
+
+    """
 
     recipes = None
 

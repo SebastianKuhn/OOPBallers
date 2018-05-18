@@ -23,7 +23,7 @@ class Recipe(object):
         print("Servings: " + str(self.servings))
         print("Vegetarian: " + str(self.vegetarian))
         print("Likes: " + str(self.aggregate_likes))
-        print("Health Score: " + str(self.health_score))
+        print("Health Score: " + str(self.health_score) + "%")
         print("")
 
         if len(self.ingredients) != 0:

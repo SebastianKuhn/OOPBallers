@@ -31,7 +31,7 @@ def parseRemainingVariables(json_response, recipe):
     recipe.aggregate_likes = aggregate_likes
 
     health_score = json_response.get("healthScore")
-    recipe.health_score = health_score
+    recipe.health_score = int(health_score)
 
     ingredients = []
 
