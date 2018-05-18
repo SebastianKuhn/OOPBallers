@@ -16,19 +16,19 @@ def parseIdAndTitle(json_response, value):
 
 def parseRemainingVariables(json_response, recipe):
     ready_in_minutes = json_response.get("readyInMinutes")
-    recipe.ready_in_minutes = ready_in_minutes
+    recipe.ready_in_minutes = int(ready_in_minutes)
 
     servings = json_response.get("servings")
-    recipe.servings = servings
+    recipe.servings = int(servings)
 
     vegetarian = json_response.get("vegetarian")
-    recipe.vegetarian = vegetarian
+    recipe.vegetarian = bool(vegetarian)
 
     source_url = json_response.get("sourceUrl")
-    recipe.source_url = source_url
+    recipe.source_url = str(source_url)
 
     aggregate_likes = json_response.get("aggregateLikes")
-    recipe.aggregate_likes = aggregate_likes
+    recipe.aggregate_likes = int(aggregate_likes)
 
     health_score = json_response.get("healthScore")
     recipe.health_score = int(health_score)
