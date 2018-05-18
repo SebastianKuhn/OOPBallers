@@ -8,19 +8,25 @@ def newUser(name, hashed_password, vegetarian):
         cursor.execute(userInsertQuery, (name, hashedpw, vegetarian)) # to replace s% put in quotation markes
         db.commit()
     except Exception:
-        return 'Error: unable to execute!'
+        return 'Error: OOPs something went wrong!'
 
     finally:
         cursor.close()
         db.close()
 
 def getAllUsers():
+    """
+    return all usernames from database
+    :return:
+    """
     db = helpers.getDbCon()
     cursor = db.cursor()
     getUsersQuery = "SELECT * FROM users"
-    cursor.execute(getUsersQuery)
-    info = cursor.fetchall() # print results
-    print(info)
+    try:
+        cursor.execute(getUsersQuery)
+        info = cursor.fetchall() # print results
+    except Exception:
+        info = "Error: OOPs something went wrong!"
     return info
 
 def getAllUsernames():
@@ -54,5 +60,3 @@ def deleteUser(name):
     cursor.execute(deleteuser, (name,))
     print("You deleted the user: " + name)
     db.commit()
-
-

@@ -8,6 +8,7 @@ def welcome():
     """starts the program and welcomes the user"""
 
     print("""
+2
 
                  \ \  / /                                                  ___         ___
                   \ \/ /           _   __      _   __     //             //   ) )    //   ) )
