@@ -6,6 +6,7 @@ from configparser import ConfigParser
 import helpers.db_helpers as helpers
 from contextlib import closing
 
+
 def newUser(name, hashedpw, vegetarian):
     db = helpers.getDbCon()
     with closing(db.cursor()) as cursor:
@@ -23,6 +24,7 @@ def getAllUsers():
     info = cursor.fetchall() # print results
     print(info)
     return info
+
 
 def getAllUsernames():
     db = helpers.getDbCon()
