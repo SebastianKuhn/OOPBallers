@@ -1,5 +1,3 @@
-import MySQLdb
-from configparser import ConfigParser
 from helpers import db_helpers
 
 def newRecipe(recipe):
@@ -20,7 +18,7 @@ def newRecipe(recipe):
         db.close()
 
 
-def checkifRecipeAlreadyExists(user_id, recipe_id):
+def checkifUserRecipeAlreadyExists(user_id, recipe_id):
     db = db_helpers.getDbCon()
     cursor = db.cursor()
     userRecipeCheckQuery = "SELECT * FROM user_recipes WHERE user_id = %s and recipe_id = %s;"
@@ -35,7 +33,7 @@ def addRecipetoUser(user_id, recipe_id):
     db = db_helpers.getDbCon()
     cursor = db.cursor()
     userRecipeInsertQuery = """INSERT into user_recipes (user_id, recipe_id) VALUES (%s, %s)"""
-    check = checkifRecipeAlreadyExists(user_id, recipe_id)
+    check = checkifUserRecipeAlreadyExists(user_id, recipe_id)
     if check == ():
         try:
             cursor.execute(userRecipeInsertQuery, (user_id, recipe_id))  # to replace s% put in quotation markes
@@ -47,5 +45,3 @@ def addRecipetoUser(user_id, recipe_id):
             db.close()
     else:
         pass
-
-addRecipetoUser(34, 25)
