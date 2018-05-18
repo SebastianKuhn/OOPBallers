@@ -1,5 +1,6 @@
 from Controller import googlevision, spoonacular, json_parser
 from helpers import user_helpers
+from helpers import recipe_helpers
 import hashlib, uuid
 from Models.user import User
 
@@ -125,7 +126,7 @@ def presentOptions():
     print("")
 
 
-def checkUserInput():
+def checkUserInput(current_user):
     """checks the user input and matches it with the available options"""
 
     user_input = str(input("What would you like to do? "))
@@ -135,7 +136,21 @@ def checkUserInput():
         recipes = spoonacular.getRecipesByIngredient(recognized_ingredients)
         chosen_recipe = chooseRecipe(recipes)
         chosen_recipe.printRecipeInformations()
-        #saveRecipeInDatabase?
+
+        print("")
+        while True:
+            save_recipe_input = str(input("Would you like to save the recipe? Y/N "))
+
+            if save_recipe_input.lower() == "y":
+                recipe_helpers.newRecipe(chosen_recipe)
+                user_id = user_helpers.getCurrentUserId(current_user.username)
+                recipe_helpers.addRecipetoUser(user_id, chosen_recipe.recipe_id)
+                break
+            elif save_recipe_input.lower() == "n":
+                break
+            else:
+                print("Oops, please type Y or N.")
+
         print("")
 
     elif user_input == "2":
@@ -276,4 +291,4 @@ if __name__ == "__main__":
     is_finished = False
 
     while is_finished != True:
-        is_finished = checkUserInput()
+        is_finished = checkUserInput(current_user)

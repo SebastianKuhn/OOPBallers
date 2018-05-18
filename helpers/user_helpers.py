@@ -50,15 +50,22 @@ def getPassword(name):
     # try:
     cursor.execute(getpassword, (name,))
     info = cursor.fetchone()
-    print(info[0])
     return info[0]
 
 
 def deleteUser(name):
     db = helpers.getDbCon()
     cursor = db.cursor()
-    deleteuser = "DELETE FROM users WHERE username=%s"
+    deleteUser = "DELETE FROM users WHERE username=%s"
     #try
-    cursor.execute(deleteuser, (name,))
+    cursor.execute(deleteUser, (name,))
     print("You deleted the user: " + name)
     db.commit()
+
+def getCurrentUserId(name):
+    db = helpers.getDbCon()
+    cursor = db.cursor()
+    userIdQuery = "SELECT user_id FROM users WHERE username = %s"
+    cursor.execute(userIdQuery, (name,))
+    user_id = cursor.fetchone()
+    return user_id

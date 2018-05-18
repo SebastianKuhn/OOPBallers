@@ -1,15 +1,18 @@
 import MySQLdb
 from configparser import ConfigParser
-import db_helpers as helpers
+from helpers import db_helpers
 
-def newRecipe(re_id, re_title, re_readyinmin, re_servings, re_vegi, re_url, re_aggr, re_health_sc):
-    db = helpers.getDbCon()
+
+def newRecipe(recipe):
+    db = db_helpers.getDbCon()
     cursor = db.cursor()
     recipeInsertQuery = """INSERT IGNORE into recipes (recipe_id, title,
                             ready_in_minutes, servings, vegetarian, source_url, aggregate_likes, health_score)
                                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s);"""
     try:
-        cursor.execute(recipeInsertQuery, (re_id, re_title, re_readyinmin, re_servings, re_vegi, re_url, re_aggr, re_health_sc))
+        cursor.execute(recipeInsertQuery, (recipe.recipe_id_id, recipe.title, recipe.ready_in_minutes, recipe.servings,
+                                           recipe.vegetarian, recipe.source_url, recipe.aggregate_likes,
+                                           recipe.health_score))
         db.commit()
     except Exception:
         return "OOPs"
@@ -18,7 +21,7 @@ def newRecipe(re_id, re_title, re_readyinmin, re_servings, re_vegi, re_url, re_a
         db.close()
 
 def addRecipetoUser(user_id, recipe_id):
-    db = helpers.getDbCon()
+    db = db_helpers.getDbCon()
     cursor = db.cursor()
     userRecipeInsertQuery = """INSERT IGNORE into recipes (user_id, recipe_id)
                                     VALUES (%s, %s) 
