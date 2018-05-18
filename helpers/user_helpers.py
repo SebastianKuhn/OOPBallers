@@ -21,6 +21,33 @@ def newUser(name, hashedpw, vegetarian):
         db.close()
 
 
+<<<<<<< HEAD
+def newUser(name, hashed_password, vegetarian):
+    db = helpers.getDbCon()
+    cursor = db.cursor()
+    userInsertQuery = "INSERT into users (username, password, vegetarian) VALUES (%s, %s, %s)"
+    # try:
+    cursor.execute(userInsertQuery, (name, hashed_password, vegetarian)) # to replace s% put in quotation markes
+    db.commit()
+    print("Successfully added " + name)
+
+
+||||||| merged common ancestors
+def newUser(name, hashed_password, vegetarian):
+    db = helpers.getDbCon()
+    cursor = db.cursor()
+    userInsertQuery = "INSERT into users (username, password, vegetarian) VALUES (%s, %s, %s)"
+    # try:
+    cursor.execute(userInsertQuery, (name, hashed_password, vegetarian)) # to replace s% put in quotation markes
+
+        cursor.execute(userInsertQuery, (name, pw, vegetarian)) # to replace s% put in quotation markes
+
+    db.commit()
+    print("Successfully added " + name)
+
+
+=======
+>>>>>>> 1575d92be1abad2ca2e206819484ab4cb7881f5c
 def getAllUsers():
     db = helpers.getDbCon()
     cursor = db.cursor()
