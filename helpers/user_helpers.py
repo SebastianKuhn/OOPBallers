@@ -21,9 +21,6 @@ def newUser(name, hashed_password, vegetarian):
     userInsertQuery = "INSERT into users (username, password, vegetarian) VALUES (%s, %s, %s)"
     # try:
     cursor.execute(userInsertQuery, (name, hashed_password, vegetarian)) # to replace s% put in quotation markes
-
-        cursor.execute(userInsertQuery, (name, pw, vegetarian)) # to replace s% put in quotation markes
-
     db.commit()
     print("Successfully added " + name)
 
