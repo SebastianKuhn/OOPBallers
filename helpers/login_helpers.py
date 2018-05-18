@@ -1,5 +1,5 @@
 import helpers.user_helpers as helpers
-import hashlib, uuid
+import hashlib
 
 def hash_password(password):
     """

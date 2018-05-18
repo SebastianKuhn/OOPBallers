@@ -1,7 +1,7 @@
 from Controller import googlevision, spoonacular, json_parser
 from helpers import user_helpers
 from helpers import recipe_helpers
-import hashlib, uuid
+import hashlib
 from Models.user import User
 from Models.recipe import Recipe
 
@@ -118,7 +118,6 @@ def hash_password(password):
     input: password as a string
     :return hashed password
     """
-
     return hashlib.sha256(password.encode()).hexdigest()
 
 
