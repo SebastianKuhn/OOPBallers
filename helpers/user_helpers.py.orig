@@ -1,7 +1,4 @@
-import hashlib
-import MySQLdb # pip install mysql-client or something else
-# Add new song into songs table
-# used by chart crawlers
+import MySQLdb
 from configparser import ConfigParser
 <<<<<<< HEAD
 import db_helpers as helpers
