@@ -5,7 +5,7 @@ import MySQLdb # pip install mysql-client or something else
 from configparser import ConfigParser
 import db_helpers as helpers
 
-def newuser(userid, name, password, vegetarian):
+def newUser(userid, name, password, vegetarian):
     db = helpers.getDbCon()
     cursor = db.cursor()
     hashedpw = password #not being hashed yet
@@ -13,31 +13,57 @@ def newuser(userid, name, password, vegetarian):
     # try:
     cursor.execute(userInsertQuery, (userid, name, hashedpw, vegetarian)) # to replace s% put in quotation markes
     db.commit()
+    print("Successfully added " + name)
+
 
 def getAllUsers():
     db = helpers.getDbCon()
     cursor = db.cursor()
     getUsersQuery = "SELECT * FROM users"
     cursor.execute(getUsersQuery)
-    print(cursor.fetchall())
-    return cursor.fetchall()
+    info = cursor.fetchall() # print results
+    print(info)
+    return info
 
-#function does not work. asked Ruben
-def getPassword(user_name):
+def getAllUsersnames():
     db = helpers.getDbCon()
     cursor = db.cursor()
-    getpassword = "SELECT password FROM users WHERE username = %s"
+    getAllUsernames = "SELECT username FROM users"
+    cursor.execute(getAllUsernames)
+    info = cursor.fetchall()
+    resp = []
+    for i in info:
+        resp.append(i[0])
+    return resp
+
+
+def getPassword(name):
+    db = helpers.getDbCon()
+    cursor = db.cursor()
+    getpassword = "SELECT password FROM users WHERE username=%s"
     # try:
-    cursor.execute(getpassword, user_name)
-    print(cursor.fetchone())
-    return cursor.fetchone()
+    cursor.execute(getpassword, (name,))
+    info = cursor.fetchone()
+    print(info[0])
+    return info[0]
+
+
+def deleteUser(name):
+    db = helpers.getDbCon()
+    cursor = db.cursor()
+    deleteuser = "DELETE FROM users WHERE username=%s"
+    #try
+    cursor.execute(deleteuser, (name,))
+    print("You deleted the user: " + name)
+    db.commit()
+
 
 
 
 
 # ------------ working functions --------------------------------------------
 
-
-#newuser(1, "Julian", "newpassword", 0)
+#newUser(6, "Taylor", "123", 0)
 #newuser(3, "Sebastian", "supersecurepassword", 1)
 #getAllUsers()
+#deleteUser("Sinan")

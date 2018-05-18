@@ -103,6 +103,9 @@ def checkUserInput():
     if user_input == "1":
         recipe = searchNewRecipes()
         recipe.printRecipeInformations()
+        #saveRecipeInDatabase?
+        print("")
+        presentOptions()
 
     elif user_input == "2":
         print("")
@@ -188,7 +191,9 @@ def searchNewRecipes():
 
     chosen_recipe = json_parser.parseIdAndTitle(recipes, value)
 
-    recipe_information = spoonacular.getRecipeInformation(chosen_recipe.getId())
+    recipe_information = spoonacular.getRecipeInformation(chosen_recipe.recipe_id)
+
+    print(recipe_information)
 
     complete_recipe = json_parser.parseRemainingVariables(recipe_information, chosen_recipe)
 

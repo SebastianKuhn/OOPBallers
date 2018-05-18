@@ -1,9 +1,7 @@
 class Equipment(object):
 
-    def __init__(self, namet):
+    def __init__(self, name):
         self.name = name
 
-    #getter methods
-
-    def getName(self):
-        return self.name
+    def printInformation(self):
+        print(str(self.name))
