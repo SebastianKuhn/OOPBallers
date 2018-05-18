@@ -12,3 +12,5 @@ def getDbCon():
     db_name = parser.get('db','db')
     print(db_name)
     return (MySQLdb.connect(db_host, db_user, db_password, db_name))
+
+
