@@ -4,15 +4,21 @@ import MySQLdb # pip install mysql-client or something else
 # used by chart crawlers
 from configparser import ConfigParser
 import helpers.db_helpers as helpers
-from contextlib import closing
 
 def newUser(name, hashedpw, vegetarian):
     db = helpers.getDbCon()
-    with closing(db.cursor()) as cursor:
-        userInsertQuery = "INSERT into users (username, password, vegetarian) VALUES (%s, %s, %s)"
-        # try:
+    cursor = db.cursor()
+
+    userInsertQuery = "INSERT into users (username, password, vegetarian) VALUES (%s, %s, %s)"
+    try:
         cursor.execute(userInsertQuery, (name, hashedpw, vegetarian)) # to replace s% put in quotation markes
-    db.commit()
+        db.commit()
+    except Exception:
+        return 'Error: unable to execute!'
+
+    finally:
+        cursor.close()
+        db.close()
 
 
 def getAllUsers():
