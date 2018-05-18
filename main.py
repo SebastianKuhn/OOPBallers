@@ -1,4 +1,5 @@
 from Controller import googlevision, spoonacular, json_parser
+from helpers import user_helpers
 import hashlib, uuid
 from Models.user import User
 
@@ -28,16 +29,16 @@ def login():
     """prompts the user to login and checks the credentials in the database"""
     print("")
 
-    correct_login = False
-
-    while correct_login != True:
-        username = input("username: ")
-        password = input("password: ")
+    while True:
+        username = str(input("username: "))
+        password = str(input("password: "))
 
         # check username and password in the database using the database controller -> if clause following
         # check password => hash function in the database controller
 
-        correct_login = True
+
+
+        break
 
 
     print("")
@@ -54,20 +55,43 @@ def signUp():
 
     username_available = False
 
-    while username_available != True:
-        username = input("Please enter a username: ")
+    while True:
+        username = str(input("Please enter a username: "))
 
         # check username against database using the database controller
+        usernames = user_helpers.getAllUsernames()
 
+        for name in usernames:
+            if username.lower() == name.lower():
+                print("")
+                raise ValueError("This username already exist, please login or choose another username.")
+                print("")
 
+        break
 
-    password = input("Please enter a passwort: ")
+    print("")
+    password = str(input("Please enter a password: "))
+    print("")
+
+    #determine whether the new user is vegetarian
+    while True:
+        vegetarian_input = str(input("Are you a vegetarian? (Y/N)"))
+
+        if vegetarian_input.lower() == "y":
+            vegetarian = True
+            break
+        elif vegetarian_input.lower() == "n":
+            vegetarian = False
+            break
+        else:
+            vegetarian_input = print("Please enter Y or N.")
 
     #hash password
     hashed_password = hash_password(password)
 
     #create User
-    user = User(username, hashed_password)
+    user_helpers.newUser(username, hashed_password,vegetarian)
+    user = User(username, hashed_password, vegetarian)
 
 
     print("")
@@ -117,10 +141,10 @@ def checkUserInput():
         print("get your recipes")
         print("")
 
-    elif user_input == "info":
+    elif user_input.lower() == "info":
         presentOptions()
 
-    elif user_input == "end":
+    elif user_input.lower() == "end":
         return True
 
     else:

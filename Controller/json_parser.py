@@ -59,7 +59,7 @@ def parseRemainingVariables(json_response, recipe):
 
                 for json_ingred in instr.get("ingredients"):
                     for saved_ingred in ingredients:
-                        if saved_ingred.name == json_ingred.get("name"):
+                        if saved_ingred.name.lower() == json_ingred.get("name").lower():
                             ingred.append(saved_ingred)
 
                 equipments = []

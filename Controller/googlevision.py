@@ -78,5 +78,5 @@ def compareWithCommonTerms(ingredient):
     """loops the input ingredient's description through all common terms and returns true if one of the is equal"""
 
     for term in common_terms:
-        if ingredient.get("description") == term:
+        if ingredient.get("description").lower() == term:
             return True
