@@ -1,5 +1,5 @@
 from Controller import googlevision, spoonacular, json_parser
-from helpers import user_helpers
+from helpers.user_helpers import getAllUsernames
 import hashlib, uuid
 from Models.user import User
 
@@ -59,7 +59,7 @@ def signUp():
         username = str(input("Please enter a username: "))
 
         # check username against database using the database controller
-        usernames = user_helpers.getAllUsernames()
+        usernames = getAllUsernames()
 
         for name in usernames:
             if username.lower() == name.lower():
