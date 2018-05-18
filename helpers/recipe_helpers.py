@@ -23,11 +23,8 @@ def newRecipe(recipe):
 def addRecipetoUser(user_id, recipe_id):
     db = db_helpers.getDbCon()
     cursor = db.cursor()
-    userRecipeInsertQuery = """INSERT IGNORE into recipes (user_id, recipe_id)
-                                    VALUES (%s, %s) 
-                                    WHERE NOT EXISTS (
-                                        SELECT * FROM user_recipes WHERE recipe_id = "recipe_id AND user_id = user_id) 
-                                        LIMIT 1;"""
+    userRecipeInsertQuery = """INSERT into user_recipes (user_id, recipe_id) VALUES (%s, %s) ON DUPLICATE KEY UPDATE 
+                                      user_id = user_id, recipe_id = recipe_id;"""
     try:
         cursor.execute(userRecipeInsertQuery, (user_id, recipe_id))  # to replace s% put in quotation markes
         db.commit()
