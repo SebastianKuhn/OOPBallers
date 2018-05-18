@@ -25,7 +25,7 @@ def getAllUsers():
     print(info)
     return info
 
-def getAllUsersnames():
+def getAllUsernames():
     db = helpers.getDbCon()
     cursor = db.cursor()
     getAllUsernames = "SELECT username FROM users"
@@ -56,14 +56,3 @@ def deleteUser(name):
     cursor.execute(deleteuser, (name,))
     print("You deleted the user: " + name)
     db.commit()
-
-
-
-
-
-# ------------ working functions --------------------------------------------
-
-#newUser(6, "Taylor", "123", 0)
-#newuser(3, "Sebastian", "supersecurepassword", 1)
-#getAllUsers()
-#deleteUser("Sinan")
