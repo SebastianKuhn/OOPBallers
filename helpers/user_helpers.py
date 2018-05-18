@@ -1,4 +1,4 @@
-db_helpers as helpers
+import db_helpers as helpers
 from contextlib import closing
 
 def newUser(name, pw, vegetarian):
