@@ -41,3 +41,4 @@ class Recipe(object):
         else:
             print("Unfortunately, there are no Instructions for this recipe.")
 
+        print("")

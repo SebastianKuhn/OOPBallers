@@ -78,6 +78,20 @@ def getPassword(name):
         cursor.close()
         db.close()
 
+def getVegetarianStatus(name):
+    db = helpers.getDbCon()
+    cursor = db.cursor()
+    getVegetarian = "SELECT vegetarian FROM users WHERE username=%s"
+    try:
+        cursor.execute(getVegetarian, (name,))
+        info = cursor.fetchone()
+        return info[0]
+    except Exception:
+        return "Oh Snap, this didn't work!"
+    finally:
+        cursor.close()
+        db.close()
+
 
 def deleteUser(name):
     """

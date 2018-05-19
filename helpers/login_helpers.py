@@ -1,29 +1,59 @@
 import helpers.user_helpers as helpers
+from Models.user import User
 import hashlib
 
 def hash_password(password):
     """
+    This function hashes a password.
+
     input: password as a string
     :return hashed password
     """
     return hashlib.sha256(password.encode()).hexdigest()
 
+
 def login():
-    for i in range(0,3):
-        name = str(input("Enter your username  "))
-        if helpers.getUser(name) != None:
-            break
-        else:
-            print("Something went wrong. Please try again.")
+    """
+    This function asks the user for a username and a password which both will be checked in the database in order
+    to login.
+    input: -
+    :return -
+    """
 
-    for i in range(0,3):
-        password = str(input("Enter your password  "))
-        if helpers.getPassword(name) == hash_password(password):
-            print("You have successfully logged in.")
-            break
+    while True:
 
-        else:
-            print("Wrong Password, please try again.")
-            continue
+        while True:
+            name = str(input("Enter your username  "))
 
+            username = helpers.getUser(name)
 
+            if username is not None:
+                break
+            else:
+                print("Something went wrong. Please try again.")
+                print("")
+
+        while True:
+            password = str(input("Enter your password  "))
+            hashed_pw = helpers.getPassword(name)
+            if hashed_pw == hash_password(password):
+                print("You have successfully logged in.")
+                print("")
+                break
+            else:
+                print("Wrong Password, please try again.")
+                print("")
+                continue
+
+        break
+
+    #gets the vegetarian status of the user
+    if helpers.getVegetarianStatus(name) == 0:
+        vegetarian = False
+    else:
+        vegetarian = True
+
+    #creates a user which will be returned
+    user = User(name, hashed_pw, vegetarian)
+
+    return user

@@ -22,8 +22,6 @@ def getRecipesByIngredient(ingredients):
         }
     )
 
-    print(response.json())
-
     return response.json()
 
 def getRecipeInformation(recipe_id):

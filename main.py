@@ -1,6 +1,7 @@
 from Controller import googlevision, spoonacular, json_parser
 from helpers import user_helpers
 from helpers import recipe_helpers
+from helpers import login_helpers
 import hashlib
 from Models.user import User
 from Models.recipe import Recipe
@@ -36,23 +37,9 @@ def login():
     """
     print("")
 
-    while True:
-        username = str(input("username: "))
-        password = str(input("password: "))
+    user = login_helpers.login()
 
-        # check username and password in the database using the database controller -> if clause following
-        # check password => hash function in the database controller
-
-
-
-        break
-
-
-    print("")
-    print("You successfully logged in")
-    print("")
-
-    #return user
+    return user
 
 
 def signUp():
@@ -148,33 +135,28 @@ def checkUserInput(cur_user):
     if user_input == "1":
         #saves all recognized ingredients, which are used to search for a recipe in the spoonacular controller
         recognized_ingredients = identifyIngredients()
+        #fetches 5 possible recipes
         recipes = spoonacular.getRecipesByIngredient(recognized_ingredients)
+        #lets the user decide which recipe he wants
         chosen_recipe = chooseRecipe(recipes)
+        #prints the recipe's information
         chosen_recipe.printRecipeInformations()
-        print("")
 
-        while True:
-            save_recipe_input = str(input("Would you like to save the recipe? Y/N "))
-
-            if save_recipe_input.lower() == "y":
-                recipe_helpers.newRecipe(chosen_recipe)
-                user_id = user_helpers.getCurrentUserId(cur_user.username)
-                recipe_helpers.addRecipetoUser(user_id, chosen_recipe.recipe_id)
-                break
-            elif save_recipe_input.lower() == "n":
-                break
-            else:
-                print("Oops, please type Y or N.")
-
-        print("")
+        #lets the user decide wheter he wants to save the recipe in his account
+        saveRecipe(chosen_recipe, cur_user)
 
     elif user_input == "2":
         print("")
+        #asks for the search query
         search_query = str(input("What recipe would you like to search for? "))
+        #saves the api response
         recipes = spoonacular.getRecipeByName(search_query)
+        #lets the user decide which recipe he wants
         chosen_recipe = chooseRecipe(recipes)
+        #prints the recipe's information
         chosen_recipe.printRecipeInformations()
-        # saveRecipeInDatabase?
+        #lets the user decide wheter he wants to save the recipe in his account
+        saveRecipe(chosen_recipe, cur_user)
         print("")
 
     elif user_input == "3":
@@ -195,10 +177,25 @@ def checkUserInput(cur_user):
 
     presentOptions()
 
+def saveRecipe(chosen_recipe, cur_user):
+    while True:
+        save_recipe_input = str(input("Would you like to save the recipe? Y/N "))
+
+        if save_recipe_input.lower() == "y":
+            recipe_helpers.newRecipe(chosen_recipe)
+            user_id = user_helpers.getCurrentUserId(cur_user.username)[0]
+            recipe_helpers.addRecipetoUser(user_id, chosen_recipe)
+            break
+        elif save_recipe_input.lower() == "n":
+            break
+        else:
+            print("Oops, please type Y or N.")
+
+    print("")
 
 def identifyIngredients():
     """
-    asks the user for a folder file path, analyzes the pictures and returns the ingredients
+    asks the user for a folder file path, analyzes the pictures and returns the ingredients in a list
     :return recognized ingredients as Ingredient-objects in a list
     """
 
@@ -224,7 +221,13 @@ def identifyIngredients():
 
     print("")
     print("Your ingredients so far are:")
-    print(recognized_ingredients)
+
+    number = 1
+
+    for ingredient in recognized_ingredients:
+        print(str(number) + ". " + ingredient)
+        number += 1
+
     print("")
 
     return recognized_ingredients
@@ -240,6 +243,8 @@ def chooseRecipe(response):
 
     recipes = None
 
+    #try to get "results" from the response in case the getRecipeByName function was triggered. Otherwise it is
+    #the getRecipeByIngredients resposne which has no "results" key
     try:
         if response.get("results") is not None:
             recipes = response.get("results")
@@ -258,7 +263,7 @@ def chooseRecipe(response):
         print(str(number) + ". " + recipe.get("title"))
         number += 1
 
-    #checks whether the user input is an int and if it is not out of bounds
+    #checks whether the user input is an int and wheter it is in bounds
     while True:
         try:
             print("")
@@ -276,12 +281,13 @@ def chooseRecipe(response):
             print("Please enter a valid number!")
             print("")
 
+    #parses the first response to return a recipe object with id and title
     chosen_recipe = json_parser.parseIdAndTitle(recipes, value)
 
+    #api call to get the full recipe information
     recipe_information = spoonacular.getRecipeInformation(chosen_recipe.recipe_id)
 
-    print(recipe_information)
-
+    #parses the full recipe information to add the remaining variables like likes, ingredients, instructions etc.
     complete_recipe = json_parser.parseRemainingVariables(recipe_information, chosen_recipe)
 
     return complete_recipe
@@ -307,6 +313,7 @@ if __name__ == "__main__":
         else:
             print("")
             print("Please enter either 1 or 2")
+            print("")
             login_or_signup = str(input("Login/Sign up (1/2): "))
 
     presentOptions()
