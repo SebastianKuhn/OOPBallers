@@ -5,7 +5,7 @@ from helpers import db_helpers
 
 # for ingredients table
 def newIngredient(recipe):
-       """
+    """
     Takes a recipe and puts all ingredients used into the equipment table of the database
     :param recipe: object of the class recipe
     :return: nothing
@@ -46,7 +46,7 @@ def addIngredienttoUser(user_id, recipe):
     db = db_helpers.getDbCon()
     cursor = db.cursor()
     userIngredientInsertQuery = """INSERT into user_recipes (user_id, ingredient_id) VALUES (%s, %s)"""
-    
+
     try:
         for ingr in recipe.ingredients:
             cursor.execute(userIngredientInsertQuery, (user_id, ingr.ingredient_id))  # to replace s% put in quotation markes

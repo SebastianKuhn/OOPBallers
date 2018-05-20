@@ -2,7 +2,7 @@
 This file serves as "master"-helpers file and contains the functions that are executed in the frontend to either add a
 Recipe to the database or save a new recipe to the user's account.
 """
-from helpers import equipment_helpers, instruction_helpers, ingredient_helpers, recipe_helpers, db_helpers
+from helpers import equipment_helpers, instruction_helpers, ingredient_helpers, recipe_helpers
 
 def master_addRecipe(recipe):
     """
@@ -14,7 +14,7 @@ def master_addRecipe(recipe):
     """
     check = recipe_helpers.checkifRecipeAlreadyExists(recipe)
 
-    #these functions work with INSERT IGNORE and thus don't need to be in the conditional.
+    # these functions work with INSERT IGNORE and thus don't need to be in the conditional.
     recipe_helpers.newRecipe(recipe)
     ingredient_helpers.newIngredient(recipe)
     equipment_helpers.newEquipment(recipe)

@@ -2,6 +2,7 @@ from Controller import googlevision, spoonacular, json_parser
 from helpers import user_helpers
 from helpers import recipe_helpers
 from helpers import login_helpers
+from helpers import master_helpers
 import hashlib
 from Models.user import User
 from Models.recipe import Recipe
@@ -182,9 +183,9 @@ def saveRecipe(chosen_recipe, cur_user):
         save_recipe_input = str(input("Would you like to save the recipe? Y/N "))
 
         if save_recipe_input.lower() == "y":
-            recipe_helpers.newRecipe(chosen_recipe)
+            master_helpers.master_addRecipe(chosen_recipe)
             user_id = user_helpers.getCurrentUserId(cur_user.username)[0]
-            recipe_helpers.addRecipetoUser(user_id, chosen_recipe)
+            master_helpers.master_addRecipetoUser(user_id, chosen_recipe)
             break
         elif save_recipe_input.lower() == "n":
             break

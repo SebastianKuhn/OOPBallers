@@ -4,7 +4,7 @@ def newEquipment(recipe):
     """
     Takes a recipe and puts all equipments used into the equipment table of the database
     :param recipe: object of the class recipe
-    :return: nothing
+    :return: adds data to the database
     """
     db = db_helpers.getDbCon()
     cursor = db.cursor()
@@ -16,6 +16,27 @@ def newEquipment(recipe):
         db.commit()
     except Exception:
         return "OOPs"
+    finally:
+        cursor.close()
+        db.close()
+
+
+def addEquipmenttoRecipe(recipe):
+    """
+    Takes a recipe and puts all equipments used into the recipe_equipment table of the database
+    :param recipe: object of the class recipe
+    :return: adds data to the database
+    """
+    db = db_helpers.getDbCon()
+    cursor = db.cursor()
+    recipeEquipmentInsertQuery = """INSERT into recipe_equipment (recip_id, equipment_id) VALUES (%s, %s)"""
+    try:
+        for instr in recipe.instructions:
+            for equip in instr.equipments:
+                cursor.execute(recipeEquipmentInsertQuery, (recipe.recipe_id, equip.equipment_id))  # to replace s% put in quotation markes
+        db.commit()
+    except Exception:
+        return 'Error: unable to execute!'
     finally:
         cursor.close()
         db.close()
@@ -36,18 +57,3 @@ def addEquipmenttoUser(user_id, recipe):
         cursor.close()
         db.close()
 
-
-def addEquipmenttoRecipe(recipe):
-    db = db_helpers.getDbCon()
-    cursor = db.cursor()
-    recipeEquipmentInsertQuery = """INSERT into recipe_equipment (recip_id, equipment_id) VALUES (%s, %s)"""
-    try:
-        for instr in recipe.instructions:
-            for equip in instr.equipments:
-                cursor.execute(recipeEquipmentInsertQuery, (recipe.recipe_id, equip.equipment_id))  # to replace s% put in quotation markes
-        db.commit()
-    except Exception:
-        return 'Error: unable to execute!'
-    finally:
-        cursor.close()
-        db.close()
