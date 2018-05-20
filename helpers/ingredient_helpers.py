@@ -2,6 +2,10 @@
 In this file all the functions to add the ingredients from the API response to the database are saved.
 """
 from helpers import db_helpers
+from Models.recipe import Recipe
+from Models.ingredient import Ingredient
+from Models.instruction import Instruction
+from Models.equipment import Equipment
 
 # for ingredients table
 def newIngredient(recipe):
@@ -45,7 +49,7 @@ def addIngredienttoRecipe(recipe):
 def addIngredienttoUser(user_id, recipe):
     db = db_helpers.getDbCon()
     cursor = db.cursor()
-    userIngredientInsertQuery = """INSERT into user_recipes (user_id, ingredient_id) VALUES (%s, %s)"""
+    userIngredientInsertQuery = """INSERT into user_ingredients (user_id, ingredient_id) VALUES (%s, %s)"""
 
     try:
         for ingr in recipe.ingredients:
@@ -57,3 +61,26 @@ def addIngredienttoUser(user_id, recipe):
         cursor.close()
         db.close()
 
+if __name__ == "__main__":
+
+    equipments = []
+    werkzeug1 = Equipment("Pfanne", 323)
+    werkzeug2 = Equipment("Messer", 1234)
+    equipments.append(werkzeug1)
+    equipments.append(werkzeug2)
+
+    ingredients =[]
+    Zutat1 = Ingredient("Pfeffer", 20, 300.6, "gram")
+    Zutat2 = Ingredient("Knoblauch", 324, 2, "Zehen")
+    print(Zutat2.ingredient_id)
+    ingredients.append(Zutat1)
+    ingredients.append(Zutat2)
+    print(ingredients[0].ingredient_id)
+    Beschreibung = Instruction(1, "hallo", equipments, ingredients)
+
+
+    rezept = Recipe(50, "test", 20, 5, True, "www.url.ch", 323, 66, ingredients,Beschreibung)
+    print(rezept.ingredients[0].ingredient_id)
+    print(type(rezept.ingredients[0].ingredient_id))
+    print(type(rezept.ingredients))
+    print(len(rezept.ingredients))
