@@ -5,6 +5,11 @@ from helpers import db_helpers
 
 # for ingredients table
 def newIngredient(recipe):
+       """
+    Takes a recipe and puts all ingredients used into the equipment table of the database
+    :param recipe: object of the class recipe
+    :return: nothing
+    """
     db = db_helpers.getDbCon()
     cursor = db.cursor()
     ingredientInsertQuery = "INSERT IGNORE into ingredients (ingredient_id, name) VALUES (%s, %s);"
