@@ -40,11 +40,13 @@ def checkifUserRecipeAlreadyExists(user_id, recipe_id):
         return result
     except Exception:
         return "Error: OOPs something went wrong!"
+    finally:
+        cursor.close()
+        db.close()
 
 def addRecipetoUser(user_id, recipe):
     """
-    This function is used to add recipes to the personal user accounts. It uses the function
-    checkifUserRecipeAlreadyExists() to check if the recipe is already saved.
+    This function is used to add recipes to the personal user accounts.
 
     :param user_id: Takes the user_id of a specific user
     :param recipe_id: Takes the recipe_id of a specific recipe
@@ -53,15 +55,33 @@ def addRecipetoUser(user_id, recipe):
     db = db_helpers.getDbCon()
     cursor = db.cursor()
     userRecipeInsertQuery = """INSERT into user_recipes (user_id, recipe_id) VALUES (%s, %s)"""
-    check = checkifUserRecipeAlreadyExists(user_id, recipe.recipe_id)
-    if check == ():
-        try:
-            cursor.execute(userRecipeInsertQuery, (user_id, recipe.recipe_id))
-            db.commit()
-        except Exception:
-            return 'Error: unable to execute!'
-        finally:
-            cursor.close()
-            db.close()
-    else:
-        pass
+
+    try:
+        cursor.execute(userRecipeInsertQuery, (user_id, recipe.recipe_id))
+        db.commit()
+    except Exception:
+        return 'Error: unable to execute!'
+    finally:
+        cursor.close()
+        db.close()
+
+def checkifRecipeAlreadyExists(recipe):
+    """
+    Takes the recipe_id and checks if the recipe of which we want to add the instructions to the instruction table
+    was already inserted in the recipe table before.
+    :param recipe: object of class recipe
+    :return: Returns result from SELECT statement
+    """
+    db = db_helpers.getDbCon()
+    cursor = db.cursor()
+    userRecipeCheckQuery = "SELECT * FROM recipes WHERE  recipe_id = %s;"
+    try:
+        cursor.execute(userRecipeCheckQuery, recipe.recipe_id)
+        result = cursor.fetchall()
+        return result
+
+    except Exception:
+        return "Error: OOPs something went wrong!"
+    finally:
+        cursor.close()
+        db.close()
