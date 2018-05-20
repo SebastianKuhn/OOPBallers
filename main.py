@@ -290,7 +290,6 @@ def chooseRecipe(response):
 
     #parses the full recipe information to add the remaining variables like likes, ingredients, instructions etc.
     complete_recipe = json_parser.parseRemainingVariables(recipe_information, chosen_recipe)
-
     return complete_recipe
 
 

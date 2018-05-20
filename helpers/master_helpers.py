@@ -18,11 +18,12 @@ def master_addRecipe(recipe):
     recipe_helpers.newRecipe(recipe)
     ingredient_helpers.newIngredient(recipe)
     equipment_helpers.newEquipment(recipe)
-
     if check == ():
-        instruction_helpers.addRecipeInstructionText(recipe)
+        #instruction_helpers.addRecipeInstructionText(recipe)
         ingredient_helpers.addIngredienttoRecipe(recipe)
+        print("I'm starting the function now")
         equipment_helpers.addEquipmenttoRecipe(recipe)
+        print("The function is done")
 
     else:
         pass

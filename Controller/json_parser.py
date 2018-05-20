@@ -37,12 +37,12 @@ def parseRemainingVariables(json_response, recipe):
 
     if json_response.get("extendedIngredients") is not None:
         for ingr in json_response.get("extendedIngredients"):
-            name = ingr.get("name")
+            ingredient_name = ingr.get("name")
             ingredient_id = ingr.get("id")
             amount = ingr.get("amount")
             unit = ingr.get("unit")
 
-            ingredient = Ingredient(name, ingredient_id, amount, unit)
+            ingredient = Ingredient(ingredient_name, ingredient_id, amount, unit)
             ingredients.append(ingredient)
 
         recipe.ingredients = ingredients
@@ -55,27 +55,27 @@ def parseRemainingVariables(json_response, recipe):
 
             if json_response.get("analyzedInstructions")[0].get("steps") is not None:
                 for instr in json_response.get("analyzedInstructions")[0].get("steps"):
-                    number = instr.get("number")
+                    instruction_number = instr.get("number")
                     step = instr.get("step")
 
                     ingred = []
 
                     for json_ingred in instr.get("ingredients"):
                         for saved_ingred in ingredients:
-                            if saved_ingred.name.lower() == json_ingred.get("name").lower():
+                            if saved_ingred.ingredient_name.lower() == json_ingred.get("name").lower():
                                 ingred.append(saved_ingred)
 
                     equipments = []
 
                     for equip in instr.get("equipment"):
-                        name = equip.get("name")
+                        equipment_name = equip.get("name")
                         equipment_id = equip.get("id")
 
-                        equipment = Equipment(name, equipment_id)
+                        equipment = Equipment(equipment_name, equipment_id)
 
                         equipments.append(equipment)
 
-                    instruction = Instruction(number, step, ingred, equipments)
+                    instruction = Instruction(instruction_number, step, ingred, equipments)
 
                     instructions.append(instruction)
 

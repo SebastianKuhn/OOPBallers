@@ -17,7 +17,7 @@ def newRecipe(recipe):
         db.commit()
 
     except Exception:
-        return "OOPs something went wrong"
+        print("ERROR: OOPs something went wrong while adding the new recipe to recipe table")
     finally:
         cursor.close()
         db.close()
@@ -39,7 +39,7 @@ def checkifUserRecipeAlreadyExists(user_id, recipe_id):
         result = cursor.fetchall()
         return result
     except Exception:
-        return "Error: OOPs something went wrong!"
+        print("Error: OOPs something went wrong while checking if the user has already saved the recipe!")
     finally:
         cursor.close()
         db.close()
@@ -60,7 +60,7 @@ def addRecipetoUser(user_id, recipe):
         cursor.execute(userRecipeInsertQuery, (user_id, recipe.recipe_id))
         db.commit()
     except Exception:
-        return 'Error: unable to execute!'
+        print('Error: OOPs something went wrong while adding the recipe to the user!')
     finally:
         cursor.close()
         db.close()
@@ -74,14 +74,14 @@ def checkifRecipeAlreadyExists(recipe):
     """
     db = db_helpers.getDbCon()
     cursor = db.cursor()
-    userRecipeCheckQuery = "SELECT * FROM recipes WHERE  recipe_id = %s;"
+    userRecipeCheckQuery = "SELECT * FROM recipes WHERE recipe_id = %s;"
     try:
-        cursor.execute(userRecipeCheckQuery, recipe.recipe_id)
+        cursor.execute(userRecipeCheckQuery, (recipe.recipe_id,))
         result = cursor.fetchall()
         return result
 
     except Exception:
-        return "Error: OOPs something went wrong!"
+        print("Error: OOPs something went wrong in checking if the record already exists!")
     finally:
         cursor.close()
         db.close()

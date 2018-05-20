@@ -51,7 +51,5 @@ def getRecipeByName(name):
         }
     )
 
-    print(response.json())
-
     return response.json()
 
