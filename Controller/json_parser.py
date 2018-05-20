@@ -69,8 +69,9 @@ def parseRemainingVariables(json_response, recipe):
 
                     for equip in instr.get("equipment"):
                         name = equip.get("name")
+                        id = equip.get("id")
 
-                        equipment = Equipment(name)
+                        equipment = Equipment(name, id)
 
                         equipments.append(equipment)
 

@@ -1,6 +1,11 @@
 from helpers import db_helpers
 
 def newRecipe(recipe):
+    """
+    This function adds a new recipe to the database' recipes table.
+    :param recipe: takes and object of the class recipe
+    :return: nothing
+    """
     db = db_helpers.getDbCon()
     cursor = db.cursor()
     recipeInsertQuery = "INSERT IGNORE into recipes (recipe_id, title, ready_in_minutes, servings, vegetarian, " \
@@ -19,6 +24,13 @@ def newRecipe(recipe):
 
 
 def checkifUserRecipeAlreadyExists(user_id, recipe_id):
+    """
+    This function is used to check if a user already saved a distinct recipe in his personal account. (i.e. the
+    user_recipes table. It is used in the function addRecipetoUser().
+    :param user_id: Takes the user_id of a specific user
+    :param recipe_id: Takes the recipe_id of a specific recipe
+    :return: returns a variable that holds the Output from the SELECT statement
+    """
     db = db_helpers.getDbCon()
     cursor = db.cursor()
     userRecipeCheckQuery = "SELECT * FROM user_recipes WHERE user_id = %s and recipe_id = %s;"
@@ -30,6 +42,14 @@ def checkifUserRecipeAlreadyExists(user_id, recipe_id):
         return "Error: OOPs something went wrong!"
 
 def addRecipetoUser(user_id, recipe):
+    """
+    This function is used to add recipes to the personal user accounts. It uses the function
+    checkifUserRecipeAlreadyExists() to check if the recipe is already saved.
+
+    :param user_id: Takes the user_id of a specific user
+    :param recipe_id: Takes the recipe_id of a specific recipe
+    :return: nothing
+    """
     db = db_helpers.getDbCon()
     cursor = db.cursor()
     userRecipeInsertQuery = """INSERT into user_recipes (user_id, recipe_id) VALUES (%s, %s)"""
@@ -45,56 +65,3 @@ def addRecipetoUser(user_id, recipe):
             db.close()
     else:
         pass
-
-def checkifRecipeInstructionAlreadyExists(recipe, instruction):
-    db = db_helpers.getDbCon()
-    cursor = db.cursor()
-    RecipeInstructionCheckQuery = "SELECT * FROM recipe_step WHERE recipe_id = %s and number = %s and step = %s;"
-    try:
-        cursor.execute(RecipeInstructionCheckQuery, (recipe.recipe_id, instruction.number, instruction.step))
-        result = cursor.fetchall()
-        return result
-    except Exception:
-        return "Error: OOPs something went wrong!"
-
-def addRecipeInstructionText(recipe, instruction):
-    db = db_helpers.getDbCon()
-    cursor = db.cursor()
-    RecipeInstrucitonInsertQuery = """INSERT into recipe_step (recipe_id, number, step)  VALUES (%s, %s, %s)"""
-    check = checkifRecipeInstructionAlreadyExists(recipe.recipe_id, instruction.number, instruction.step)
-    if check == ():
-        try:
-            cursor.execute(RecipeInstrucitonInsertQuery, (user.user_id, recipe.recipe_id))  # to replace s% put in quotation markes
-            db.commit()
-        except Exception:
-            return 'Error: unable to execute!'
-        finally:
-            cursor.close()
-            db.close()
-    else:
-        pass
-
-#addRecipetoUser(43, 606643)
-
-result = checkifUserRecipeAlreadyExists(44, 101141)
-
-print(result)
-
-db = db_helpers.getDbCon()
-print(db)
-cursor = db.cursor()
-print(cursor)
-userRecipeInsertQuery = """INSERT into user_recipes (user_id, recipe_id) VALUES (%s, %s)"""
-check = result
-if check == ():
-    try:
-        cursor.execute(userRecipeInsertQuery, (44, 101141))
-        print(cursor.fetchall())
-        db.commit()
-    except Exception:
-        print('Error: unable to execute!')
-    finally:
-        cursor.close()
-        db.close()
-else:
-    pass

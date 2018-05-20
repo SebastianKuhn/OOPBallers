@@ -2,15 +2,15 @@
 In this file all the functions to add the ingredients from the API response to the database are saved.
 """
 from helpers import db_helpers
-from Models.ingredient import Ingredient
 
 # for ingredients table
-def newIngredient(ingredient):
+def newIngredient(recipe):
     db = db_helpers.getDbCon()
     cursor = db.cursor()
     ingredientInsertQuery = "INSERT IGNORE into ingredients (ingredient_id, name) VALUES (%s, %s);"
     try:
-        cursor.execute(ingredientInsertQuery, (ingredient.ingredient_id, ingredient.name))
+        for ingr in recipe.ingredients:
+            cursor.execute(ingredientInsertQuery, (ingr.ingredient_id, ingr.name))
         db.commit()
     except Exception:
         return "OOPs something went wrong"
@@ -78,5 +78,3 @@ def addIngredienttoUser(user, ingredient):
     else:
         pass
 
-#create a class to test the functions
-coffee = Ingredient("coffee", 2, 4.5, "cups")

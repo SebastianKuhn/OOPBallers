@@ -1,12 +1,12 @@
 from helpers import db_helpers
 
-
-def newEquipment(equipment):
+def newEquipment(instruction):
     db = db_helpers.getDbCon()
     cursor = db.cursor()
     equipmentInsertQuery = "INSERT IGNORE into recipes (equipment) VALUES (%s);"
     try:
-        cursor.execute(equipmentInsertQuery, (equipment.name))
+        for equip in instruction.equipment:
+            cursor.execute(equipmentInsertQuery, equip)
         db.commit()
     except Exception:
         return "OOPs"
