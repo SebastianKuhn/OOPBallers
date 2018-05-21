@@ -24,9 +24,10 @@ def master_addRecipe(recipe):
     if check == ():
         instruction_helpers.addRecipeInstructionText(recipe)
         print("I'm starting the function now!")
-        ingredient_helpers.addIngredienttoRecipe(recipe)
+        instruction_helpers.addIngredienttoRecipeInstruction(recipe)
         print("The function has been ran!")
         equipment_helpers.addEquipmenttoRecipe(recipe)
+        recipe_helpers.addIngredienttoRecipe(recipe)
 
     else:
         pass
