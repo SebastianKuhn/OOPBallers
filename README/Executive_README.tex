@@ -1,0 +1,108 @@
+\documentclass[11pt,a4paper,notitlepage]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{titling}
+
+\usepackage{authblk}
+\usepackage{graphicx}
+\usepackage{titlepic}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{tabu}
+\usepackage{mathpazo}
+\usepackage{stackengine}
+\usepackage{titling}
+\usepackage{courier}
+\usepackage{epigraph}
+
+
+%%% Spaces before and after sections
+\usepackage{titlesec}
+
+\titlespacing\section{0pt}{0pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+\titlespacing\subsection{0pt}{0pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+\titlespacing\subsubsection{0pt}{0pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+
+%%% PAGE DIMENSIONS
+\usepackage{geometry}
+\geometry{a4paper}
+\geometry{margin=3cm}
+\setlength{\parskip}{\baselineskip}
+\setlength{\parindent}{0pt}
+
+
+%%% HEADER
+\newcommand{\subtitle}[1]{%
+\posttitle{%
+\par\end{center}
+\begin{center}\large#1\end{center}
+\vskip0.5em}}%
+
+\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+\fancyhead[L]{\slshape {
+		\includegraphics[scale = .2]{unisg_logo.png}
+}}
+\fancyhead[R]{\slshape {by Thomas, Julian, Sebastian}}
+
+\title{YUMMLY 3.0 -  README}
+\subtitle{hello}
+\date{\vspace{-5ex}}
+\author{\vspace{-5ex}}
+
+% --------------------------------------------------------
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+This paper contains an executive README of the application \textbf{ YUMMLY 3.0}, created by Group 1 of the course 'Applications in Object-Oriented Programming and Databases'.
+
+\section*{Prerequisites}
+\begin{itemize}  
+\item\textbf{Python version}: python3
+\item \textbf{Python Packages}: check out the file \texttt{prerequisits.txt}!
+\end{itemize}
+ 
+\section*{Application}
+This section provides an overview over the functionality of the application.
+\subsection*{Functionality}
+\subsection*{User Interface}
+\subsection*{Under the hood}
+\subsubsection*{Database}
+\subsubsection*{APIs}
+\subsection*{Security}
+One issue that can never be overemphasized in our digital world is security. In the course we heard that in some databases whole tables can be deleted by simple user inputs through the front end. \par
+
+Of course we have thought about how we can prevent this in our application to prevent embarrassment during the presentation.
+\includegraphics[scale = .5]{exploits_of_a_mom.png}
+
+
+\section*{Project}
+This section describes the project from an organizational perspective. The software development project is in itself not easy to handle, especially for business students who do not have a lot of programming knowledge. 
+\subsection*{Organization}
+To collaborate successfully, we used the version control system [VCS] git. We created a repository on GitHub and thus were able to work remotely and simultaneously on our project without any problem. It can be regarded as a nice side-take-away, that we all learned to handle the kinks and peculiarities of git. \par Since we were three people working on the project we split the tasks as follows: One person focusing on the front-end and API calls, one person building the Database and one person coding the helper functions of the data access object [DAO]. The work w
+
+\subsection*{Challenges}
+\subsubsection*{On the Search}
+As our main challenge we regard finding a suitable project that fulfills the needs of the course and doesn't completely surpass the scope. After having changed our minds several times, we tried sticking to the things needed, but doing them as clean as possible. In the end we found a use case that not only provided a lot of fun to us food-loving people. The application we built is usable and equipped with a nice front-end and enriched with some more functionality, it could well be used as a web application by a large community of users. \par We have long lived in the belief that we are the only ones who offer such a solution. Unfortunately there's already a group of people that is working on a similar idea. They called their application 'Yummly 2.0'. However, we think that our version has much more potential and thus we named it 'Yummly 3.0'.
+\subsubsection*{Dealing with Databases}
+MySQL workbench may seem easy and intuitive at first sight and invites the user to start creating tables and building databases before actually knowing what he does. This happened to us as well and reading theory another hour or two would have saved us quite some time. \par Luckily we knew from another project that handling locally hosted databases is quite a struggle when working in a team. Therefore we decided to host our database on a server from the beginning on which took some time to set up, but proved to make many things a lot easier.\par
+
+An additional difficulty we found when accessing the database via a python package. The functions to be written are often nested and finding an error is quite tedious, especially when the error handling (i.e. try and except statements) have already been implemented and the only output is the the 'answer' of the except statement. What may have helped here is a lecture about error handling. Especially in a project of this scope where we are using many different files and nested scripts, a proper lecture about debugging using Pycharm's integrated debugging function would have provided a lot of additional security while fighting errors.
+
+\epigraph{Q: Why do you never ask SQL people to help you move your furniture?\\ A: They sometimes drop the table.}{The Internet}
+\section*{Appendix}
+
+
+
+
+
+\end{document}
