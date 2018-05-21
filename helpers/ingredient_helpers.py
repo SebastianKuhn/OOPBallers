@@ -35,7 +35,7 @@ def addIngredienttoRecipeInstruction(recipe):
     db = db_helpers.getDbCon()
     cursor = db.cursor()
     recipe_instruction_id = instruction_helpers.getRecipeInstructionID(recipe)
-    instructionIngredientInsertQuery = """INSERT into instruction_ingredients 
+    instructionIngredientInsertQuery = """INSERT into instruction_ingredient 
                                       (recipe_instruction_id, ingredient_id, amount, unit) VALUES (%s, %s, %s, %s);"""
     try:
         for ind, instr in enumerate(recipe.instructions):
@@ -57,7 +57,7 @@ def addIngredienttoRecipe(recipe):
     """
     db = db_helpers.getDbCon()
     cursor = db.cursor()
-    recipeIngredientInsertQuery = """INSERT into recipe_ingredients (recipe.recipe_id, ingredient_id) VALUES (%s, %s)"""
+    recipeIngredientInsertQuery = """INSERT into recipe_ingredients (recipe_id, ingredient_id) VALUES (%s, %s)"""
 
     try:
         for ingr in recipe.ingredients:
