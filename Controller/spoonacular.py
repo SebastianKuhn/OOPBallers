@@ -1,7 +1,16 @@
+"""
+This file serves as the controller for the spoonacular api. Every function which communicates with the spoonacular
+api is included in this file.
+"""
+
 import requests
 
 def getRecipesByIngredient(ingredients):
-
+    """
+    fetches recipes which maximize the use of input ingredients.
+    input: list of strings
+    :return decoded json
+    """
     base_url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?ranking=" \
                "1&number=5&ingredients="
     ingredients_no_spaces = []

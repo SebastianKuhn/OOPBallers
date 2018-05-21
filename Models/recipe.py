@@ -1,3 +1,8 @@
+"""
+This file contains the class recipe. A recipe consists of the variables listed below. The recipe id is unique
+and directly adopted from the spoonacular api.
+"""
+
 from Models.ingredient import Ingredient
 
 class Recipe(object):
@@ -17,6 +22,9 @@ class Recipe(object):
         self.instructions = instructions
 
     def printRecipeInformations(self):
+        """
+        This method prints all the necessary information of the recipe in order to present it to the user.
+        """
         print("Title: " + str(self.title))
         print("")
         print("Ready in Minutes: " + str(self.ready_in_minutes))

@@ -26,10 +26,10 @@ def newIngredient(recipe):
 # for recipe_ingredients table
 
 def addIngredienttoRecipe(recipe):
-     """
-    Takes a Recipe and puts every ingredients and the corresponding recipe_id into the recipe_ingredient table.
-    :param recipe: object of the class recipe
-    :return: nothing
+    """
+       Takes a Recipe and puts every ingredients and the corresponding recipe_id into the recipe_ingredient table.
+       :param recipe: object of the class recipe
+       :return: nothing
     """
     db = db_helpers.getDbCon()
     cursor = db.cursor()

@@ -1,3 +1,7 @@
+"""
+This file serves as the json parser. Ever funciton which parses a json response is included in this file.
+"""
+
 from Models.recipe import Recipe
 from Models.ingredient import Ingredient
 from Models.instruction import Instruction
@@ -5,6 +9,12 @@ from Models.equipment import Equipment
 
 
 def parseIdAndTitle(json_response, value):
+    """
+    takes a json response and an int value as an input and gets the id and title of the recipe which are used
+    to create a recipe object.
+    input: decoded json, int
+    :return Recipe
+    """
     value -= 1
     recipe_id = json_response[value].get("id")
     title = json_response[value].get("title")
@@ -15,6 +25,11 @@ def parseIdAndTitle(json_response, value):
 
 
 def parseRemainingVariables(json_response, recipe):
+    """
+    takes a json response and a recipe object as an input and gets the the remaining variables to complete the recipe
+    input: decoded json, recipe
+    :return recipe
+    """
     ready_in_minutes = json_response.get("readyInMinutes")
     recipe.ready_in_minutes = int(ready_in_minutes)
 

@@ -1,3 +1,8 @@
+"""
+This file contains the class instructions which consists of the number, steps and equipment used in every
+step to create a recipe.
+"""
+
 class Instruction(object):
 
     def __init__(self, instruction_number, step, ingredients, equipment):
@@ -7,6 +12,9 @@ class Instruction(object):
         self.equipment = equipment
 
     def printInformation(self):
+        """
+        This method prints all the necessary information about the instruction in order to present it to the user.
+        """
         print("")
         print("Step " + str(self.instruction_number) + ": ")
         print("You need: ")

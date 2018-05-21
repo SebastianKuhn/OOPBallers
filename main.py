@@ -1,10 +1,13 @@
+"""
+This is the main file which starts the program and interacts with the user.
+"""
+
 from Controller import googlevision, spoonacular, json_parser
 from helpers import user_helpers
 from helpers import login_helpers
 from helpers import master_helpers
 import hashlib
 from Models.user import User
-from Models.recipe import Recipe
 
 
 def welcome():
@@ -37,6 +40,7 @@ def login():
     """
     print("")
 
+    #starts the login function in login_helpers and returns a user object
     user = login_helpers.login()
 
     return user
@@ -55,14 +59,20 @@ def signUp():
         # check username against database using the database controller
         usernames = user_helpers.getAllUsernames()
 
+        #loops through all usernames and checks whether the username already exists.
         username_exists = False
-
         for name in usernames:
 
             if username.lower() == name.lower():
+                #username exists - lets the user decide whether he rather wants to login.
                 print("")
-                print("This username already exist, please login or choose another username.")
+                login_input = input("This username already exist, do you want to login? (Y/N) ")
                 print("")
+
+                if login_input.lower() == "y":
+                    login_user = login_helpers.login()
+                    return login_user
+
                 username_exists = True
 
         if username_exists is False:
@@ -106,6 +116,7 @@ def hash_password(password):
     input: password as a string
     :return hashed password
     """
+
     return hashlib.sha256(password.encode()).hexdigest()
 
 
@@ -165,9 +176,11 @@ def checkUserInput(cur_user):
         print("")
 
     elif user_input.lower() == "info":
+        #presents all the options that the user has
         presentOptions()
 
     elif user_input.lower() == "exit":
+        #ends the program
         return True
 
     else:
@@ -178,12 +191,19 @@ def checkUserInput(cur_user):
     presentOptions()
 
 def saveRecipe(chosen_recipe, cur_user):
+    """
+    saves the Recipe to the current user.
+    input: recipe, user
+    """
     while True:
         save_recipe_input = str(input("Would you like to save the recipe? Y/N "))
 
         if save_recipe_input.lower() == "y":
+            #adds the recipe to the database
             master_helpers.master_addRecipe(chosen_recipe)
+            #gets the user_id of the current user
             user_id = user_helpers.getCurrentUserId(cur_user.username)[0]
+            #adds the recipe to the user
             master_helpers.master_addRecipetoUser(user_id, chosen_recipe)
             break
         elif save_recipe_input.lower() == "n":
@@ -196,7 +216,7 @@ def saveRecipe(chosen_recipe, cur_user):
 def identifyIngredients():
     """
     asks the user for a folder file path, analyzes the pictures and returns the ingredients in a list
-    :return recognized ingredients as Ingredient-objects in a list
+    :return list of strings
     """
 
     list_of_image_paths = []
@@ -219,6 +239,7 @@ def identifyIngredients():
     for image_path in list_of_image_paths:
         recognized_ingredients.append(googlevision.identifyNewIngredient(image_path))
 
+    #prints all the ingredients
     print("")
     print("Your ingredients so far are:")
 
@@ -236,8 +257,8 @@ def identifyIngredients():
 def chooseRecipe(response):
     """
     takes the spoonacular response as input and asks the user which recipe he wants to choose.
-    input: spoonacular json-response
-    :return complete_recipe as Recipe object
+    input: decoded json response
+    :return recipe
 
     """
 
@@ -295,18 +316,23 @@ def chooseRecipe(response):
 if __name__ == "__main__":
     """starts the program"""
 
+    #global user who is logged in
     current_user = None
 
+    #prints the welcome message
     welcome()
 
+    #lets the user decide whether he wants to login or signup
     login_or_signup = str(input("Login/Sign up (1/2): "))
     login_status = False
 
     while login_status is False:
         if login_or_signup == "1":
+            #current user will be set to logged in user
             current_user = login()
             login_status = True
         elif login_or_signup == "2":
+            #current user will be set to the new user
             current_user = signUp()
             login_status = True
         else:
@@ -315,8 +341,10 @@ if __name__ == "__main__":
             print("")
             login_or_signup = str(input("Login/Sign up (1/2): "))
 
+    #presents all the available options
     presentOptions()
 
+    #runs the program as long as is_finished is false
     is_finished = False
 
     while is_finished != True:

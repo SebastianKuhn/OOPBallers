@@ -1,3 +1,8 @@
+"""
+This file serves as the controller for the google vision api. Every function which communicates with the google vision
+api is included in this file.
+"""
+
 #import classes
 import base64, json, requests, glob
 
@@ -7,7 +12,11 @@ common_terms = ["animal source foods", "animal fat", "vegetable", "natural foods
                 "al dente", "italian food", "superfood"]
 
 def scanFolderforPictures(folder_path):
-    """ takes a folder directory as the input and adds all pictures in an array, which will be returned """
+    """
+    takes a folder directory as the input and adds all pictures in an array, which will be returned
+    input: folder path as string
+    :return list of strings
+    """
 
     jpg = folder_path + "/*.jpg"
     jpeg = folder_path + "/*.jpeg"
@@ -25,7 +34,11 @@ def scanFolderforPictures(folder_path):
 
 
 def identifyNewIngredient(image_to_append):
-    """ sends a request to the Google Vision API and chooses the correct term """
+    """
+    sends a request to the Google Vision API and chooses the correct term
+    input: image_path
+    :return list of strings
+    """
 
     base_url = "https://vision.googleapis.com/v1/images:annotate?key="
     api_key = "AIzaSyDfKIKpRF7OBu5Q3Q6Zh1zxFOsulyTZ2IE"
@@ -57,7 +70,11 @@ def identifyNewIngredient(image_to_append):
 
 
 def encodeImageAsBase64(image_path):
-    """ Loads an image from path and returns it as base64 encoded string """
+    """
+    Loads an image from path and returns it as base64 encoded string
+    input: image path as string
+    :return String
+    """
 
     print("Encoding image: "+ image_path)
     with open(image_path, "rb") as image_file:
@@ -67,7 +84,11 @@ def encodeImageAsBase64(image_path):
 
 
 def chooseCorrectIngredient(list_of_ingredients):
-    """loops every possible description and returns the first that is not in the list of common terms"""
+    """
+    loops every possible description and returns the first that is not in the list of common terms
+    input: list of strings
+    :return String
+    """
 
     for element in list_of_ingredients:
         if not compareWithCommonTerms(element):
@@ -75,7 +96,11 @@ def chooseCorrectIngredient(list_of_ingredients):
 
 
 def compareWithCommonTerms(ingredient):
-    """loops the input ingredient's description through all common terms and returns true if one of the is equal"""
+    """
+    loops the input ingredient's description through all common terms and returns true if one of the is equal
+    input: String
+    return: Boolean
+    """
 
     for term in common_terms:
         if ingredient.get("description").lower() == term:

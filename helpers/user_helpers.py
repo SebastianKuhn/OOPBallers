@@ -1,5 +1,5 @@
 """
-In this file all  functions to add users to the database are saved.
+In this file all functions to add users to the database are saved.
 """
 
 import helpers.db_helpers as helpers
