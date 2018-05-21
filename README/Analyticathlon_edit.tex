@@ -1,0 +1,96 @@
+\documentclass[11pt,a4paper,notitlepage]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{titling}
+
+\usepackage{authblk}
+\usepackage{graphicx}
+\usepackage{titlepic}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{tabu}
+\usepackage{mathpazo}
+\usepackage{stackengine}
+\usepackage{titling}
+\usepackage{courier}
+
+
+%%% Spaces before and after sections
+\usepackage{titlesec}
+
+\titlespacing\section{0pt}{0pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+\titlespacing\subsection{0pt}{0pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+\titlespacing\subsubsection{0pt}{0pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+
+%%% PAGE DIMENSIONS
+\usepackage{geometry}
+\geometry{a4paper}
+\geometry{margin=3cm}
+\setlength{\parskip}{\baselineskip}
+\setlength{\parindent}{0pt}
+
+
+%%% HEADER
+\newcommand{\subtitle}[1]{%
+\posttitle{%
+\par\end{center}
+\begin{center}\large#1\end{center}
+\vskip0.5em}}%
+
+\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+\fancyhead[L]{\slshape {
+		\includegraphics[scale = .2]{unisg_logo.png}
+}}
+\fancyhead[R]{\slshape {by Thomas, Julian, Sebastian}}
+
+\title{YUMMLY 3.0 -  README}
+\subtitle{hello}
+\date{\vspace{-5ex}}
+\author{\vspace{-5ex}}
+
+% --------------------------------------------------------
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+This paper contains an executive summary of the application \textbf{ YUMMLY 3.0}, created by Group 1 of the course 'Applications in Object-Oriented Programming and Databases'.
+
+\section*{Prerequisites}
+\begin{itemize}  
+\item\textbf{Python version}: python3
+\item \textbf{Python Packages}: check out the file \texttt{prerequisits.txt}!
+\end{itemize}
+ 
+\section*{Application}
+This section provides an overview over the functionality of the application.
+\subsection*{Functionality}
+\subsection*{User Interface}
+\subsection*{Under the hood}
+\subsubsection*{Database}
+\subsubsection*{APIs}
+\subsection*{Security}
+
+\section*{Project}
+This section describes the project from an organizational perspective. The software development project is in itself not easy to handle, especially for business students who do not have a lot of programming knowledge. 
+\subsection*{Organization}
+To collaborate successfully, we used the version control system [VCS] git. We created a repository on GitHub and thus were able to work remotely and simultaneously on our project without any problem. It can be regarded as a nice side-take-away, that we all learned to handle the kinks of git. 
+
+\subsection*{Challenges}
+As our main challenge we regard finding a suitable project that fulfills the needs of the course and doesn't completely surpass the scope of this project. We tried sticking to what is needed, but doing this as clean as possible.
+
+\section*{Appendix}
+
+
+
+
+
+\end{document}
