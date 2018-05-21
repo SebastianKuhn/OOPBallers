@@ -2,6 +2,7 @@
 In this file all the functions to add the ingredients from the API response to the database are saved.
 """
 from helpers import db_helpers
+from helpers import instruction_helpers
 
 # for ingredients table
 def newIngredient(recipe):
@@ -12,7 +13,7 @@ def newIngredient(recipe):
     """
     db = db_helpers.getDbCon()
     cursor = db.cursor()
-    ingredientInsertQuery = "INSERT into ingredients (ingredient_id, name) VALUES (%s, %s) ON Duplicate KEY UPDATE ingredient_id = ingredient_id;"
+    ingredientInsertQuery = """INSERT into ingredients (ingredient_id, name) VALUES (%s, %s) ON Duplicate KEY UPDATE ingredient_id = ingredient_id;"""
     try:
         for ingr in recipe.ingredients:
             cursor.execute(ingredientInsertQuery, (ingr.ingredient_id, ingr.ingredient_name))
@@ -33,12 +34,14 @@ def addIngredienttoRecipe(recipe):
     """
     db = db_helpers.getDbCon()
     cursor = db.cursor()
-    recipeIngredientInsertQuery = """INSERT into recipe_ingredients (recipe_id, instruction_number, ingredient_id, amount, unit) VALUES (%s, %s, %s, %s, %s)"""
+    recipe_instruction_id = instruction_helpers.getRecipeInstructionID(recipe)
+    recipeIngredientInsertQuery = """INSERT into recipe_ingredients 
+                                  (recipe_instruction_id, ingredient_id, amount, unit) VALUES (%s, %s, %s, %s);"""
     try:
-        for instr in recipe.instructions:
+        for ind, instr in enumerate(recipe.instructions):
             for ingred in instr.ingredients:
-                cursor.execute(recipeIngredientInsertQuery, (recipe.recipe_id, instr.instruction_number, ingred.ingredient_id,
-                                                                     ingred.amount, ingred.unit))
+                cursor.execute(recipeIngredientInsertQuery, (recipe_instruction_id[ind][0], ingred.ingredient_id,
+                                                            ingred.amount, ingred.unit))
         db.commit()
     except Exception:
         print('Error: OOPs something went wrong while adding ingredients to a recipe!')

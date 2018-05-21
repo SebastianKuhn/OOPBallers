@@ -26,3 +26,17 @@ def addRecipeInstructionText(recipe):
     finally:
         cursor.close()
         db.close()
+
+def getRecipeInstructionID(recipe):
+    db = db_helpers.getDbCon()
+    cursor = db.cursor()
+    recipeInstructionIdQuery = "SELECT recipe_instruction_id FROM recipe_instructions WHERE recipe_id = %s"
+    try:
+        cursor.execute(recipeInstructionIdQuery, (recipe.recipe_id,))
+        recipe_insturcion_id = cursor.fetchall()
+        return recipe_insturcion_id
+    except Exception:
+        return "Oh Snap, this didn't work!"
+    finally:
+        cursor.close()
+        db.close()

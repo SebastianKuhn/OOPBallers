@@ -3,6 +3,7 @@ In this file all the functions to add equipment from the API response to the dat
 """
 
 from helpers import db_helpers
+from helpers import instruction_helpers
 
 def newEquipment(recipe):
     """
@@ -12,7 +13,8 @@ def newEquipment(recipe):
     """
     db = db_helpers.getDbCon()
     cursor = db.cursor()
-    equipmentInsertQuery = """INSERT into equipment (equipment_id, equipment_name) VALUES (%s, %s) ON Duplicate KEY UPDATE equipment_id = equipment_id;"""
+    equipmentInsertQuery = """INSERT into equipment (equipment_id, equipment_name) 
+                              VALUES (%s, %s) ON Duplicate KEY UPDATE equipment_id = equipment_id;"""
     try:
         for instr in recipe.instructions:
             for equip in instr.equipment:
@@ -33,11 +35,12 @@ def addEquipmenttoRecipe(recipe):
     """
     db = db_helpers.getDbCon()
     cursor = db.cursor()
-    recipeEquipmentInsertQuery = """INSERT into recipe_equipment (recipe_id, instruction_number, equipment_id) VALUES (%s, %s, %s)"""
+    recipe_instruction_id = instruction_helpers.getRecipeInstructionID(recipe)
+    recipeEquipmentInsertQuery = """INSERT into recipe_equipment (recipe_instruction_id, equipment_id) VALUES (%s, %s)"""
     try:
-        for instr in recipe.instructions:
+        for ind, instr in enumerate(recipe.instructions):
             for equip in instr.equipment:
-                cursor.execute(recipeEquipmentInsertQuery, (recipe.recipe_id, instr.instruction_number, equip.equipment_id))
+                cursor.execute(recipeEquipmentInsertQuery, (recipe_instruction_id[ind], equip.equipment_id))
         db.commit()
     except Exception:
         print('Error: OOPs something went wrong while adding Equipment to a Recipe!')
