@@ -50,6 +50,7 @@ def parseRemainingVariables(json_response, recipe):
 
     ingredients = []
 
+    #parse all the ingredients and add them to the list of ingredients as a ingredient object
     if json_response.get("extendedIngredients") is not None:
         for ingr in json_response.get("extendedIngredients"):
             ingredient_name = ingr.get("name")
@@ -64,11 +65,13 @@ def parseRemainingVariables(json_response, recipe):
 
     instructions = []
 
+    #parse all the instructions and add them as instruction objects to the instructions list
     if json_response.get("analyzedInstructions") is not None:
 
         if len(json_response.get("analyzedInstructions")) != 0:
 
             if json_response.get("analyzedInstructions")[0].get("steps") is not None:
+
                 for instr in json_response.get("analyzedInstructions")[0].get("steps"):
                     instruction_number = instr.get("number")
                     step = instr.get("step")
@@ -77,7 +80,7 @@ def parseRemainingVariables(json_response, recipe):
 
                     for json_ingred in instr.get("ingredients"):
                         for saved_ingred in ingredients:
-                            if saved_ingred.ingredient_name.lower() == json_ingred.get("name").lower():
+                            if saved_ingred.ingredient_id == json_ingred.get("id"):
                                 ingred.append(saved_ingred)
 
                     equipments = []
