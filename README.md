@@ -1,6 +1,6 @@
 # OOPBallers
 ## Project Overview
-![alt text](https://github.com/SebastianKuhn/OOPBallers/blob/master/README/OOPBallers_Cropped.PNG)
+![alt text](https://github.com/SebastianKuhn/OOPBallers/blob/master/README/OOPBallers-Cropped.png)
 
 # The Fucking Docs (read them)
 ## helper functions
