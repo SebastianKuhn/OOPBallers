@@ -5,6 +5,13 @@ In this file all functions to add users to the database are saved.
 import helpers.db_helpers as helpers
 
 def newUser(name, hashed_password, vegetarian):
+    """
+    Inserts new user into database
+    :param name: type string
+    :param hashed_password: string will be hashed in main.py before being saved into db.
+    :param vegetarian: boolean
+    :return:
+    """
     db = helpers.getDbCon()
     cursor = db.cursor()
     userInsertQuery = "INSERT into users (username, password, vegetarian) VALUES (%s, %s, %s)"
@@ -20,6 +27,7 @@ def newUser(name, hashed_password, vegetarian):
 
 def getAllUsers():
     """
+    Display the whole users table
     :return: all usernames that are currently in the database
     """
     db = helpers.getDbCon()
@@ -37,6 +45,10 @@ def getAllUsers():
 
 
 def getAllUsernames():
+    """
+    Display all usernames from the users table.
+    :return:
+    """
     db = helpers.getDbCon()
     cursor = db.cursor()
     getAllUsernames = "SELECT username FROM users"
@@ -54,6 +66,12 @@ def getAllUsernames():
         db.close()
 
 def getUser(name):
+    """
+    Search user by his username and return the username.
+    Function is used to check if a username already exists in the database.
+    :param username:
+    :return: username
+    """
     db = helpers.getDbCon()
     cursor = db.cursor()
     getuser = "SELECT username FROM users WHERE username=%s"
@@ -82,6 +100,11 @@ def getPassword(name):
         db.close()
 
 def getVegetarianStatus(name):
+    """
+    This function will return if a user searched with his username is vegetarian.
+    :param username:
+    :return:
+    """
     db = helpers.getDbCon()
     cursor = db.cursor()
     getVegetarian = "SELECT vegetarian FROM users WHERE username=%s"
@@ -95,12 +118,10 @@ def getVegetarianStatus(name):
         cursor.close()
         db.close()
 
-
 def deleteUser(name):
     """
-    this function will delete a user from the database and say if the user has not been found in the database.
-    :param name:
-    :return:
+    This function will delete a user from the database and say if the user has not been found in the database.
+    :param username:
     """
     db = helpers.getDbCon()
     cursor = db.cursor()
@@ -122,8 +143,8 @@ def deleteUser(name):
 def getCurrentUserId(name):
     """
     This function is used to put the user with the corresponding recipes in table matching the latter two.
-    :param name:
-    :return:
+    :param username:
+    :return: 1 or 0
     """
     db = helpers.getDbCon()
     cursor = db.cursor()
@@ -137,3 +158,25 @@ def getCurrentUserId(name):
     finally:
         cursor.close()
         db.close()
+
+
+def unsafeGetUsername(name):
+    """
+    This unsafe function is created for learning purposes.
+    We tried to inject our database.
+    :param username:
+    :return: username
+    """
+    db = helpers.getDbCon()
+    cursor = db.cursor()
+    if "drop" in str(name).lower() or "dlete" in str(name).lower():
+        print("Please don't do it Ruben!")
+        return
+        print("SHOULDNT SHOW")
+    fail = "SELECT username FROM users WHERE username=%s" % (name)
+    cursor.execute(fail)
+    for row in cursor.fetchall():
+        print(row)
+    return cursor.fetchall()
+    cursor.close()
+    db.close()
