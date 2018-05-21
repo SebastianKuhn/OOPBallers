@@ -24,9 +24,50 @@ def newIngredient(recipe):
         cursor.close()
         db.close()
 
-# for recipe_ingredients table
+def addIngredienttoRecipeInstruction(recipe):
+    """
+       Takes a Recipe and puts the ingredients matching to an instruction number into the instruction_ingredients table.
+       ATTENTION: This function doesn't return the full list of ingredients. To still have all ingredients matching to
+       their origin in the database the function addIngredienttoRecipe() was created (see below).
+       :param recipe: object of the class recipe
+       :return: adds data to the database
+    """
+    db = db_helpers.getDbCon()
+    cursor = db.cursor()
+    recipe_instruction_id = instruction_helpers.getRecipeInstructionID(recipe)
+    instructionIngredientInsertQuery = """INSERT into instruction_ingredients 
+                                      (recipe_instruction_id, ingredient_id, amount, unit) VALUES (%s, %s, %s, %s);"""
+    try:
+        for ind, instr in enumerate(recipe.instructions):
+            for ingred in instr.ingredients:
+                cursor.execute(instructionIngredientInsertQuery, (recipe_instruction_id[ind][0], ingred.ingredient_id,
+                                                            ingred.amount, ingred.unit))
+        db.commit()
+    except Exception:
+        print('Error: OOPs something went wrong while adding ingredients to a recipe instruction!')
+    finally:
+        cursor.close()
+        db.close()
 
+def addIngredienttoRecipe(recipe):
+    """
+    Takes a recipe and puts every ingredient and the corresponding recipe_id into the recipe_ingredients table.
+    :param recipe: opject of class recipe
+    :return: add Data to the database
+    """
+    db = db_helpers.getDbCon()
+    cursor = db.cursor()
+    recipeIngredientInsertQuery = """INSERT into recipe_ingredients (recipe.recipe_id, ingredient_id) VALUES (%s, %s)"""
 
+    try:
+        for ingr in recipe.ingredients:
+            cursor.execute(recipeIngredientInsertQuery, (recipe.recipe_id, ingr.ingredient_id))
+            db.commit()
+    except Exception:
+        print('Error: OOPs something went wrong while adding ingredients to the recipe!')
+    finally:
+        cursor.close()
+        db.close()
 
 def addIngredienttoUser(user_id, recipe):
     """

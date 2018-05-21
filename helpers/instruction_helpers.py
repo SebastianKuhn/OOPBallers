@@ -27,29 +27,6 @@ def addRecipeInstructionText(recipe):
         cursor.close()
         db.close()
 
-def addIngredienttoRecipeInstruction(recipe):
-    """
-       Takes a Recipe and puts every ingredients and the corresponding into the instruction_ingredients table.
-       :param recipe: object of the class recipe
-       :return: nothing
-    """
-    db = db_helpers.getDbCon()
-    cursor = db.cursor()
-    recipe_instruction_id = instruction_helpers.getRecipeInstructionID(recipe)
-    recipeIngredientInsertQuery = """INSERT into recipe_ingredients 
-                                  (recipe_instruction_id, ingredient_id, amount, unit) VALUES (%s, %s, %s, %s);"""
-    try:
-        for ind, instr in enumerate(recipe.instructions):
-            for ingred in instr.ingredients:
-                cursor.execute(recipeIngredientInsertQuery, (recipe_instruction_id[ind][0], ingred.ingredient_id,
-                                                            ingred.amount, ingred.unit))
-        db.commit()
-    except Exception:
-        print('Error: OOPs something went wrong while adding ingredients to a recipe instruction!')
-    finally:
-        cursor.close()
-        db.close()
-
 def getRecipeInstructionID(recipe):
     db = db_helpers.getDbCon()
     cursor = db.cursor()

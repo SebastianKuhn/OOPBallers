@@ -27,7 +27,7 @@ def master_addRecipe(recipe):
         instruction_helpers.addIngredienttoRecipeInstruction(recipe)
         print("The function has been ran!")
         equipment_helpers.addEquipmenttoRecipe(recipe)
-        recipe_helpers.addIngredienttoRecipe(recipe)
+        ingredient_helpers.addIngredienttoRecipe(recipe)
 
     else:
         pass

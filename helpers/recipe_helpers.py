@@ -68,6 +68,7 @@ def addRecipetoUser(user_id, recipe):
         cursor.close()
         db.close()
 
+
 def checkifRecipeAlreadyExists(recipe):
     """
     Takes the recipe_id and checks if the recipe of which we want to add the instructions to the instruction table
@@ -88,3 +89,5 @@ def checkifRecipeAlreadyExists(recipe):
     finally:
         cursor.close()
         db.close()
+
+
