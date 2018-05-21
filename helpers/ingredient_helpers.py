@@ -2,27 +2,23 @@
 In this file all the functions to add the ingredients from the API response to the database are saved.
 """
 from helpers import db_helpers
-from Models.recipe import Recipe
-from Models.ingredient import Ingredient
-from Models.instruction import Instruction
-from Models.equipment import Equipment
 
 # for ingredients table
 def newIngredient(recipe):
     """
-    Takes a recipe and puts all ingredients used into the equipment table of the database
+    Takes a recipe and puts all ingredients used into the ingredient table of the database
     :param recipe: object of the class recipe
     :return: nothing
     """
     db = db_helpers.getDbCon()
     cursor = db.cursor()
-    ingredientInsertQuery = "INSERT IGNORE into ingredients (ingredient_id, name) VALUES (%s, %s);"
+    ingredientInsertQuery = "INSERT into ingredients (ingredient_id, name) VALUES (%s, %s) ON Duplicate KEY UPDATE ingredient_id = ingredient_id;"
     try:
         for ingr in recipe.ingredients:
             cursor.execute(ingredientInsertQuery, (ingr.ingredient_id, ingr.ingredient_name))
         db.commit()
     except Exception:
-        return "OOPs something went wrong"
+        print("OOPs something went wrong while adding new Ingredients to the database!")
     finally:
         cursor.close()
         db.close()
@@ -30,13 +26,18 @@ def newIngredient(recipe):
 # for recipe_ingredients table
 
 def addIngredienttoRecipe(recipe):
+     """
+    Takes a Recipe and puts every ingredients and the corresponding recipe_id into the recipe_ingredient table.
+    :param recipe: object of the class recipe
+    :return: nothing
+    """
     db = db_helpers.getDbCon()
     cursor = db.cursor()
-    recipeIngredientInsertQuery = """INSERT into recipe_ingredients (recipe_id, number, ingredient_id, amount, unit) VALUES (%s, %s, %s, %s, %s)"""
+    recipeIngredientInsertQuery = """INSERT into recipe_ingredients (recipe_id, instruction_number, ingredient_id, amount, unit) VALUES (%s, %s, %s, %s, %s)"""
     try:
         for instr in recipe.instructions:
             for ingred in instr.ingredients:
-                cursor.execute(recipeIngredientInsertQuery, (recipe.recipe_id, instr.number, ingred.ingredient_id,
+                cursor.execute(recipeIngredientInsertQuery, (recipe.recipe_id, instr.instruction_number, ingred.ingredient_id,
                                                                      ingred.amount, ingred.unit))
         db.commit()
     except Exception:
@@ -61,7 +62,7 @@ def addIngredienttoUser(user_id, recipe):
             cursor.execute(userIngredientInsertQuery, (user_id, ingr.ingredient_id))
             db.commit()
     except Exception:
-        return 'Error: OOPs something went wrong while adding ingredients to the user!'
+        print('Error: OOPs something went wrong while adding ingredients to the user!')
     finally:
         cursor.close()
         db.close()

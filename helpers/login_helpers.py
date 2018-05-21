@@ -1,3 +1,7 @@
+"""
+This file contains all functions to log in users.
+"""
+
 import helpers.user_helpers as helpers
 from Models.user import User
 import hashlib

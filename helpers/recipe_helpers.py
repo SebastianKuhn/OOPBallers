@@ -1,3 +1,6 @@
+"""
+In this file all the functions to add the recipes from the API response to the database are saved.
+"""
 from helpers import db_helpers
 
 def newRecipe(recipe):
@@ -8,8 +11,8 @@ def newRecipe(recipe):
     """
     db = db_helpers.getDbCon()
     cursor = db.cursor()
-    recipeInsertQuery = "INSERT IGNORE into recipes (recipe_id, title, ready_in_minutes, servings, vegetarian, " \
-                        "source_url, aggregate_likes, health_score) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);"
+    recipeInsertQuery = "INSERT into recipes (recipe_id, title, ready_in_minutes, servings, vegetarian, " \
+                        "source_url, aggregate_likes, health_score) VALUES (%s, %s, %s, %s, %s, %s, %s, %s) ON Duplicate KEY UPDATE recipe_id = recipe_id;"
     try:
         cursor.execute(recipeInsertQuery, (recipe.recipe_id, recipe.title, recipe.ready_in_minutes, recipe.servings,
                                            recipe.vegetarian, recipe.source_url, recipe.aggregate_likes,

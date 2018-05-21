@@ -12,18 +12,19 @@ def master_addRecipe(recipe):
     :param recipe: object of the class recipe
     :return: adds data to database
     """
+    # all functions inside this function already have try and except statements built-in. That's why no
+    # try and except statement is used here.
     check = recipe_helpers.checkifRecipeAlreadyExists(recipe)
 
     # these functions work with INSERT IGNORE and thus don't need to be in the conditional.
     recipe_helpers.newRecipe(recipe)
     ingredient_helpers.newIngredient(recipe)
     equipment_helpers.newEquipment(recipe)
+
     if check == ():
-        #instruction_helpers.addRecipeInstructionText(recipe)
+        instruction_helpers.addRecipeInstructionText(recipe)
         ingredient_helpers.addIngredienttoRecipe(recipe)
-        print("I'm starting the function now")
         equipment_helpers.addEquipmenttoRecipe(recipe)
-        print("The function is done")
 
     else:
         pass
@@ -37,6 +38,9 @@ def master_addRecipetoUser(user_id, recipe):
     :param recipe: object of the class recipe
     :return: adds data to database
     """
+
+    # all functions inside this function already have try and except statements built-in. That's why no
+    # try and except statement is used here.
     check = recipe_helpers.checkifUserRecipeAlreadyExists(user_id, recipe.recipe_id)
 
     if check == ():

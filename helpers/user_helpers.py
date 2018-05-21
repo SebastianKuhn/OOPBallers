@@ -1,5 +1,8 @@
-import helpers.db_helpers as helpers
+"""
+In this file all  functions to add users to the database are saved.
+"""
 
+import helpers.db_helpers as helpers
 
 def newUser(name, hashed_password, vegetarian):
     db = helpers.getDbCon()

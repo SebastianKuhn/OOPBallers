@@ -1,5 +1,8 @@
-from helpers import db_helpers
+"""
+In this file all the functions to add the recipe instructions from the API response to the database are saved.
+"""
 
+from helpers import db_helpers
 
 def addRecipeInstructionText(recipe):
     """
@@ -12,13 +15,14 @@ def addRecipeInstructionText(recipe):
 
     db = db_helpers.getDbCon()
     cursor = db.cursor()
-    recipeInstructionInsertQuery = """INSERT into recipe_insructions (recipe_id, instruction_number, step)  VALUES (%s, %s, %s)"""
+    recipeInstructionInsertQuery = """INSERT into recipe_instructions (recipe_id, instruction_number, step) VALUES (%s, %s, %s)"""
     try:
         for instr in recipe.instructions:
+            instr.step.encode('utf-8')
             cursor.execute(recipeInstructionInsertQuery, (recipe.recipe_id, instr.instruction_number, instr.step))
         db.commit()
     except Exception:
-        return 'Error: unable to execute!'
+        print("Error: OOPs something went wrong while adding instruction text to a recipe!")
     finally:
         cursor.close()
         db.close()
