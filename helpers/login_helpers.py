@@ -41,6 +41,7 @@ def login():
             password = str(input("Enter your password  "))
             hashed_pw = helpers.getPassword(name)
             if hashed_pw == hash_password(password):
+                print("")
                 print("You have successfully logged in.")
                 print("")
                 break
@@ -57,7 +58,13 @@ def login():
     else:
         vegetarian = True
 
-    #creates a user which will be returned
-    user = User(name, hashed_pw, vegetarian)
+    #gets the user's id and creates a user object
+    try:
+        user_id = int(helpers.getCurrentUserId(username)[0])
+        user = User(name, hashed_pw, vegetarian, user_id)
+    except Exception:
+        user = User(name, hashed_pw, vegetarian)
+        print("oops something went wrong with fetching the user id")
+
 
     return user

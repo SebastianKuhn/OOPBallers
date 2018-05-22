@@ -90,4 +90,83 @@ def checkifRecipeAlreadyExists(recipe):
         cursor.close()
         db.close()
 
+def getRecipeIds(user):
+    """
+    Takes a user as the input and returns a list with all of the user's recipe ids.
+    :param user: object of class User
+    :return: list of integers
+    """
+    db = db_helpers.getDbCon()
+    cursor = db.cursor()
+    userRecipeTitlesQuery = "SELECT recipe_id FROM user_recipes WHERE user_id = %s;"
+    try:
+        cursor.execute(userRecipeTitlesQuery, (user.user_id,))
+        results = cursor.fetchall()
+        list_of_recipe_ids = []
+        for result in results:
+            list_of_recipe_ids.append(result[0])
+        return list_of_recipe_ids
+
+    except Exception:
+        print("Error: OOPs something went wrong in getting the user's recipe id's!")
+    finally:
+        cursor.close()
+        db.close()
+
+
+def getRecipeName(recipe_id):
+    """
+    Takes a recipe id as the input and returns the respective recipe name.
+    :param integer
+    :return: string
+    """
+    db = db_helpers.getDbCon()
+    cursor = db.cursor()
+    recipeNameQuery = "SELECT title FROM recipes WHERE recipe_id = %s;"
+    try:
+        cursor.execute(recipeNameQuery, (recipe_id,))
+        results = cursor.fetchall()
+        for result in results:
+            return result[0]
+    except Exception:
+        print("Error: OOPs something went wrong in getting the recipe name.")
+    finally:
+        cursor.close()
+        db.close()
+
+
+def getRecipeNames(list_of_recipe_ids):
+    """
+    Takes a list of recipes as the input and gets all his recipe id's which are used to fetch all the recipe names which will
+    be returned
+    :param list_of_recipe_ids: list of integers
+    :return: list of strings
+    """
+    list_of_recipe_names = []
+
+    for recipe_id in list_of_recipe_ids:
+        list_of_recipe_names.append(getRecipeName(recipe_id))
+
+    return list_of_recipe_names
+
+
+def getRecipeInformation(recipe_id):
+    """
+    Takes a recipe id and the term that is needed as the input and returns the value of the term.
+    :param recipe_id: integer, term: string
+    :return: tuple response
+    """
+    db = db_helpers.getDbCon()
+    cursor = db.cursor()
+    recipeNameQuery = "SELECT title, ready_in_minutes, servings, vegetarian, source_url, aggregate_likes, health_score " \
+                      "FROM recipes WHERE recipe_id = %s;"
+    try:
+        cursor.execute(recipeNameQuery, (recipe_id,))
+        results = cursor.fetchall()
+        return results[0]
+    except Exception:
+        print("Error: OOPs something went wrong in getting information of " + term + ".")
+    finally:
+        cursor.close()
+        db.close()
 
