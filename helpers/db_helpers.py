@@ -24,4 +24,4 @@ def getDbCon():
         db_password = parser.get('db','password')
         db_name = parser.get('db','db')
 
-    return (MySQLdb.connect(db_host, db_user, db_password, db_name))
+    return (MySQLdb.connect(db_host, db_user, db_password, db_name, use_unicode=True, charset="utf8"))
