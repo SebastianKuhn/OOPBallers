@@ -169,7 +169,7 @@ def unsafeGetUsername(name):
     """
     db = helpers.getDbCon()
     cursor = db.cursor()
-    if "drop" in str(name).lower() or "dlete" in str(name).lower():
+    if "drop" in str(name).lower() or "delete" in str(name).lower():
         print("Please don't do it Ruben!")
         return
         print("SHOULDNT SHOW")
