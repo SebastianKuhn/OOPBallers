@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sell
+{% endblock %}
+
+{% block main %}
+    <form action="/sell" method="post">
+        <div class="form-group">
+            <select class="form-control" name="symbol">
+                <!-- implement drop down menu, displaying only those stocks as available for sale, which the user actually owns -->
+                <option value="" disabled="disabled" selected="selected">Symbol</option>
+                {% for symbol in symbols %}
+                    <option value="{{symbol[0]}}">{{symbol[0]}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <input class="form-control"  min="1" name="shares" placeholder="Shares" type="number"/>
+        </div>
+        <button class="btn btn-success" type="submit">Sell</button>
+    </form>
+{% endblock %}
