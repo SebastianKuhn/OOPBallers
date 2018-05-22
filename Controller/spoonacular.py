@@ -8,7 +8,7 @@ import requests
 def getRecipesByIngredient(ingredients):
     """
     fetches recipes which maximize the use of input ingredients.
-    input: list of strings
+    :param ingredints: list of strings
     :return decoded json
     """
     base_url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?ranking=" \
@@ -34,7 +34,11 @@ def getRecipesByIngredient(ingredients):
     return response.json()
 
 def getRecipeInformation(recipe_id):
-
+    """
+    fetches the informations by using the recipe_id
+    :param recipe_id: integer
+    :return decoded json
+    """
     base_url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/" + str(recipe_id) + "/information"
 
     response = requests.get(
@@ -48,9 +52,14 @@ def getRecipeInformation(recipe_id):
     return response.json()
 
 
-def getRecipeByName(name):
+def getRecipeByName(search_query):
+    """
+    fetches recipes using natural language detection.
+    :param search_query: string
+    :return decoded json
+    """
 
-    base_url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?query=" + name
+    base_url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?query=" + search_query
 
     response = requests.get(
         base_url,

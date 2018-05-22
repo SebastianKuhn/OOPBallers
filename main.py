@@ -165,13 +165,23 @@ def checkUserInput(cur_user):
         search_query = str(input("What recipe would you like to search for? "))
         #saves the api response
         recipes = spoonacular.getRecipeByName(search_query)
-        #lets the user decide which recipe he wants
-        chosen_recipe = chooseRecipeFromJson(recipes)
-        #prints the recipe's information
-        chosen_recipe.printRecipeInformations()
-        #lets the user decide wheter he wants to save the recipe in his account
-        saveRecipe(chosen_recipe, cur_user)
-        print("")
+
+        if len(recipes.get("results")) != 0:
+            # lets the user decide which recipe he wants
+            chosen_recipe = chooseRecipeFromJson(recipes)
+            # prints the recipe's information
+            chosen_recipe.printRecipeInformations()
+            # lets the user decide wheter he wants to save the recipe in his account
+            saveRecipe(chosen_recipe, cur_user)
+            print("")
+        else:
+            print("")
+            print("")
+            print("Unfortunately your search did not have any results. Please start again.")
+            print("")
+            print("")
+
+
 
     elif user_input == "3":
         #get all recipe ids and titles for the current user

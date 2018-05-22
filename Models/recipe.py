@@ -3,7 +3,6 @@ This file contains the class recipe. A recipe consists of the variables listed b
 and directly adopted from the spoonacular api.
 """
 
-from Models.ingredient import Ingredient
 
 class Recipe(object):
 
