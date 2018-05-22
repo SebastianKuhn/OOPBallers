@@ -132,6 +132,7 @@ def presentOptions():
     print("1. Search a new recipe using pictures")
     print("2. Search recipes by name")
     print("3. Get all your recipes")
+    print("4. Delete your Account")
     print("'info' to get information on all options")
     print("'exit' to end the program")
     print("")
@@ -143,7 +144,7 @@ def checkUserInput(cur_user):
     input: current user as User-object
     """
 
-    user_input = str(input("What would you like to do? "))
+    user_input = str(input("What would you like to do? Type in a number or 'info' for information: "))
 
     #search new recipe by ingredients.
     if user_input == "1":
@@ -181,8 +182,6 @@ def checkUserInput(cur_user):
             print("")
             print("")
 
-
-
     elif user_input == "3":
         #get all recipe ids and titles for the current user
         list_of_recipe_ids = recipe_helpers.getRecipeIds(cur_user)
@@ -204,6 +203,26 @@ def checkUserInput(cur_user):
 
         chosen_recipe.printRecipeInformations()
 
+    elif user_input == "4":
+        print("")
+        delete_response = str(input("Do you really want to delete your account? Type 'DELETE' to delete your Account or "
+                                "'cancel' to cancel: "))
+
+        if delete_response == "DELETE":
+            print("")
+            print(cur_user.username)
+            print(user_helpers.deleteUser(cur_user.user_id))
+            print("The programm will now end.")
+            return True
+        elif delete_response.lower() == "cancel":
+            print("")
+            presentOptions()
+
+        else:
+            print("")
+            delete_response = str(input("Please type in DELETE in caps or cancel to cancel. "))
+            print("")
+
 
     elif user_input.lower() == "info":
         #presents all the options that the user has
@@ -218,7 +237,6 @@ def checkUserInput(cur_user):
         print("Please enter a valid number. If you need further information type: info")
         print("")
 
-    presentOptions()
 
 def saveRecipe(chosen_recipe, cur_user):
     """
@@ -359,9 +377,6 @@ def chooseCorrectNumber(number):
 
 if __name__ == "__main__":
     """starts the programm"""
-
-    print(ingredient_helpers.getIngredientIdByInstructionId(223))
-
     #global user who is logged in
     current_user = None
 
