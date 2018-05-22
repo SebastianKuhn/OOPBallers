@@ -89,6 +89,7 @@ In a next optional step, the data is saved to the users profile in the MySQL dat
  	 	\item 1. Search a new recipe using pictures
  	 	\item 2. Search recipes by name
  	 	\item 3. Get all your recipes
+		\item 4. Delete your Account
  	 	\item 'info' to get information on all options
  	 	\item 'exit' to end the program
  	 \end{itemize}}
@@ -101,22 +102,23 @@ In a next optional step, the data is saved to the users profile in the MySQL dat
  
  \subsection*{\texttt{3. Get all your recipes}}
  This functionality taps into the database to obtain all recipes saved to the users profile. The recipes can again be inspected.
+
+ \subsection*{\texttt{4. Delete your Account}}
+ This functionality enables the user to delete the user account. One can choose between typing 'DELETE' to confirm and 'cancel'.
   
 \subsection*{\texttt{'info' to get information on all options}}
 The \texttt{'info'} option allows you to obtain more information about the different functionalities of the program.
   
 \subsection*{\texttt{'exit' to end the program}}
 \texttt{'exit'} allows you to stop the \texttt{main.py} file process by exiting the while loop.
-\begin{wrapfigure}[16]{r}{0.5\textwidth}
+\begin{wrapfigure}[7]{r}{0.5\textwidth}
   \begin{center}
     \includegraphics[scale = 1.2]{file_structure.png}
   \end{center}
 \end{wrapfigure}
 
 \subsection*{File Structure}
-
-
-On the right the file structure of our project is displayed. Our git repository mainly consists of four folders and the \texttt{main.py} file:
+\par
 \begin{itemize}
 \item \textbf{\texttt{Config}}: Contains the \texttt{config.ini} file which stores the database access parameters.
 \item \textbf{\texttt{Controller}}: Contains the controller files that communicate with the APIs.
