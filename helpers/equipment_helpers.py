@@ -69,3 +69,42 @@ def addEquipmenttoUser(user_id, recipe):
     finally:
         cursor.close()
         db.close()
+
+
+def getEquipmentByInstructionId(instruction_id):
+    """
+    This function is used to fetch the equipment id using the instruction_id
+    :param recipe_id: int
+    :return: equipment_id: int
+    """
+    db = db_helpers.getDbCon()
+    cursor = db.cursor()
+    userEquipmentInsertQuery = "SELECT equipment_id FROM recipe_equipment WHERE recipe_instruction_id =%s"
+    try:
+        cursor.execute(userEquipmentInsertQuery, (instruction_id,))
+        equipment_id = cursor.fetchall()
+        return equipment_id[0]
+    except Exception:
+        print('Error: OOPs something went wrong while adding Equipment to a user!')
+    finally:
+        cursor.close()
+        db.close()
+
+def getEquipmentByEquipmentId(equipment_id):
+    """
+    This function is used to fetch the complete equipment using the equipment_id
+    :param equipment_id: int
+    :return: tuple consisting of all the necessary equipment infos
+    """
+    db = db_helpers.getDbCon()
+    cursor = db.cursor()
+    userEquipmentInsertQuery = "SELECT * FROM equipments WHERE equipment_id =%s"
+    try:
+        cursor.execute(userEquipmentInsertQuery, (equipment_id,))
+        equipment = cursor.fetchall()
+        return equipment
+    except Exception:
+        print('Error: OOPs something went wrong while adding Equipment to a user!')
+    finally:
+        cursor.close()
+        db.close()
