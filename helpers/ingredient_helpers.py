@@ -174,8 +174,7 @@ def getIngredientIdByInstructionId(instruction_id):
     try:
         cursor.execute(ingredientIdQuery, (instruction_id,))
         results = cursor.fetchall()
-        instruction_id = results
-        return instruction_id
+        return results
     except Exception:
         print('Error: OOPs something went wrong while getting the ingredient id!')
     finally:

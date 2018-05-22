@@ -116,7 +116,7 @@ def master_getRecipeInformation(recipe_id):
 
         for ingredient in ingred:
             if isempty(ingredient_ids) is not True:
-                for id in ingredient_ids:
+                for id in ingredient_ids[0]:
                     if ingredient.ingredient_id == id:
                         ingredients.append(ingredient)
 

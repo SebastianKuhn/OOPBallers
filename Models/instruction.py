@@ -18,12 +18,17 @@ class Instruction(object):
         print("")
         print("Step " + str(self.instruction_number) + ": ")
         print("You need: ")
-        print("Ingredients:")
-        for ingredient in self.ingredients:
-            ingredient.printInformation()
-        print("Equipment:")
-        for equipment in self.equipment:
-            equipment.printInformation()
+
+        if len(self.ingredients) != 0:
+            print("Ingredients:")
+            for ingredient in self.ingredients:
+                ingredient.printInformation()
+
+        if len(self.equipment) != 0:
+            print("Equipment:")
+            for equipment in self.equipment:
+                equipment.printInformation()
+
         print("")
         print(self.step)
         print("")

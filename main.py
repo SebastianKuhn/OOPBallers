@@ -9,7 +9,7 @@ from helpers import master_helpers
 from helpers import recipe_helpers
 import hashlib
 from Models.user import User
-from helpers import equipment_helpers
+from helpers import ingredient_helpers
 
 
 def welcome():
@@ -350,7 +350,7 @@ def chooseCorrectNumber(number):
 if __name__ == "__main__":
     """starts the programm"""
 
-    print(equipment_helpers.getEquipmentByInstructionId(192))
+    print(ingredient_helpers.getIngredientIdByInstructionId(223))
 
     #global user who is logged in
     current_user = None
