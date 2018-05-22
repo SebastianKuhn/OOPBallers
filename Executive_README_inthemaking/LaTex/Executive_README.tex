@@ -18,6 +18,7 @@
 \usepackage{titling}
 \usepackage{courier}
 \usepackage{epigraph}
+\usepackage{enumitem}
 
 
 %%% Spaces before and after sections
@@ -71,13 +72,42 @@ This paper contains an executive README of the application \textbf{ YUMMLY 3.0},
 \item \textbf{Python Packages}: check out the file \texttt{prerequisits.txt}!
 \end{itemize}
  
-\section*{Application}
-This section provides an overview over the functionality of the application.
-\subsection*{Functionality}
-\subsection*{User Interface}
-\subsection*{Under the hood}
-\subsubsection*{Database}
-\subsubsection*{APIs}
+\section*{Workings of Yummly3.0}
+This section mainly serves as explanation of the program itself. For easier understanding (if needed) it is recommended to use the Application overview diagram as reference. The Yummly 3.0 program is executed in a python environment, with which the user interacts via \texttt{input()} functions.
+
+The program comes together in the \texttt{main.py} file which taps into the other necessary function.
+Upon executting the latter file the user is required to sign in or sign up.
+Following this choice a new user is either saved into the database or the username and password are compared to a hashed record stored in the database.
+Hereby the main.py script directly communicates with the data access object [DAO].
+
+Following this first interaction, the user is offered a choice of options which shall be discussed hereafter. The concept of each request is always a similar one.
+Thus the user chooses an option, if the latter requires further input the main file requests this. The obtained information are then used by one of the API controllers which requests the API and returns the information which are saved as object using one of the blueprints provided by the Models file.
+In a next optional step, the data is saved to the users profile in the MySQL database through the functions provided in one of the helper files which are accessed through the \texttt{master\_helpers.py} file.
+
+ \texttt{Please enter the number of one of the following options: 
+ 	\begin{itemize}[label={}]
+ 	 	\item 1. Search a new recipe using pictures
+ 	 	\item 2. Search recipes by name
+ 	 	\item 3. Get all your recipes
+ 	 	\item 'info' to get information on all options
+ 	 	\item 'exit' to end the program
+ 	 \end{itemize}}
+  
+ \subsection*{\texttt{1. Search a new recipe using pictures}}
+ This option uses pictures stored locally in a folder. The path is provided by the user whereafter the images are  encoded and through use of the Google Vision API the ingredients shown on the pictures are recognized and used as input for the Spoonacular API which returns a list of possible recipies to the user. The user can select to see explicit instructions about the recipe and thereafter decide to store it in the database.
+ 
+ \subsection*{\texttt{2. Search recipies by name}}
+ Here the user may search a recipe through an input string, which will be sent to the Spoonacular API and returns once again a list of recipies. Once again the user can select to see more details and save the inspected recipe.
+ 
+ \subsection*{\texttt{3.Get all your recipes}}
+ This functionality taps into the database to obtain all recipes saved to the users profile. The recipies can again be inspected.
+  
+\subsection*{\texttt{'info' to get information on all options}}
+The \texttt{'info'} option allows you to obtain more information about the different functionalities of the program.
+  
+\subsection*{\texttt{'exit' to end the program}}
+\texttt{'exit'} allows you to stop the \texttt{main.py} file process by exiting the while loop.
+
 \subsection*{Security}
 One issue that can never be overemphasized in our digital world is security. In the course we heard that in some databases whole tables can be deleted by simple user inputs through the front end. \par Of course we have thought about how we can prevent this in our application to prevent embarrassment during the presentation. \par
 \includegraphics[scale = .5]{exploits_of_a_mom.png} \par
