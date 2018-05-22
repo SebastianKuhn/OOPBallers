@@ -69,6 +69,7 @@ def addIngredienttoRecipe(recipe):
         cursor.close()
         db.close()
 
+
 def addIngredienttoUser(user_id, recipe):
     """
     This function is used to add new Ingredients to a user's account. It puts them into the "user_ingredients" table.
@@ -86,6 +87,51 @@ def addIngredienttoUser(user_id, recipe):
             db.commit()
     except Exception:
         print('Error: OOPs something went wrong while adding ingredients to the user!')
+    finally:
+        cursor.close()
+        db.close()
+
+
+def getIngredientIdsForRecipe(recipe_id):
+    """
+    This function is used to fetch all the ingredients for a recipe
+    :param recipe_id: integer
+    :return: ingredient_ids: list of integers
+    """
+    db = db_helpers.getDbCon()
+    cursor = db.cursor()
+    ingredientIdForRecipeQuery = "SELECT ingredient_id FROM recipe_ingredients WHERE recipe_id = %s"
+
+    try:
+        cursor.execute(ingredientIdForRecipeQuery, (recipe_id,))
+        results = cursor.fetchall()
+        ingredient_ids = []
+        for result in results:
+            ingredient_ids.append(result[0])
+        return ingredient_ids
+    except Exception:
+        print('Error: OOPs something went wrong while adding ingredients to the user!')
+    finally:
+        cursor.close()
+        db.close()
+
+def getAmountAndUnitForIngredient(ingredient_id, recipe_instruction_ids):
+    """
+    This function is used to fetch the amount and the unit for the respective Ingredient
+    :param recipe_id: integer
+    :return:
+    """
+    db = db_helpers.getDbCon()
+    cursor = db.cursor()
+    amountAndUnitQuery = "SELECT amount, unit FROM recipe_instructions WHERE ingredient_id = %s" \
+                         "and recipe_instruction_id in %s"
+
+    try:
+        cursor.execute(amountAndUnitQuery, (ingredient_id, recipe_instruction_ids))
+        results = cursor.fetchall()
+        return results
+    except Exception:
+        print('Error: OOPs something went wrong while getting the amount and unit!')
     finally:
         cursor.close()
         db.close()

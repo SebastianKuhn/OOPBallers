@@ -6,8 +6,11 @@ from Controller import googlevision, spoonacular, json_parser
 from helpers import user_helpers
 from helpers import login_helpers
 from helpers import master_helpers
+from helpers import recipe_helpers
 import hashlib
 from Models.user import User
+from Models.recipe import Recipe
+from helpers import instruction_helpers
 
 
 def welcome():
@@ -99,8 +102,9 @@ def signUp():
     hashed_password = hash_password(password)
 
     #create User
-    user_helpers.newUser(username, hashed_password,vegetarian)
     user = User(username, hashed_password, vegetarian)
+    user_helpers.newUser(user)
+
 
     print("")
     print("You successfully created an account!")
@@ -149,7 +153,7 @@ def checkUserInput(cur_user):
         #fetches 5 possible recipes
         recipes = spoonacular.getRecipesByIngredient(recognized_ingredients)
         #lets the user decide which recipe he wants
-        chosen_recipe = chooseRecipe(recipes)
+        chosen_recipe = chooseRecipeFromJson(recipes)
         #prints the recipe's information
         chosen_recipe.printRecipeInformations()
 
@@ -163,7 +167,7 @@ def checkUserInput(cur_user):
         #saves the api response
         recipes = spoonacular.getRecipeByName(search_query)
         #lets the user decide which recipe he wants
-        chosen_recipe = chooseRecipe(recipes)
+        chosen_recipe = chooseRecipeFromJson(recipes)
         #prints the recipe's information
         chosen_recipe.printRecipeInformations()
         #lets the user decide wheter he wants to save the recipe in his account
@@ -171,9 +175,23 @@ def checkUserInput(cur_user):
         print("")
 
     elif user_input == "3":
+        #get all recipe ids and titles for the current user
+        list_of_recipe_ids = recipe_helpers.getRecipeIds(cur_user)
+        list_of_recipe_titles = recipe_helpers.getRecipeNames(list_of_recipe_ids)
+
+        #print the recipes
+        number = 1
+        for title in list_of_recipe_titles:
+            print(str(number) + ". " + str(title))
+            number += 1
         print("")
-        print("get your recipes")
-        print("")
+
+        chosen_value = chooseCorrectNumber(number)
+
+        chosen_recipe_id = list_of_recipe_ids[chosen_value]
+
+        chosen_recipe = master_helpers.getRecipe(chosen_recipe_id)
+
 
     elif user_input.lower() == "info":
         #presents all the options that the user has
@@ -254,7 +272,7 @@ def identifyIngredients():
     return recognized_ingredients
 
 
-def chooseRecipe(response):
+def chooseRecipeFromJson(response):
     """
     takes the spoonacular response as input and asks the user which recipe he wants to choose.
     input: decoded json response
@@ -284,7 +302,28 @@ def chooseRecipe(response):
         print(str(number) + ". " + recipe.get("title"))
         number += 1
 
-    #checks whether the user input is an int and wheter it is in bounds
+    #lets the user choose a number and checks whether it is valid.
+    value = chooseCorrectNumber(number)
+
+    #parses the first response to return a recipe object with id and title
+    chosen_recipe = json_parser.parseIdAndTitle(recipes, value)
+
+    #api call to get the full recipe information
+    recipe_information = spoonacular.getRecipeInformation(chosen_recipe.recipe_id)
+
+    #parses the full recipe information to add the remaining variables like likes, ingredients, instructions etc.
+    complete_recipe = json_parser.parseRemainingVariables(recipe_information, chosen_recipe)
+    return complete_recipe
+
+
+def chooseCorrectNumber(number):
+    """
+    takes the number which has been incremented in the for loop as input and returns the value chosen from the user.
+    input: number: int
+    :return value: Integer
+
+    """
+    #checks whether the user chooses a correct number
     while True:
         try:
             print("")
@@ -302,19 +341,13 @@ def chooseRecipe(response):
             print("Please enter a valid number!")
             print("")
 
-    #parses the first response to return a recipe object with id and title
-    chosen_recipe = json_parser.parseIdAndTitle(recipes, value)
+    return value
 
-    #api call to get the full recipe information
-    recipe_information = spoonacular.getRecipeInformation(chosen_recipe.recipe_id)
-
-    #parses the full recipe information to add the remaining variables like likes, ingredients, instructions etc.
-    complete_recipe = json_parser.parseRemainingVariables(recipe_information, chosen_recipe)
-    return complete_recipe
 
 
 if __name__ == "__main__":
     """starts the program"""
+    master_helpers.master_getRecipeInformation(559187)
 
     #global user who is logged in
     current_user = None

@@ -4,7 +4,7 @@ In this file all functions to add users to the database are saved.
 
 import helpers.db_helpers as helpers
 
-def newUser(name, hashed_password, vegetarian):
+def newUser(user):
     """
     Inserts new user into database
     :param name: type string
@@ -16,7 +16,7 @@ def newUser(name, hashed_password, vegetarian):
     cursor = db.cursor()
     userInsertQuery = "INSERT into users (username, password, vegetarian) VALUES (%s, %s, %s)"
     try:
-        cursor.execute(userInsertQuery, (name, hashed_password, vegetarian)) # to replace s% put in quotation markes
+        cursor.execute(userInsertQuery, (user.username, user.hashed_password, user.vegetarian_status)) # to replace s% put in quotation markes
         db.commit()
     except Exception:
         return 'Error: OOPs something went wrong!'
