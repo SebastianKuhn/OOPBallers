@@ -85,7 +85,7 @@ def getEquipmentByInstructionId(instruction_id):
         equipment_id = cursor.fetchall()
         return equipment_id[0]
     except Exception:
-        print('Error: OOPs something went wrong while adding Equipment to a user!')
+        print('Error: OOPs something went wrong while getting the equipment by Instruction ID!')
     finally:
         cursor.close()
         db.close()
