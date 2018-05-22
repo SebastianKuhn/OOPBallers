@@ -125,7 +125,7 @@ def master_getRecipeInformation(recipe_id):
         equipment_ids = equipment_helpers.getEquipmentByInstructionId(instruction_id)
 
         if isempty(equipment_ids) is not True:
-            for id in equipment_ids:
+            for id in equipment_ids[0]:
                 equipment_tuple = equipment_helpers.getEquipmentByEquipmentId(id)
                 if isempty(equipment_tuple) is not True:
                     for equipment in equipment_tuple:
