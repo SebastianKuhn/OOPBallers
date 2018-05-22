@@ -93,7 +93,7 @@ def master_getRecipeInformation(recipe_id):
     for ingredient_id in ingredient_ids:
         for recipe_instruction_id in recipe_instruction_ids:
             if len(ingredient_helpers.getAmountAndUnitForIngredient(ingredient_id, recipe_instruction_id)) != 0:
-                ingredient_name = ingredient_helpers.getIngredientNameById(ingredient_id)
+                ingredient_name = ingredient_helpers.getIngredientNameById(ingredient_id)[0]
                 amount = ingredient_helpers.getAmountAndUnitForIngredient(ingredient_id, recipe_instruction_id)[0][0]
                 unit = ingredient_helpers.getAmountAndUnitForIngredient(ingredient_id, recipe_instruction_id)[0][1]
                 ingredient_object = Ingredient(ingredient_name, ingredient_id, amount, unit)
