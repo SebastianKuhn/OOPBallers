@@ -101,11 +101,11 @@ def master_getRecipeInformation(recipe_id):
     for id in ingredient_ids:
         amount_and_unit = ingredient_helpers.getAmountAndUnitForIngredient(id, recipe_instruction_ids)
         ingredient_name = ingredient_helpers.getIngredientNameById(id)[0]
-        if isempty(amount_and_unit) is False:
+        if master_isempty(amount_and_unit) is False:
             amount = amount_and_unit[0][0]
             unit = amount_and_unit[0][1]
-        ingredient_object = Ingredient(ingredient_name, id, amount, unit)
-        ingred.append(ingredient_object)
+            ingredient_object = Ingredient(ingredient_name, id, amount, unit)
+            ingred.append(ingredient_object)
 
     #printing information for the user
     print("It's going slow, but your recipe will be printed shortly...")
@@ -125,7 +125,7 @@ def master_getRecipeInformation(recipe_id):
         ingredient_ids = ingredient_helpers.getIngredientIdByInstructionId(instruction_id)
 
         for ingredient in ingred:
-            if isempty(ingredient_ids) is not True:
+            if master_isempty(ingredient_ids) is not True:
                 for id in ingredient_ids[0]:
                     if ingredient.ingredient_id == id:
                         ingredients.append(ingredient)
@@ -135,10 +135,10 @@ def master_getRecipeInformation(recipe_id):
 
         equipment_ids = equipment_helpers.getEquipmentByInstructionId(instruction_id)
 
-        if isempty(equipment_ids) is not True:
+        if master_isempty(equipment_ids) is not True:
             for id in equipment_ids[0]:
                 equipment_tuple = equipment_helpers.getEquipmentByEquipmentId(id)
-                if isempty(equipment_tuple) is not True:
+                if master_isempty(equipment_tuple) is not True:
                     for equipment in equipment_tuple:
                         id = equipment[0]
                         name = equipment[1]
@@ -157,11 +157,10 @@ def master_getRecipeInformation(recipe_id):
     return Recipe(recipe_id, title, ready_in_minutes, servings, vegetarian, source_url, aggregate_likes, health_score,
                   ingred, instructions)
 
-
-def isempty(tuple):
+def master_isempty(tuple):
     """
-    this function checks wheter a tuple is empty or not
-    :param tuple: tuple which is either filled or empty
+    this function checks whether a tuple is empty or not
+    :param list: list which is either filled or empty
     :return: boolean: False if it is not empty and true if the tuple is empty
     """
     if tuple:
