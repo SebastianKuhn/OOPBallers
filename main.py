@@ -10,7 +10,7 @@ from helpers import recipe_helpers
 import hashlib
 from Models.user import User
 from Models.recipe import Recipe
-from helpers import instruction_helpers
+from helpers import ingredient_helpers
 
 
 def welcome():
@@ -188,9 +188,12 @@ def checkUserInput(cur_user):
 
         chosen_value = chooseCorrectNumber(number)
 
-        chosen_recipe_id = list_of_recipe_ids[chosen_value]
+        chosen_recipe_id = list_of_recipe_ids[chosen_value-1]
 
-        chosen_recipe = master_helpers.getRecipe(chosen_recipe_id)
+        chosen_recipe = master_helpers.master_getRecipeInformation(chosen_recipe_id)
+
+
+        chosen_recipe.printRecipeInformations()
 
 
     elif user_input.lower() == "info":
@@ -346,8 +349,9 @@ def chooseCorrectNumber(number):
 
 
 if __name__ == "__main__":
-    """starts the program"""
-    master_helpers.master_getRecipeInformation(559187)
+    """starts the programm"""
+
+    #print(ingredient_helpers.getIngredientIdByInstructionId(191))
 
     #global user who is logged in
     current_user = None

@@ -46,3 +46,22 @@ def getRecipeInstructionID(recipe):
         cursor.close()
         db.close()
 
+
+def getInstructionByRecipeId(recipe_id):
+    """
+    gets the instruction of a certain recipe by its id
+    :param recipe_id: int
+    :return:
+    """
+    db = db_helpers.getDbCon()
+    cursor = db.cursor()
+    recipeInstructionIdQuery = "SELECT * FROM recipe_instructions WHERE recipe_id = %s"
+    try:
+        cursor.execute(recipeInstructionIdQuery, (recipe_id,))
+        recipe_instruction = cursor.fetchall()
+        return recipe_instruction
+    except Exception:
+        return "Oh Snap, this didn't work!"
+    finally:
+        cursor.close()
+        db.close()

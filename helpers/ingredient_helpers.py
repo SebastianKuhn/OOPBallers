@@ -115,23 +115,69 @@ def getIngredientIdsForRecipe(recipe_id):
         cursor.close()
         db.close()
 
-def getAmountAndUnitForIngredient(ingredient_id, recipe_instruction_ids):
+
+def getAmountAndUnitForIngredient(ingredient_id, recipe_instruction_id):
     """
     This function is used to fetch the amount and the unit for the respective Ingredient
-    :param recipe_id: integer
-    :return:
+    :param recipe_instruction_id: integer
+    :param ingredient_id: integer
+    :return: results: tuple with amount and unit
     """
     db = db_helpers.getDbCon()
     cursor = db.cursor()
-    amountAndUnitQuery = "SELECT amount, unit FROM recipe_instructions WHERE ingredient_id = %s" \
-                         "and recipe_instruction_id in %s"
+    amountAndUnitQuery = "SELECT amount, unit FROM instruction_ingredient WHERE ingredient_id = %s and "\
+                         "recipe_instruction_id = %s"
 
     try:
-        cursor.execute(amountAndUnitQuery, (ingredient_id, recipe_instruction_ids))
+        cursor.execute(amountAndUnitQuery, (ingredient_id, recipe_instruction_id))
         results = cursor.fetchall()
         return results
     except Exception:
         print('Error: OOPs something went wrong while getting the amount and unit!')
+    finally:
+        cursor.close()
+        db.close()
+
+
+def getIngredientNameById(ingredient_id):
+    """
+    This function is used to fetch the name of an ingredient
+    :param ingredient_id: int
+    :return: ingredient_name: string
+    """
+    db = db_helpers.getDbCon()
+    cursor = db.cursor()
+    amountAndUnitQuery = "SELECT name FROM ingredients WHERE ingredient_id = %s"
+
+    try:
+        cursor.execute(amountAndUnitQuery, (ingredient_id,))
+        results = cursor.fetchall()
+        ingredient_name = results[0]
+        return ingredient_name
+    except Exception:
+        print('Error: OOPs something went wrong while getting the ingredient name!')
+    finally:
+        cursor.close()
+        db.close()
+
+
+def getIngredientIdByInstructionId(instruction_id):
+    """
+    This function is used to fetch the id of the ingredient according to its instruction
+    :param instruction_id: int
+    :return: ingredient_id: int
+    """
+    db = db_helpers.getDbCon()
+    cursor = db.cursor()
+    ingredientIdQuery = "SELECT ingredient_id FROM instruction_ingredient WHERE recipe_instruction_id = %s"
+
+    try:
+        cursor.execute(ingredientIdQuery, (instruction_id,))
+        results = cursor.fetchall()
+        instruction_id = results
+        return instruction_id
+    except Exception:
+        print('Error: OOPs something went wrong while getting the ingredient id!')
     finally:
         cursor.close()
         db.close()
