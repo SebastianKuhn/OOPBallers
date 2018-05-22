@@ -186,21 +186,25 @@ def checkUserInput(cur_user):
         list_of_recipe_ids = recipe_helpers.getRecipeIds(cur_user)
         list_of_recipe_titles = recipe_helpers.getRecipeNames(list_of_recipe_ids)
 
-        #print the recipes
-        number = 1
-        for title in list_of_recipe_titles:
-            print(str(number) + ". " + str(title))
-            number += 1
-        print("")
+        if isempty(list_of_recipe_ids) is True:
+            #print the recipes
+            number = 1
+            for title in list_of_recipe_titles:
+                print(str(number) + ". " + str(title))
+                number += 1
+            print("")
 
-        chosen_value = chooseCorrectNumber(number)
+            chosen_value = chooseCorrectNumber(number)
 
-        chosen_recipe_id = list_of_recipe_ids[chosen_value-1]
+            chosen_recipe_id = list_of_recipe_ids[chosen_value-1]
 
-        chosen_recipe = master_helpers.master_getRecipeInformation(chosen_recipe_id)
+            chosen_recipe = master_helpers.master_getRecipeInformation(chosen_recipe_id)
 
-
-        chosen_recipe.printRecipeInformations()
+            chosen_recipe.printRecipeInformations()
+        else:
+            print("")
+            print("Unfortunately you have no recipes saved. You can search recipes with option 1 or 2")
+            print("")
 
     elif user_input == "4":
         print("")
@@ -372,6 +376,16 @@ def chooseCorrectNumber(number):
 
     return value
 
+def isempty(list):
+    """
+    this function checks wheter a tuple is empty or not
+    :param list: list which is either filled or empty
+    :return: boolean: False if it is not empty and true if the tuple is empty
+    """
+    if tuple:
+        return False
+    else:
+        return True
 
 if __name__ == "__main__":
     """starts the programm"""
