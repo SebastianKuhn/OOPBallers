@@ -116,7 +116,7 @@ def getIngredientIdsForRecipe(recipe_id):
         db.close()
 
 
-def getAmountAndUnitForIngredient(ingredient_id, recipe_instruction_id):
+def getAmountAndUnitForIngredient(ingredient_id, recipe_instruction_ids):
     """
     This function is used to fetch the amount and the unit for the respective Ingredient
     :param recipe_instruction_id: integer
@@ -126,10 +126,18 @@ def getAmountAndUnitForIngredient(ingredient_id, recipe_instruction_id):
     db = db_helpers.getDbCon()
     cursor = db.cursor()
     amountAndUnitQuery = "SELECT amount, unit FROM instruction_ingredient WHERE ingredient_id = %s and "\
-                         "recipe_instruction_id = %s"
+                         "recipe_instruction_id IN "
+
+    #adopted the query string to match the input variables
+    s = "(" + ', '.join(['%s'] * len(recipe_instruction_ids)) + ")"
+    amountAndUnitQuery += s
+
+    #add both tuples in order to pass them to the execute function
+    tupleQuery = (ingredient_id, )
+    tupleQuery += recipe_instruction_ids
 
     try:
-        cursor.execute(amountAndUnitQuery, (ingredient_id, recipe_instruction_id))
+        cursor.execute(amountAndUnitQuery, tupleQuery)
         results = cursor.fetchall()
         return results
     except Exception:

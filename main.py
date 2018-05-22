@@ -9,6 +9,7 @@ from helpers import master_helpers
 from helpers import recipe_helpers
 import hashlib
 from Models.user import User
+from helpers import ingredient_helpers
 
 
 def welcome():
@@ -40,7 +41,6 @@ def login():
     prompts the user to login and checks the credentials in the database
     """
     print("")
-
     #starts the login function in login_helpers and returns a user object
     user = login_helpers.login()
 
@@ -371,7 +371,6 @@ def chooseCorrectNumber(number):
             print("")
 
     return value
-
 
 
 if __name__ == "__main__":

@@ -30,7 +30,9 @@ def master_addRecipe(recipe):
         ingredient_helpers.addIngredienttoRecipeInstruction(recipe)
         equipment_helpers.addEquipmenttoRecipe(recipe)
         ingredient_helpers.addIngredienttoRecipe(recipe)
-
+        print("")
+        print("Your recipe was successfully saved to your account.")
+        print("")
     else:
         pass
 
@@ -87,24 +89,23 @@ def master_getRecipeInformation(recipe_id):
     ingred = []
     recipe = Recipe(recipe_id, " ") #created object in order to get the correct input, sorry for the bad coding
 
-    recipe_instruction_ids = []
+    recipe_instruction_ids = ()
     for instr_tuple in instruction_helpers.getRecipeInstructionID(recipe):
-        recipe_instruction_ids.append(instr_tuple[0])
+        recipe_instruction_ids += instr_tuple
     ingredient_ids = ingredient_helpers.getIngredientIdsForRecipe(recipe_id)
 
     #printing information for the user
     print("Coming up...")
 
-    #inefficient code to create all ingredients of the recipe.
-    for ingredient_id in ingredient_ids:
-        for recipe_instruction_id in recipe_instruction_ids:
-            if len(ingredient_helpers.getAmountAndUnitForIngredient(ingredient_id, recipe_instruction_id)) != 0:
-                ingredient_name = ingredient_helpers.getIngredientNameById(ingredient_id)[0]
-                amount = ingredient_helpers.getAmountAndUnitForIngredient(ingredient_id, recipe_instruction_id)[0][0]
-                unit = ingredient_helpers.getAmountAndUnitForIngredient(ingredient_id, recipe_instruction_id)[0][1]
-                ingredient_object = Ingredient(ingredient_name, ingredient_id, amount, unit)
-                ingred.append(ingredient_object)
-                break
+    #create all ingredients by fetching the amount and unit of each ingredient
+    for id in ingredient_ids:
+        amount_and_unit = ingredient_helpers.getAmountAndUnitForIngredient(id, recipe_instruction_ids)
+        ingredient_name = ingredient_helpers.getIngredientNameById(id)[0]
+        if isempty(amount_and_unit) is False:
+            amount = amount_and_unit[0][0]
+            unit = amount_and_unit[0][1]
+        ingredient_object = Ingredient(ingredient_name, id, amount, unit)
+        ingred.append(ingredient_object)
 
     #printing information for the user
     print("It's going slow, but your recipe will be printed shortly...")
