@@ -125,6 +125,7 @@ def deleteUser(user_id):
     """
     db = helpers.getDbCon()
     cursor = db.cursor()
+    #dirtydirtycoding
     deleteUserQuery = "SET FOREIGN_KEY_CHECKS=0; DELETE FROM users WHERE user_id=%s; SET FOREIGN_KEY_CHECKS=1;"
     try:
         info = cursor.execute(deleteUserQuery, (user_id,))
