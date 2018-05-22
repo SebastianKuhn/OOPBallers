@@ -72,7 +72,7 @@ Hereby the main.py script directly communicates with the data access object [DAO
 
 Following this first interaction, the user is offered a choice of options which shall be discussed hereafter. The concept of each request is always a similar one.
 Thus the user chooses an option, if the latter requires further input the main file requests this. The obtained information are then used by one of the API controllers which requests the API and returns the information which are saved as object using one of the blueprints provided by the Models file.
-In a text step, the data is saved into the MySQL database through the functions provided in one of the helper files which are accessed through the \texttt{master\_helpers.py} file.
+In a next optional step, the data is saved to the users profile in the MySQL database through the functions provided in one of the helper files which are accessed through the \texttt{master\_helpers.py} file.
 
  \texttt{Please enter the number of one of the following options: 
  	\begin{itemize}[label={}]
@@ -84,9 +84,19 @@ In a text step, the data is saved into the MySQL database through the functions 
  	 \end{itemize}}
   
  \subsection*{\texttt{1. Search a new recipe using pictures}}
- This option uses pictures stored locally in a folder. The path is provided by the user whereafter the images are  encoded and through use of the google vision API the ingredients shown on the pictures are recognized whereafter they are used as input for the spoonacular API which returns a list of possible recipies to the user.
+ This option uses pictures stored locally in a folder. The path is provided by the user whereafter the images are  encoded and through use of the Google Vision API the ingredients shown on the pictures are recognized and used as input for the Spoonacular API which returns a list of possible recipies to the user. The user can select to see explicit instructions about the recipe and thereafter decide to store it in the database.
+ 
+ \subsection*{\texttt{2. Search recipies by name}}
+ Here the user may search a recipe through an input string, which will be sent to the Spoonacular API and returns once again a list of recipies. Once again the user can select to see more details and save the inspected recipe.
+ 
+ \subsection*{\texttt{3.Get all your recipes}}
+ This functionality taps into the database to obtain all recipes saved to the users profile. The recipies can again be inspected.
   
+\subsection*{\texttt{'info' to get information on all options}}
+The \texttt{'info'} option allows you to obtain more information about the different functionalities of the program.
   
+\subsection*{\texttt{'exit' to end the program}}
+\texttt{'exit'} allows you to stop the \texttt{main.py} file process by exiting the while loop.
 
 
 
