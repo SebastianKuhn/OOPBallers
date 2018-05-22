@@ -1,0 +1,631 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Bibliotek",
+		"_postman_id": "227dcc87-8dbe-e51d-264a-c6b929bc3593",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/books",
+			"request": {
+				"url": "http://127.0.0.1:5000/books",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Obtain a list of all the books currently registered on the server"
+			},
+			"response": []
+		},
+		{
+			"name": "/books/<int:id>",
+			"request": {
+				"url": "http://127.0.0.1:5000/books/62",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Obtain details on a specific book"
+			},
+			"response": []
+		},
+		{
+			"name": "/books/title/<string:title>",
+			"request": {
+				"url": "http://127.0.0.1:5000/books/title/Machine Learning",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Obtain a book details provided its title"
+			},
+			"response": []
+		},
+		{
+			"name": "/authors/<int:id>/books",
+			"request": {
+				"url": "http://127.0.0.1:5000/authors/11/books",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Obtain the list of books from a specific author"
+			},
+			"response": []
+		},
+		{
+			"name": "/categories/<int:id>/books",
+			"request": {
+				"url": "http://127.0.0.1:5000/categories/5/books",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Obtain the list of books of a specific category"
+			},
+			"response": []
+		},
+		{
+			"name": "/authors",
+			"request": {
+				"url": "http://127.0.0.1:5000/authors",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"La rose au soleil\",\n    \"authorId\": 1,\n    \"categoryId\": 1,\n    \"publisher\": \"Springer Science & Business Media\",\n    \"published_date\": \"2013-06-24\",\n    \"description\": \"J?aime les fruits au sirop\",\n    \"isbn10\": \"1461471389\",\n    \"isbn13\": \"9781461471387\",\n    \"booktype\": \"pdf\",\n    \"language\": \"en\",\n    \"thumbnail\": \"http://books.google.com/books/content?id=qcI_AAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api\",\n    \"page_count\": 426,\n    \"md5\": \"NaN\",\n    \"url_info\": \"https://www.googleapis.com/books/v1/volumes/qcI_AAAAQBAJ\",\n    \"dl_link1\": \"http://libgen.pw/view.php?id=917808\",\n    \"dl_link2\": \"http://libgen.io/ads.php?md5=4413A24C7D70F6AC12A764A76CC7E514\",\n    \"filepath\": \"../../download/gareth-jamesdaniela-wittentrevor-hastierobert-tibshirani/an-introduction-to-statistical-learning.pdf\",\n    \"chosen_url\": \"dl_link2\"\n}"
+				},
+				"description": "Obtain the list of all authors"
+			},
+			"response": []
+		},
+		{
+			"name": "/authors/<int:id>",
+			"request": {
+				"url": "http://127.0.0.1:5000/authors/23",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"La rose au soleil\",\n    \"authorId\": 1,\n    \"categoryId\": 1,\n    \"publisher\": \"Springer Science & Business Media\",\n    \"published_date\": \"2013-06-24\",\n    \"description\": \"J?aime les fruits au sirop\",\n    \"isbn10\": \"1461471389\",\n    \"isbn13\": \"9781461471387\",\n    \"booktype\": \"pdf\",\n    \"language\": \"en\",\n    \"thumbnail\": \"http://books.google.com/books/content?id=qcI_AAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api\",\n    \"page_count\": 426,\n    \"md5\": \"NaN\",\n    \"url_info\": \"https://www.googleapis.com/books/v1/volumes/qcI_AAAAQBAJ\",\n    \"dl_link1\": \"http://libgen.pw/view.php?id=917808\",\n    \"dl_link2\": \"http://libgen.io/ads.php?md5=4413A24C7D70F6AC12A764A76CC7E514\",\n    \"filepath\": \"../../download/gareth-jamesdaniela-wittentrevor-hastierobert-tibshirani/an-introduction-to-statistical-learning.pdf\",\n    \"chosen_url\": \"dl_link2\"\n}"
+				},
+				"description": "Obtain details on a specific author provided an id."
+			},
+			"response": []
+		},
+		{
+			"name": "/authors/name/<string:name>",
+			"request": {
+				"url": "http://127.0.0.1:5000/authors/name/tibshirani robert",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"La rose au soleil\",\n    \"authorId\": 1,\n    \"categoryId\": 1,\n    \"publisher\": \"Springer Science & Business Media\",\n    \"published_date\": \"2013-06-24\",\n    \"description\": \"J?aime les fruits au sirop\",\n    \"isbn10\": \"1461471389\",\n    \"isbn13\": \"9781461471387\",\n    \"booktype\": \"pdf\",\n    \"language\": \"en\",\n    \"thumbnail\": \"http://books.google.com/books/content?id=qcI_AAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api\",\n    \"page_count\": 426,\n    \"md5\": \"NaN\",\n    \"url_info\": \"https://www.googleapis.com/books/v1/volumes/qcI_AAAAQBAJ\",\n    \"dl_link1\": \"http://libgen.pw/view.php?id=917808\",\n    \"dl_link2\": \"http://libgen.io/ads.php?md5=4413A24C7D70F6AC12A764A76CC7E514\",\n    \"filepath\": \"../../download/gareth-jamesdaniela-wittentrevor-hastierobert-tibshirani/an-introduction-to-statistical-learning.pdf\",\n    \"chosen_url\": \"dl_link2\"\n}"
+				},
+				"description": "Obtain details on an authors provided a name."
+			},
+			"response": []
+		},
+		{
+			"name": "/categories",
+			"request": {
+				"url": "http://127.0.0.1:5000/categories",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"La rose au soleil\",\n    \"authorId\": 1,\n    \"categoryId\": 1,\n    \"publisher\": \"Springer Science & Business Media\",\n    \"published_date\": \"2013-06-24\",\n    \"description\": \"J?aime les fruits au sirop\",\n    \"isbn10\": \"1461471389\",\n    \"isbn13\": \"9781461471387\",\n    \"booktype\": \"pdf\",\n    \"language\": \"en\",\n    \"thumbnail\": \"http://books.google.com/books/content?id=qcI_AAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api\",\n    \"page_count\": 426,\n    \"md5\": \"NaN\",\n    \"url_info\": \"https://www.googleapis.com/books/v1/volumes/qcI_AAAAQBAJ\",\n    \"dl_link1\": \"http://libgen.pw/view.php?id=917808\",\n    \"dl_link2\": \"http://libgen.io/ads.php?md5=4413A24C7D70F6AC12A764A76CC7E514\",\n    \"filepath\": \"../../download/gareth-jamesdaniela-wittentrevor-hastierobert-tibshirani/an-introduction-to-statistical-learning.pdf\",\n    \"chosen_url\": \"dl_link2\"\n}"
+				},
+				"description": "Obtain the list of all the categories contained in the database"
+			},
+			"response": []
+		},
+		{
+			"name": "/categories/<int:id>",
+			"request": {
+				"url": "http://127.0.0.1:5000/categories/17",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"La rose au soleil\",\n    \"authorId\": 1,\n    \"categoryId\": 1,\n    \"publisher\": \"Springer Science & Business Media\",\n    \"published_date\": \"2013-06-24\",\n    \"description\": \"J?aime les fruits au sirop\",\n    \"isbn10\": \"1461471389\",\n    \"isbn13\": \"9781461471387\",\n    \"booktype\": \"pdf\",\n    \"language\": \"en\",\n    \"thumbnail\": \"http://books.google.com/books/content?id=qcI_AAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api\",\n    \"page_count\": 426,\n    \"md5\": \"NaN\",\n    \"url_info\": \"https://www.googleapis.com/books/v1/volumes/qcI_AAAAQBAJ\",\n    \"dl_link1\": \"http://libgen.pw/view.php?id=917808\",\n    \"dl_link2\": \"http://libgen.io/ads.php?md5=4413A24C7D70F6AC12A764A76CC7E514\",\n    \"filepath\": \"../../download/gareth-jamesdaniela-wittentrevor-hastierobert-tibshirani/an-introduction-to-statistical-learning.pdf\",\n    \"chosen_url\": \"dl_link2\"\n}"
+				},
+				"description": "Obtain a specific category provided an id"
+			},
+			"response": []
+		},
+		{
+			"name": "/categories/name/<string:name>",
+			"request": {
+				"url": "http://127.0.0.1:5000/categories/name/Business",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"La rose au soleil\",\n    \"authorId\": 1,\n    \"categoryId\": 1,\n    \"publisher\": \"Springer Science & Business Media\",\n    \"published_date\": \"2013-06-24\",\n    \"description\": \"J?aime les fruits au sirop\",\n    \"isbn10\": \"1461471389\",\n    \"isbn13\": \"9781461471387\",\n    \"booktype\": \"pdf\",\n    \"language\": \"en\",\n    \"thumbnail\": \"http://books.google.com/books/content?id=qcI_AAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api\",\n    \"page_count\": 426,\n    \"md5\": \"NaN\",\n    \"url_info\": \"https://www.googleapis.com/books/v1/volumes/qcI_AAAAQBAJ\",\n    \"dl_link1\": \"http://libgen.pw/view.php?id=917808\",\n    \"dl_link2\": \"http://libgen.io/ads.php?md5=4413A24C7D70F6AC12A764A76CC7E514\",\n    \"filepath\": \"../../download/gareth-jamesdaniela-wittentrevor-hastierobert-tibshirani/an-introduction-to-statistical-learning.pdf\",\n    \"chosen_url\": \"dl_link2\"\n}"
+				},
+				"description": "Obtain a specific category provided an name"
+			},
+			"response": []
+		},
+		{
+			"name": "/portfolios",
+			"request": {
+				"url": "http://127.0.0.1:5000/portfolios",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"Business\",\n\t\"userId\" : 1\n}"
+				},
+				"description": "Obtain the list of all portfolios"
+			},
+			"response": []
+		},
+		{
+			"name": "/portfolios/<int:id>",
+			"request": {
+				"url": "http://127.0.0.1:5000/portfolios/13",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"Business\",\n\t\"userId\" : 1\n}"
+				},
+				"description": "Obtain the details of a specific portfolio"
+			},
+			"response": []
+		},
+		{
+			"name": "/portfolios/<int:id>/books",
+			"request": {
+				"url": "http://127.0.0.1:5000/portfolios/13/books",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"Business\",\n\t\"userId\" : 1\n}"
+				},
+				"description": "Obtain the list of all the portfolio relation contained in a portfolio"
+			},
+			"response": []
+		},
+		{
+			"name": "/portfolio/books",
+			"request": {
+				"url": "http://127.0.0.1:5000/portfolios/books",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"La rose au soleil\",\n    \"authorId\": 1,\n    \"categoryId\": 1,\n    \"publisher\": \"Springer Science & Business Media\",\n    \"published_date\": \"2013-06-24\",\n    \"description\": \"J?aime les fruits au sirop\",\n    \"isbn10\": \"1461471389\",\n    \"isbn13\": \"9781461471387\",\n    \"booktype\": \"pdf\",\n    \"language\": \"en\",\n    \"thumbnail\": \"http://books.google.com/books/content?id=qcI_AAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api\",\n    \"page_count\": 426,\n    \"md5\": \"NaN\",\n    \"url_info\": \"https://www.googleapis.com/books/v1/volumes/qcI_AAAAQBAJ\",\n    \"dl_link1\": \"http://libgen.pw/view.php?id=917808\",\n    \"dl_link2\": \"http://libgen.io/ads.php?md5=4413A24C7D70F6AC12A764A76CC7E514\",\n    \"filepath\": \"../../download/gareth-jamesdaniela-wittentrevor-hastierobert-tibshirani/an-introduction-to-statistical-learning.pdf\",\n    \"chosen_url\": \"dl_link2\"\n}"
+				},
+				"description": "Obtain the list of all the portfolio-book relation contained in the database"
+			},
+			"response": []
+		},
+		{
+			"name": "/users",
+			"request": {
+				"url": "http://127.0.0.1:5000/users",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"Business\",\n\t\"userId\" : 1\n}"
+				},
+				"description": "Obtain a list of all users."
+			},
+			"response": []
+		},
+		{
+			"name": "/users/email/<string:email>",
+			"request": {
+				"url": "http://127.0.0.1:5000/users/email/bastien.girardet@gmail.com",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"Business\",\n\t\"userId\" : 1\n}"
+				},
+				"description": "Obtain the user by mail"
+			},
+			"response": []
+		},
+		{
+			"name": "/users/<int:id>/portfolios",
+			"request": {
+				"url": "http://127.0.0.1:5000/users/2/portfolios",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Obtain all the portfolios belonging to one user."
+			},
+			"response": []
+		},
+		{
+			"name": "/users/<int:id>",
+			"request": {
+				"url": "http://127.0.0.1:5000/users/2",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"Business\",\n\t\"userId\" : 1\n}"
+				},
+				"description": "Obtain the user by id"
+			},
+			"response": []
+		},
+		{
+			"name": "/search/book",
+			"request": {
+				"url": "http://127.0.0.1:5000/search/book",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\" : \"Learning Python\",\n\t\"authors\" : \"Mark Lutz\",\n\t\"isbn\" : \"978-1449355739\"\n}\t"
+				},
+				"description": "Search for a book in the database, if it is not extactly like in the database it will run a subprocess to web scrap it.\nMight take long depending on the libgen server."
+			},
+			"response": []
+		},
+		{
+			"name": "/books",
+			"request": {
+				"url": "http://127.0.0.1:5000/books",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n            \"title\": \"Physique\",\n            \"authorId\": 23,\n            \"categoryId\": 6,\n            \"publisher\": \"MIT PRESS\",\n            \"published_date\": \"2015-05-21\",\n            \"description\": \"South African born Elon Musk is the renowned entrepreneur and innovator behind PayPal SpaceX Tesla and SolarCity. Musk wants to save our planet; he wants to send citizens into space to form a colony on Mars; he wants to make money while doing these things; and he wants us all to know about it. He is the real-life inspiration for the Iron Man series of films starring Robert Downey Junior. The personal tale of Musk’s life comes with all the trappings one associates with a great drama-filled story. He was a freakishly bright kid who was bullied brutally at school and abused by his father. In the midst of these rough conditions and the violence of apartheid South Africa Musk still thrived academically and attended the University of Pennsylvania where he paid his own way through school by turning his house into a club and throwing massive parties. He started a pair of huge dot-com successes including PayPal which eBay acquired for $1.5 billion in 2002. Musk was forced out as CEO and so began his lost years in which he decided to go it alone and baffled friends by investing his fortune in rockets and electric cars. Meanwhile Musk’s marriage disintegrated as his technological obsessions took over his life ... Elon Musk is the Steve Jobs of the present and the future and for the past twelve months he has been shadowed by tech reporter Ashlee Vance. Elon Musk: How the Billionaire CEO of Spacex and Tesla is Shaping our Future is an important exciting and intelligent account of the real-life Iron Man.\",\n            \"isbn10\": \"0753550660\",\n            \"isbn13\": \"9780753550663\",\n            \"booktype\": \"pdf\",\n            \"language\": \"en\",\n            \"thumbnail\": \"http://books.google.com/books/content?id=_LFSBgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api\",\n            \"page_count\": 416,\n            \"md5\": \"NaN\",\n            \"url_info\": \"https://www.googleapis.com/books/v1/volumes/_LFSBgAAQBAJ\",\n            \"dl_link1\": \"http://libgen.pw/view.php?id=1453498\",\n            \"dl_link2\": \"http://libgen.io/ads.php?md5=AEBFCBC49C01F60549672CB1D7E7BF60\",\n            \"filepath\": \"../../download/ashlee-vance/elon-musk.pdf\",\n            \"chosen_url\": \"dl_link2\"\n        }"
+				},
+				"description": "Creates a new book provided the correct data in a raw application/json format\n- title : cannot be empty\n- authorId : cannot be empty\n- categoryId : cannot be empty\n- publisher : cannot be empty\n- published_date : cannot be empty\n- description : can be empty\n- isbn10 : can be empty\n- isbn13 : can be empty\n- booktype : cannot be empty\n- language : cannot be empty\n- thumbnail : can be empty\n- page_count : can be empty\n- md5 : can be empty\n- url_info : can be empty\n- dl_link1 : can be empty\n- dl_link2 : can be empty\n- chosen_url : can be empty\n- filepath : cannot be empty"
+			},
+			"response": []
+		},
+		{
+			"name": "/authors",
+			"request": {
+				"url": "http://127.0.0.1:5000/authors",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Ruben Zürcher\",\n    \"description\": \"Cool guy!\",\n    \"image_url\": \"http://placeholder.it/200x200\",\n    \"wiki_url\": \"http://wikipedia.com?q=Forbes500\"\n}"
+				},
+				"description": "Create an entry author provided a raw application/json\n\n- name : cannot be empty\n- description : can be empty\n- image_url : can be empty\n- wiki_url : can be empty"
+			},
+			"response": []
+		},
+		{
+			"name": "/categories",
+			"request": {
+				"url": "http://127.0.0.1:5000/categories",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Microbiology\"\n}"
+				},
+				"description": "Create an entry category provided a raw application/json\n\n- name : cannot be empty"
+			},
+			"response": []
+		},
+		{
+			"name": "/portfolios/<int:portfolio_id>/books/<int:book_id>",
+			"request": {
+				"url": "http://127.0.0.1:5000/portfolios/13/books/53",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": "Create the relations between the specific book and portfolio.\n\n*If error, check whether the book or the portfolio do exist.*"
+			},
+			"response": []
+		},
+		{
+			"name": "/portfolios",
+			"request": {
+				"url": "http://127.0.0.1:5000/portfolios",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"The Amazing portfolio of John Doe\",\n\t\"userId\" : 4\n}"
+				},
+				"description": "Create an entry portfolio provided a raw application/json\n\n- name : cannot be empty\n- userId : cannot be empty"
+			},
+			"response": []
+		},
+		{
+			"name": "/register",
+			"request": {
+				"url": "http://127.0.0.1:5000/register",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"Ruben\",\n\t\"surname\" : \"Zürcher\",\n\t\"email\" : \"ruben.zurcher@student.unisg.ch\",\n\t\"password\" : \"712985CC1194DFFE8B30127444E0C92FE214420A84A5B2D28ABE6684F4540409\"\n}"
+				},
+				"description": "Create an entry user provided a raw application/json\n\n- name : cannot be empty\n- surname : cannot be empty\n- email : cannot be empty. must be unique\n- password : cannot be empty"
+			},
+			"response": []
+		},
+		{
+			"name": "/books/<int:id>",
+			"request": {
+				"url": "http://127.0.0.1:5000/books/1",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"The Hound of the asdas\",\n    \"authorId\": 5,\n    \"categoryId\": 17,\n    \"publisher\": \"NaN\",\n    \"published_date\": \"1961\",\n    \"description\": \"NaN\",\n    \"isbn10\": \"NaN\",\n    \"isbn13\": \"NaN\",\n    \"booktype\": \"pdf\",\n    \"language\": \"en\",\n    \"thumbnail\": \"NaN\",\n    \"page_count\": 155,\n    \"md5\": \"NaN\",\n    \"url_info\": \"https://www.googleapis.com/books/v1/volumes/ALLVnAEACAAJ\",\n    \"dl_link1\": \"http://libgen.pw/view.php?id=848667\",\n    \"dl_link2\": \"http://libgen.io/ads.php?md5=433A838E62AC699C2687BED387269021\",\n    \"filepath\": \"../../download/arthur-conan-doyle/the-hound-of-the-baskervilles.pdf\",\n    \"chosen_url\": \"dl_link2\"\n}"
+				},
+				"description": "Update a book provided its id, or create it if it doesn't exists\n\n- title : cannot be empty\n- authorId : cannot be empty\n- categoryId : cannot be empty\n- publisher : cannot be empty\n- published_date : cannot be empty\n- description : can be empty\n- isbn10 : can be empty\n- isbn13 : can be empty\n- booktype : cannot be empty\n- language : cannot be empty\n- thumbnail : can be empty\n- page_count : can be empty\n- md5 : can be empty\n- url_info : can be empty\n- dl_link1 : can be empty\n- dl_link2 : can be empty\n- chosen_url : can be empty\n- filepath : cannot be empty"
+			},
+			"response": [
+				{
+					"id": "2e3084d2-1a0f-4a85-8257-363541794a98",
+					"name": "Update book 1",
+					"originalRequest": {
+						"url": "http://127.0.0.1:5000/books/1",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"The Hound of the asdasddasd\",\n    \"authorId\": 1,\n    \"categoryId\": 1,\n    \"publisher\": \"NaN\",\n    \"published_date\": \"1961\",\n    \"description\": \"NaN\",\n    \"isbn10\": \"NaN\",\n    \"isbn13\": \"NaN\",\n    \"booktype\": \"pdf\",\n    \"language\": \"en\",\n    \"thumbnail\": \"NaN\",\n    \"page_count\": 54,\n    \"md5\": \"NaN\",\n    \"url_info\": \"https://www.googleapis.com/books/v1/volumes/ALLVnAEACAAJ\",\n    \"dl_link1\": \"http://libgen.pw/view.php?id=848667\",\n    \"dl_link2\": \"http://libgen.io/ads.php?md5=433A838E62AC699C2687BED387269021\",\n    \"filepath\": \"../../download/arthur-conan-doyle/the-hound-of-the-baskervilles.pdf\",\n    \"chosen_url\": \"dl_link2\"\n}"
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"_postman_previewtype": "parsed",
+					"header": [],
+					"cookie": [],
+					"responseTime": 0,
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "/books/title/<string:title>",
+			"request": {
+				"url": "http://127.0.0.1:5000/books/title/An Introduction to Statistical Learning",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Deep work\",\n    \"authorId\": 23,\n    \"categoryId\": 6,\n    \"publisher\": \"Springer Science & Business Media\",\n    \"published_date\": \"2013-06-24\",\n    \"description\": \"An Introduction to Statistical Learning provides an accessible overview of the field of statistical learning an essential toolset for making sense of the vast and complex data sets that have emerged in fields ranging from biology to finance to marketing to astrophysics in the past twenty years. This book presents some of the most important modeling and prediction techniques along with relevant applications. Topics include linear regression classification resampling methods shrinkage approaches tree-based methods support vector machines clustering and more. Color graphics and real-world examples are used to illustrate the methods presented. Since the goal of this textbook is to facilitate the use of these statistical learning techniques by practitioners in science industry and other fields each chapter contains a tutorial on implementing the analyses and methods presented in R an extremely popular open source statistical software platform. Two of the authors co-wrote The Elements of Statistical Learning (Hastie Tibshirani and Friedman 2nd edition 2009) a popular reference book for statistics and machine learning researchers. An Introduction to Statistical Learning covers many of the same topics but at a level accessible to a much broader audience. This book is targeted at statisticians and non-statisticians alike who wish to use cutting-edge statistical learning techniques to analyze their data. The text assumes only a previous course in linear regression and no knowledge of matrix algebra.\",\n    \"isbn10\": \"1461471389\",\n    \"isbn13\": \"9781461471387\",\n    \"booktype\": \"pdf\",\n    \"language\": \"en\",\n    \"thumbnail\": \"http://books.google.com/books/content?id=qcI_AAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api\",\n    \"page_count\": 426,\n    \"md5\": \"NaN\",\n    \"url_info\": \"https://www.googleapis.com/books/v1/volumes/qcI_AAAAQBAJ\",\n    \"dl_link1\": \"http://libgen.pw/view.php?id=917808\",\n    \"dl_link2\": \"http://libgen.io/ads.php?md5=4413A24C7D70F6AC12A764A76CC7E514\",\n    \"filepath\": \"../../download/gareth-jamesdaniela-wittentrevor-hastierobert-tibshirani/an-introduction-to-statistical-learning.pdf\",\n    \"chosen_url\": \"dl_link2\"\n}"
+				},
+				"description": "Update a book provided its title\n\n- title : cannot be empty\n- authorId : cannot be empty\n- categoryId : cannot be empty\n- publisher : cannot be empty\n- published_date : cannot be empty\n- description : can be empty\n- isbn10 : can be empty\n- isbn13 : can be empty\n- booktype : cannot be empty\n- language : cannot be empty\n- thumbnail : can be empty\n- page_count : can be empty\n- md5 : can be empty\n- url_info : can be empty\n- dl_link1 : can be empty\n- dl_link2 : can be empty\n- chosen_url : can be empty\n- filepath : cannot be empty"
+			},
+			"response": []
+		},
+		{
+			"name": "/authors/<int:id>",
+			"request": {
+				"url": "http://127.0.0.1:5000/authors/2",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"JeanBonnessadadadds\",\n    \"description\": \"Jemappelasda\",\n    \"image_url\": \"http://wikipedia.com\",\n    \"wiki_url\": \"asdasdasdasdas\"\n}"
+				},
+				"description": "Update the author if exists or create it if doesn't\n\n- name : cannot be empty\n- description : can be empty\n- image_url : can be empty\n- wiki_url : can be empty"
+			},
+			"response": []
+		},
+		{
+			"name": "/categories/<int:id>",
+			"request": {
+				"url": "http://127.0.0.1:5000/categories/1",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Economics\"\n}"
+				},
+				"description": "Update a specific category provided an id\n\n- name : cannot be empty"
+			},
+			"response": []
+		},
+		{
+			"name": "/portfolios/<int:id>",
+			"request": {
+				"url": "http://127.0.0.1:5000/portfolios/6",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Economics\",\n    \"userId\" : 2\n}"
+				},
+				"description": "Update a specific portfolio provided an id\n\n- name : cannot be empty\n- userId : cannot be empty"
+			},
+			"response": []
+		},
+		{
+			"name": "/books/<int:id>",
+			"request": {
+				"url": "http://127.0.0.1:5000/books/57",
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": "Delete a book provided an id."
+			},
+			"response": []
+		},
+		{
+			"name": "/books/title/<string:title>",
+			"request": {
+				"url": "http://127.0.0.1:5000/books/title/An Introduction to Statistical Learning",
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": "Delete a book provided its title"
+			},
+			"response": []
+		},
+		{
+			"name": "/authors/<int:id>",
+			"request": {
+				"url": "http://127.0.0.1:5000/authors/23",
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": "Delete an author and all the books belonging to him"
+			},
+			"response": []
+		},
+		{
+			"name": "/portfolios/<int:id>",
+			"request": {
+				"url": "http://127.0.0.1:5000/portfolios/12",
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": "Delete the portfolio and its portfolio books relations."
+			},
+			"response": []
+		},
+		{
+			"name": "/portfolio/<int:portfolio_id>/books/<int:book_id>",
+			"request": {
+				"url": "http://127.0.0.1:5000/portfolios/1/books/3",
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": "Delete if exists, the relation between a book and a portofolio"
+			},
+			"response": []
+		},
+		{
+			"name": "/categories/<int:id>",
+			"request": {
+				"url": "http://127.0.0.1:5000/categories/16",
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": "Delete a specific category provided an id"
+			},
+			"response": []
+		},
+		{
+			"name": "/users/<int:id>",
+			"request": {
+				"url": "http://127.0.0.1:5000/users/1",
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"Business\",\n\t\"userId\" : 1\n}"
+				},
+				"description": "Obtain the user by mail"
+			},
+			"response": []
+		}
+	]
+}

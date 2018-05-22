@@ -143,6 +143,7 @@ def checkUserInput(cur_user):
     input: current user as User-object
     """
 
+    presentOptions()
     user_input = str(input("What would you like to do? Type in a number or 'info' for information: "))
 
     #search new recipe by ingredients.
@@ -185,8 +186,8 @@ def checkUserInput(cur_user):
         #get all recipe ids and titles for the current user
         list_of_recipe_ids = recipe_helpers.getRecipeIds(cur_user)
         list_of_recipe_titles = recipe_helpers.getRecipeNames(list_of_recipe_ids)
-
-        if isempty(list_of_recipe_ids) is True:
+        check = isempty(list_of_recipe_ids)
+        if check is True:
             #print the recipes
             number = 1
             for title in list_of_recipe_titles:
@@ -382,7 +383,7 @@ def isempty(list):
     :param list: list which is either filled or empty
     :return: boolean: False if it is not empty and true if the tuple is empty
     """
-    if tuple:
+    if not list:
         return False
     else:
         return True
@@ -415,7 +416,7 @@ if __name__ == "__main__":
             login_or_signup = str(input("Login/Sign up (1/2): "))
 
     #presents all the available options
-    presentOptions()
+    #presentOptions()
 
     #runs the program as long as is_finished is false
     is_finished = False
