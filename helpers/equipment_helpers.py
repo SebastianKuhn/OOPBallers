@@ -83,12 +83,7 @@ def getEquipmentByInstructionId(instruction_id):
     try:
         cursor.execute(userEquipmentInsertQuery, (instruction_id,))
         equipment_id = cursor.fetchall()
-<<<<<<< HEAD
-        print(equipment_id)
-        return equipment_id[0]
-=======
         return equipment_id
->>>>>>> 9e950130ae2542aac55171af89c351f78a045565
     except Exception:
         print('Error: OOPs something went wrong while getting the equipment by Instruction ID!')
     finally:
@@ -103,13 +98,8 @@ def getEquipmentByEquipmentId(equipment_id):
     """
     db = db_helpers.getDbCon()
     cursor = db.cursor()
-<<<<<<< HEAD
-    userEquipmentInsertQuery = "SELECT * FROM equipments WHERE equipment_id = %s"
-    try: 
-=======
     userEquipmentInsertQuery = "SELECT * FROM equipment WHERE equipment_id =%s"
     try:
->>>>>>> 9e950130ae2542aac55171af89c351f78a045565
         cursor.execute(userEquipmentInsertQuery, (equipment_id,))
         equipment = cursor.fetchall()
         return equipment

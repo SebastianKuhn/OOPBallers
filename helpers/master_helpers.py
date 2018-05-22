@@ -65,6 +65,9 @@ def master_getRecipeInformation(recipe_id):
     :return: recipe: object of class Recipe
     """
 
+    #printing out information for the user
+    print("Loading your recipe...")
+
     # get general information
     informations = recipe_helpers.getRecipeInformation(recipe_id)
 
@@ -89,6 +92,9 @@ def master_getRecipeInformation(recipe_id):
         recipe_instruction_ids.append(instr_tuple[0])
     ingredient_ids = ingredient_helpers.getIngredientIdsForRecipe(recipe_id)
 
+    #printing information for the user
+    print("Coming up...")
+
     #inefficient code to create all ingredients of the recipe.
     for ingredient_id in ingredient_ids:
         for recipe_instruction_id in recipe_instruction_ids:
@@ -100,6 +106,8 @@ def master_getRecipeInformation(recipe_id):
                 ingred.append(ingredient_object)
                 break
 
+    #printing information for the user
+    print("It's going slow, but your recipe will be printed shortly...")
 
     #get instructions
     instructions = []
@@ -110,6 +118,7 @@ def master_getRecipeInformation(recipe_id):
         instruction_nr = instruction[2]
         step = instruction[3]
 
+        #get ingredients for instructions by comparing the ids to the ids in the ingred list
         ingredients = []
 
         ingredient_ids = ingredient_helpers.getIngredientIdByInstructionId(instruction_id)
@@ -120,6 +129,7 @@ def master_getRecipeInformation(recipe_id):
                     if ingredient.ingredient_id == id:
                         ingredients.append(ingredient)
 
+        #get equipments for instructions by getting the respective equipment ids and then the equipment variables
         equipments = []
 
         equipment_ids = equipment_helpers.getEquipmentByInstructionId(instruction_id)
@@ -135,13 +145,24 @@ def master_getRecipeInformation(recipe_id):
                         equi = Equipment(name, id)
                         equipments.append(equi)
 
+        #creating the instruction with the variables fetched above and append it to the instructions list
         instruct = Instruction(instruction_nr, step, ingredients, equipments)
         instructions.append(instruct)
 
+    #printing information for the user
+    print("Here we go: ")
+
+    #create and return the whole fetched recipe.
     return Recipe(recipe_id, title, ready_in_minutes, servings, vegetarian, source_url, aggregate_likes, health_score,
                   ingred, instructions)
 
+
 def isempty(tuple):
+    """
+    this function checks wheter a tuple is empty or not
+    :param tuple: tuple which is either filled or empty
+    :return: boolean: False if it is not empty and true if the tuple is empty
+    """
     if tuple:
         return False
     else:

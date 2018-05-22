@@ -25,6 +25,8 @@ class Recipe(object):
         """
         This method prints all the necessary information of the recipe in order to present it to the user.
         """
+        print("")
+        print("")
         print("Title: " + str(self.title))
         print("ID: " + str(self.recipe_id))
         print("Ready in Minutes: " + str(self.ready_in_minutes))

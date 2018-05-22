@@ -17,7 +17,9 @@ class Instruction(object):
         """
         print("")
         print("Step " + str(self.instruction_number) + ": ")
-        print("You need: ")
+
+        if len(self.ingredients) != 0 or len(self.equipment) != 0:
+            print("You need: ")
 
         if len(self.ingredients) != 0:
             print("Ingredients:")
