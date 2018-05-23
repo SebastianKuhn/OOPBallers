@@ -218,8 +218,8 @@ def checkUserInput(cur_user):
 
         if delete_response == "DELETE":
             print("")
-            print(user_helpers.deleteUser(cur_user))
-            print("The programm will now end.")
+            user_helpers.deleteUser(cur_user)
+            print("The program will now end.")
             return True
         elif delete_response.lower() == "cancel":
             print("")
@@ -392,7 +392,7 @@ def isempty(list):
         return True
 
 if __name__ == "__main__":
-    """starts the programm"""
+    """starts the program"""
     #global user who is logged in
     current_user = None
 
