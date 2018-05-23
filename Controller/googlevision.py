@@ -9,7 +9,7 @@ import base64, json, requests, glob
 #list of commonly used terms which are too general
 common_terms = ["animal source foods", "animal fat", "vegetable", "natural foods", "local foods", "produce", "food",
                 "product", "product design", "ingredient", "drink", "dairy product", "yellow", "red", "blue",
-                "al dente", "italian food", "superfood"]
+                "al dente", "italian food", "superfood", "fruit"]
 
 def scanFolderforPictures(folder_path):
     """
@@ -19,11 +19,12 @@ def scanFolderforPictures(folder_path):
     """
 
     jpg = folder_path + "/*.jpg"
+    JPG = folder_path + "/*.JPG"
     jpeg = folder_path + "/*.jpeg"
     png = folder_path + "/*.png"
     gif = folder_path + "/*.gif"
 
-    list_of_formats = [jpg, jpeg, png, gif]
+    list_of_formats = [jpg, JPG, jpeg, png, gif]
 
     list_of_image_paths = []
 
