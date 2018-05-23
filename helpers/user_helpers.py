@@ -126,22 +126,27 @@ def deleteUser(user):
     db = helpers.getDbCon()
     cursor = db.cursor()
     #dirtydirtycoding
-    deleteUserQuery = "SET FOREIGN_KEY_CHECKS=0; DELETE FROM users WHERE user_id=%s; SET FOREIGN_KEY_CHECKS=1;"
-    #try:
-    cursor.execute(deleteUserQuery, (user.user_id,))
-    info = cursor.fetchall()
-    db.commit()
+    deleteUserQuery1 = "SET FOREIGN_KEY_CHECKS=0;"
+    deleteUserQuery2 = "DELETE FROM users WHERE user_id=%s;"
+    deleteUserQuery3 = "SET FOREIGN_KEY_CHECKS=1;"
+    try:
+        cursor.execute(deleteUserQuery1)
+        db.commit()
+        info = cursor.execute(deleteUserQuery2, (user.user_id,))
+        db.commit()
+        cursor.execute(deleteUserQuery3)
+        db.commit()
 
-    if info == 0:
-        print("No such user found")
-    else:
-        print("You deleted the user: " + user.usernname)
-    return info
-    #except Exception:
-    #return "Oh Snap, this didn't work!"
-    #finally:
-    cursor.close()
-    db.close()
+        if info == 0:
+            print("No such user found")
+        else:
+            print("You deleted the user: " + user.username)
+            return info
+    except Exception:
+        return "Oh Snap, this didn't work!"
+    finally:
+        cursor.close()
+        db.close()
 
 def getCurrentUserId(name):
     """
