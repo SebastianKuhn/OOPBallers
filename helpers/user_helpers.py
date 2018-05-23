@@ -118,7 +118,7 @@ def getVegetarianStatus(name):
         cursor.close()
         db.close()
 
-def deleteUser(user_id):
+def deleteUser(user):
     """
     This function will delete a user from the database and say if the user has not been found in the database.
     :param username:
@@ -127,19 +127,21 @@ def deleteUser(user_id):
     cursor = db.cursor()
     #dirtydirtycoding
     deleteUserQuery = "SET FOREIGN_KEY_CHECKS=0; DELETE FROM users WHERE user_id=%s; SET FOREIGN_KEY_CHECKS=1;"
-    try:
-        info = cursor.execute(deleteUserQuery, (user_id,))
-        db.commit()
-        if info == 0:
-            print("No such user found")
-        else:
-            print("You deleted the user: " + name)
-        return info
-    except Exception:
-        return "Oh Snap, this didn't work!"
-    finally:
-        cursor.close()
-        db.close()
+    #try:
+    cursor.execute(deleteUserQuery, (user.user_id,))
+    info = cursor.fetchall()
+    db.commit()
+
+    if info == 0:
+        print("No such user found")
+    else:
+        print("You deleted the user: " + user.usernname)
+    return info
+    #except Exception:
+    #return "Oh Snap, this didn't work!"
+    #finally:
+    cursor.close()
+    db.close()
 
 def getCurrentUserId(name):
     """

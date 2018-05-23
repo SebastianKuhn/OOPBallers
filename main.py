@@ -103,6 +103,10 @@ def signUp():
     user = User(username, hashed_password, vegetarian)
     user_helpers.newUser(user)
 
+    #fetch User ID
+    user_id = user_helpers.getCurrentUserId(username)
+
+    user.user_id = user_id
 
     print("")
     print("You successfully created an account!")
@@ -214,8 +218,7 @@ def checkUserInput(cur_user):
 
         if delete_response == "DELETE":
             print("")
-            print(cur_user.username)
-            print(user_helpers.deleteUser(cur_user.user_id))
+            print(user_helpers.deleteUser(cur_user))
             print("The programm will now end.")
             return True
         elif delete_response.lower() == "cancel":
@@ -415,8 +418,6 @@ if __name__ == "__main__":
             print("")
             login_or_signup = str(input("Login/Sign up (1/2): "))
 
-    #presents all the available options
-    #presentOptions()
 
     #runs the program as long as is_finished is false
     is_finished = False
