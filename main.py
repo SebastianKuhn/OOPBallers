@@ -103,6 +103,10 @@ def signUp():
     user = User(username, hashed_password, vegetarian)
     user_helpers.newUser(user)
 
+    #fetch User ID
+    user_id = user_helpers.getCurrentUserId(username)
+
+    user.user_id = user_id
 
     print("")
     print("You successfully created an account!")
