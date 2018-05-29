@@ -9,7 +9,7 @@ import base64, json, requests, glob
 #list of commonly used terms which are too general
 common_terms = ["animal source foods", "animal fat", "vegetable", "natural foods", "local foods", "produce", "food",
                 "product", "product design", "ingredient", "drink", "dairy product", "yellow", "red", "blue",
-                "al dente", "italian food", "superfood", "fruit"]
+                "al dente", "italian food", "superfood", "fruit", "still life photography", "banana family"]
 
 def scanFolderforPictures(folder_path):
     """
